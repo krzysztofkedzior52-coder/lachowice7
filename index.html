@@ -23,7 +23,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);color:var(--color-text-primary);background:#fff;padding:0 1.5rem}
- 
+
 /* ── Login screen ── */
 #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh}
 .login-card{background:#fff;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:2rem;width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.07)}
@@ -35,7 +35,7 @@ body{font-family:var(--font-sans);color:var(--color-text-primary);background:#ff
 .login-btn{width:100%;height:38px;background:#1a4a8a;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans)}
 .login-btn:hover{background:#15397a}
 .login-error{font-size:12px;color:var(--color-text-danger);margin-top:8px;min-height:18px}
- 
+
 /* ── App ── */
 #appScreen{display:none}
 .app{max-width:1100px;margin:0 auto;padding:1.5rem 0}
@@ -100,7 +100,7 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
 </style>
 </head>
 <body>
- 
+
 <!-- ── Login screen ─────────────────────────────────────────── -->
 <div id="loginScreen">
   <div class="login-card">
@@ -112,11 +112,11 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
     <div class="login-error" id="loginError"></div>
   </div>
 </div>
- 
+
 <!-- ── App ─────────────────────────────────────────────────── -->
 <div id="appScreen">
 <div class="app">
- 
+
   <div class="header">
     <div class="logo">PL<br>W/O</div>
     <div class="header-text">
@@ -131,19 +131,19 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
       <i class="ti ti-plus"></i> Add phase
     </button>
   </div>
- 
+
   <div id="syncBanner" class="sync-banner" style="display:none">
     <i class="ti ti-refresh"></i>
     <span>Changes synced from another user.</span>
   </div>
- 
+
   <div class="stats">
     <div class="stat"><div class="stat-label">Total tasks</div><div class="stat-value" id="st-total">—</div><div class="stat-sub">across all phases</div></div>
     <div class="stat"><div class="stat-label">Completed</div><div class="stat-value" id="st-done">—</div><div class="stat-sub" id="st-pct">—</div></div>
     <div class="stat"><div class="stat-label">In progress</div><div class="stat-value" id="st-progress">—</div><div class="stat-sub">active tasks</div></div>
     <div class="stat"><div class="stat-label">Overdue</div><div class="stat-value" id="st-overdue" style="color:var(--color-text-danger)">—</div><div class="stat-sub">past due date</div></div>
   </div>
- 
+
   <div class="toolbar">
     <div class="toolbar-left">
       <input type="text" id="filterText" placeholder="Search tasks…" style="width:200px" oninput="renderAll()">
@@ -159,14 +159,14 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
       </select>
     </div>
   </div>
- 
+
   <div id="phasesContainer">
     <div class="loading-screen"><i class="ti ti-loader ti-spin"></i>&nbsp; Connecting to database…</div>
   </div>
- 
+
 </div>
 </div>
- 
+
 <!-- Phase modal -->
 <div class="modal-overlay" id="phaseModal">
   <div class="modal">
@@ -181,7 +181,7 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
     </div>
   </div>
 </div>
- 
+
 <!-- Task modal -->
 <div class="modal-overlay" id="taskModal">
   <div class="modal">
@@ -206,20 +206,20 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
     </div>
   </div>
 </div>
- 
+
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
- 
+
 <script>
 // ── Password gate ──────────────────────────────────────────────
 const PASS_HASH = "c91b04ce895b5c6de83e686469b828c5b78e410b7e67bb341b48124240c3616e";
- 
+
 async function hashPassword(pw) {
   const enc = new TextEncoder().encode(pw);
   const buf = await crypto.subtle.digest("SHA-256", enc);
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
 }
- 
+
 async function tryLogin() {
   const pw = document.getElementById("passwordInput").value;
   const hash = await hashPassword(pw);
@@ -236,13 +236,13 @@ async function tryLogin() {
     setTimeout(() => err.textContent = "", 3000);
   }
 }
- 
+
 // Auto-unlock if already authenticated this session
 if (sessionStorage.getItem("lachowice7_auth") === "1") {
   document.getElementById("loginScreen").style.display = "none";
   document.getElementById("appScreen").style.display = "block";
 }
- 
+
 // ── Firebase init ──────────────────────────────────────────────
 const firebaseConfig = {
   apiKey: "AIzaSyAyby5pO-3GbBFlc6qS94mG2pqufZYZCSU",
@@ -256,15 +256,15 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const projectDoc = db.collection("projects").doc("lachowice7");
- 
+
 // ── Default seed data ──────────────────────────────────────────
-const DEFAULT_PEOPLE = ["Chris Kedzior","Lukasz Lukanko","David Krajewski","Kasia Dusak","Tomasz Kepczynski","Roger McMechan","Dave Westlund","Todd MacEacheron","Ian Habke","David Winter"];
+const DEFAULT_PEOPLE = [];
 const DEFAULT_PHASES = [
   {id:1,name:"Pre-spud & Location Preparation",start:"2025-09-01",end:"2025-09-30",notes:"Site setup, wellhead installation, rig move-in",open:true,tasks:[
-    {id:101,name:"Site survey & environmental assessment",owner:"Lukasz Lukanko",start:"2025-09-01",due:"2025-09-10",status:"complete",notes:"",subs:[]},
-    {id:102,name:"Rig move-in and rigging up",owner:"Lukasz Lukanko",start:"2025-09-11",due:"2025-09-20",status:"complete",notes:"",subs:[
-      {id:1021,name:"Equipment transport permits",owner:"Lukasz Lukanko",start:"2025-09-05",due:"2025-09-08",status:"complete",notes:""},
-      {id:1022,name:"Crane and heavy lift coordination",owner:"Lukasz Lukanko",start:"2025-09-11",due:"2025-09-13",status:"complete",notes:""}
+    {id:101,name:"Site survey & environmental assessment",owner:"",start:"2025-09-01",due:"2025-09-10",status:"complete",notes:"",subs:[]},
+    {id:102,name:"Rig move-in and rigging up",owner:"",start:"2025-09-11",due:"2025-09-20",status:"complete",notes:"",subs:[
+      {id:1021,name:"Equipment transport permits",owner:"",start:"2025-09-05",due:"2025-09-08",status:"complete",notes:""},
+      {id:1022,name:"Crane and heavy lift coordination",owner:"",start:"2025-09-11",due:"2025-09-13",status:"complete",notes:""}
     ]},
     {id:103,name:"Wellhead and BOP installation",owner:"",start:"2025-09-21",due:"2025-09-30",status:"in progress",notes:"",subs:[]}
   ]},
@@ -295,21 +295,21 @@ const DEFAULT_PHASES = [
     {id:502,name:"Environmental site restoration",owner:"",start:"2025-12-29",due:"2026-01-10",status:"not started",notes:"",subs:[]}
   ]}
 ];
- 
+
 // ── State ──────────────────────────────────────────────────────
 let phases = [], people = [...DEFAULT_PEOPLE], nextId = 9000;
 let editingPhaseId = null, editingTaskCtx = null, saveTimer = null, isFirstLoad = true;
 let appInitialised = false;
- 
+
 function setSaveStatus(state, text) {
   document.getElementById("saveDot").className = "save-dot " + state;
   document.getElementById("saveLabel").textContent = text;
 }
- 
+
 function initApp() {
   if (appInitialised) return;
   appInitialised = true;
- 
+
   projectDoc.onSnapshot(snap => {
     if (snap.exists) {
       const data = snap.data();
@@ -339,10 +339,10 @@ function initApp() {
     renderAll();
   });
 }
- 
+
 // Auto-init if session already authenticated
 if (sessionStorage.getItem("lachowice7_auth") === "1") initApp();
- 
+
 async function persistSave() {
   setSaveStatus("saving", "Saving…");
   try {
@@ -353,26 +353,26 @@ async function persistSave() {
     console.error(e);
   }
 }
- 
+
 function scheduleSave() {
   setSaveStatus("saving", "Saving…");
   clearTimeout(saveTimer);
   saveTimer = setTimeout(persistSave, 800);
 }
- 
+
 function uid() { return ++nextId; }
- 
+
 function statusBadge(s) {
   const m = { complete:"badge-green", "in progress":"badge-blue", "not started":"badge-gray", blocked:"badge-red" };
   return `<span class="badge ${m[s]||'badge-gray'}">${s}</span>`;
 }
- 
+
 function isOverdue(task) {
   if (task.status === "complete") return false;
   if (!task.due) return false;
   return new Date(task.due) < new Date(new Date().toISOString().slice(0,10));
 }
- 
+
 function computeStats() {
   let total=0,done=0,prog=0,over=0;
   phases.forEach(p => p.tasks.forEach(t => {
@@ -391,7 +391,7 @@ function computeStats() {
   document.getElementById("st-progress").textContent = prog;
   document.getElementById("st-overdue").textContent = over;
 }
- 
+
 function computePhaseProgress(p) {
   let total=0,done=0;
   p.tasks.forEach(t => {
@@ -400,7 +400,7 @@ function computePhaseProgress(p) {
   });
   return total ? Math.round(done/total*100) : 0;
 }
- 
+
 function refreshOwnerFilter() {
   const sel = document.getElementById("filterOwner");
   const cur = sel.value;
@@ -411,7 +411,7 @@ function refreshOwnerFilter() {
     sel.appendChild(o);
   });
 }
- 
+
 function renderAll() {
   const ft = (document.getElementById("filterText").value||"").toLowerCase();
   const fs = document.getElementById("filterStatus").value;
@@ -425,18 +425,18 @@ function renderAll() {
   }
   phases.forEach(p => c.appendChild(renderPhase(p,ft,fs,fo)));
 }
- 
+
 function taskVisible(t,ft,fs,fo) {
   if (ft && !(t.name.toLowerCase().includes(ft)||(t.owner||"").toLowerCase().includes(ft))) return false;
   if (fs && t.status!==fs && !(t.subs||[]).some(s=>s.status===fs)) return false;
   if (fo && t.owner!==fo && !(t.subs||[]).some(s=>s.owner===fo)) return false;
   return true;
 }
- 
+
 function escHtml(str) {
   return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
- 
+
 function renderPhase(p,ft,fs,fo) {
   const pct = computePhaseProgress(p);
   const vt = p.tasks.filter(t=>taskVisible(t,ft,fs,fo));
@@ -463,7 +463,7 @@ function renderPhase(p,ft,fs,fo) {
     </div>`;
   return div;
 }
- 
+
 function renderTaskRow(pid,t) {
   const od = isOverdue(t);
   const subs = (t.subs||[]).map(s=>renderSubRow(pid,t.id,s)).join("");
@@ -481,7 +481,7 @@ function renderTaskRow(pid,t) {
     </span>
   </div>${subs}`;
 }
- 
+
 function renderSubRow(pid,tid,s) {
   const od = isOverdue(s);
   return `<div class="task-row sub" style="${od?'background:#fff0f0':''}">
@@ -497,12 +497,12 @@ function renderSubRow(pid,tid,s) {
     </span>
   </div>`;
 }
- 
+
 function togglePhase(id) {
   const p = phases.find(x=>x.id===id);
   if(p){p.open=!p.open;scheduleSave();renderAll();}
 }
- 
+
 function toggleDone(pid,tid,sid) {
   const p=phases.find(x=>x.id===pid);if(!p)return;
   const t=p.tasks.find(x=>x.id===tid);if(!t)return;
@@ -510,26 +510,26 @@ function toggleDone(pid,tid,sid) {
   else t.status=t.status==="complete"?"not started":"complete";
   scheduleSave();renderAll();
 }
- 
+
 function deletePhase(id) {
   if(!confirm("Delete this phase and all its tasks?"))return;
   phases=phases.filter(p=>p.id!==id);scheduleSave();renderAll();
 }
- 
+
 function deleteTask(pid,tid,sid) {
   const p=phases.find(x=>x.id===pid);if(!p)return;
   if(sid){const t=p.tasks.find(x=>x.id===tid);if(t)t.subs=(t.subs||[]).filter(s=>s.id!==sid);}
   else p.tasks=p.tasks.filter(t=>t.id!==tid);
   scheduleSave();renderAll();
 }
- 
+
 function openAddPhase() {
   editingPhaseId=null;
   document.getElementById("modalTitle").textContent="Add phase";
   ["mPhaseName","mPhaseStart","mPhaseEnd","mPhaseNotes"].forEach(id=>document.getElementById(id).value="");
   openModal("phaseModal");
 }
- 
+
 function openEditPhase(id) {
   const p=phases.find(x=>x.id===id);if(!p)return;
   editingPhaseId=id;
@@ -540,7 +540,7 @@ function openEditPhase(id) {
   document.getElementById("mPhaseNotes").value=p.notes||"";
   openModal("phaseModal");
 }
- 
+
 function savePhase() {
   const name=document.getElementById("mPhaseName").value.trim();
   if(!name)return alert("Phase name is required.");
@@ -552,7 +552,7 @@ function savePhase() {
   }
   closeModal("phaseModal");scheduleSave();renderAll();
 }
- 
+
 function openAddTask(pid,parentTid) {
   editingTaskCtx={pid,parentTid,tid:null};
   document.getElementById("taskModalTitle").textContent=parentTid?"Add sub-item":"Add task";
@@ -562,7 +562,7 @@ function openAddTask(pid,parentTid) {
   populateOwnerSelect("mTaskOwner","");
   openModal("taskModal");
 }
- 
+
 function openEditTask(pid,tid,sid) {
   const p=phases.find(x=>x.id===pid);if(!p)return;
   const t=p.tasks.find(x=>x.id===tid);if(!t)return;
@@ -578,22 +578,43 @@ function openEditTask(pid,tid,sid) {
   populateOwnerSelect("mTaskOwner",item.owner||"");
   openModal("taskModal");
 }
- 
+
 function populateOwnerSelect(selId,selected) {
   const sel=document.getElementById(selId);
   sel.innerHTML='<option value="">Unassigned</option>';
   people.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;o.selected=p===selected;sel.appendChild(o);});
 }
- 
+
+// Returns date string clamped to be >= floor (if floor set) — both are "YYYY-MM-DD" strings or ""
+function clampDate(date, floor) {
+  if (!date || !floor) return date;
+  return date < floor ? floor : date;
+}
+
 function saveTask() {
   const name=document.getElementById("mTaskName").value.trim();
   if(!name)return alert("Task name is required.");
   let owner=document.getElementById("mTaskOwner").value;
   const newP=document.getElementById("mNewPerson").value.trim();
   if(newP){owner=newP;if(!people.includes(newP))people.push(newP);}
-  const task={id:uid(),name,owner,start:document.getElementById("mTaskStart").value,due:document.getElementById("mTaskDue").value,status:document.getElementById("mTaskStatus").value,notes:document.getElementById("mTaskNotes").value};
   const{pid,parentTid,tid}=editingTaskCtx;
   const p=phases.find(x=>x.id===pid);if(!p)return;
+
+  // Determine the earliest allowed date — parent task's start (for sub-items) or phase start (for tasks)
+  let floor = "";
+  if (parentTid) {
+    const parentTask = p.tasks.find(x=>x.id===parentTid);
+    floor = (parentTask && parentTask.start) ? parentTask.start : (p.start||"");
+  } else {
+    floor = p.start || "";
+  }
+
+  let taskStart = clampDate(document.getElementById("mTaskStart").value, floor);
+  let taskDue   = clampDate(document.getElementById("mTaskDue").value,   floor);
+  // Also ensure due is not before start
+  if (taskStart && taskDue && taskDue < taskStart) taskDue = taskStart;
+
+  const task={id:uid(),name,owner,start:taskStart,due:taskDue,status:document.getElementById("mTaskStatus").value,notes:document.getElementById("mTaskNotes").value};
   if(tid){
     if(parentTid){const t=p.tasks.find(x=>x.id===parentTid);if(t){const s=(t.subs||[]).find(x=>x.id===tid);if(s)Object.assign(s,task);}}
     else{const t=p.tasks.find(x=>x.id===tid);if(t)Object.assign(t,{name:task.name,owner:task.owner,start:task.start,due:task.due,status:task.status,notes:task.notes});}
@@ -605,14 +626,12 @@ function saveTask() {
   }
   closeModal("taskModal");scheduleSave();renderAll();
 }
- 
+
 function openModal(id){document.getElementById(id).classList.add("open");}
 function closeModal(id){document.getElementById(id).classList.remove("open");}
 document.querySelectorAll(".modal-overlay").forEach(el=>{
   el.addEventListener("click",function(e){if(e.target===this)this.classList.remove("open");});
 });
 </script>
-</body>
-</html>
 </body>
 </html>
