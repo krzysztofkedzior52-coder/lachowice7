@@ -16,15 +16,28 @@
   --color-background-secondary: #f8f7f4;
   --color-background-danger: #fef2f2;
   --color-background-info: #eff6ff;
-  --color-border-primary: #d1d0ca;
   --color-border-secondary: #e2e1db;
   --color-border-tertiary: #eeede8;
-  --color-border-danger: #fecaca;
   --border-radius-md: 6px;
   --border-radius-lg: 10px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);color:var(--color-text-primary);background:#fff;padding:0 1.5rem}
+
+/* ── Login screen ── */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.login-card{background:#fff;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:2rem;width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.07)}
+.login-logo{width:48px;height:48px;background:#1a4a8a;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:500;line-height:1.2;margin:0 auto 1.25rem}
+.login-card h1{font-size:16px;font-weight:500;margin-bottom:4px}
+.login-card p{font-size:12px;color:var(--color-text-secondary);margin-bottom:1.5rem}
+.login-card input{width:100%;height:38px;font-size:14px;padding:0 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans);margin-bottom:10px;letter-spacing:0.05em}
+.login-card input:focus{outline:none;border-color:#1a4a8a}
+.login-btn{width:100%;height:38px;background:#1a4a8a;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans)}
+.login-btn:hover{background:#15397a}
+.login-error{font-size:12px;color:var(--color-text-danger);margin-top:8px;min-height:18px}
+
+/* ── App ── */
+#appScreen{display:none}
 .app{max-width:1100px;margin:0 auto;padding:1.5rem 0}
 .header{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
 .logo{width:36px;height:36px;background:#1a4a8a;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500;line-height:1.1;text-align:center;flex-shrink:0}
@@ -42,8 +55,8 @@ body{font-family:var(--font-sans);color:var(--color-text-primary);background:#ff
 .stat-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
 .toolbar{display:flex;gap:8px;margin-bottom:1rem;align-items:center;flex-wrap:wrap}
 .toolbar-left{display:flex;gap:8px;flex:1;align-items:center;flex-wrap:wrap}
-select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)}
-.btn{height:32px;padding:0 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary)}
+.btn{height:32px;padding:0 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .btn:hover{background:var(--color-background-secondary)}
 .btn-primary{background:#1a4a8a;color:#fff;border-color:#1a4a8a}
 .btn-primary:hover{background:#15397a}
@@ -64,7 +77,7 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
 .phase-body.open{display:block}
 .table-head{padding:8px 14px;display:grid;grid-template-columns:24px 1fr 130px 150px 110px 80px 70px;gap:8px;font-size:11px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary)}
 .task-row{padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:grid;grid-template-columns:24px 1fr 130px 150px 110px 80px 70px;gap:8px;align-items:center;font-size:13px}
-.task-row.sub{padding-left:42px;background:var(--color-background-secondary);grid-template-columns:24px 1fr 130px 150px 110px 80px 70px}
+.task-row.sub{padding-left:42px;background:var(--color-background-secondary)}
 .task-row:last-child{border-bottom:none}
 .task-check{width:16px;height:16px;border:1.5px solid var(--color-border-secondary);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .task-check.done{background:#1a4a8a;border-color:#1a4a8a;color:#fff;font-size:11px}
@@ -87,6 +100,21 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
 </style>
 </head>
 <body>
+
+<!-- ── Login screen ─────────────────────────────────────────── -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">PL<br>W/O</div>
+    <h1>Lachowice-7 Workover</h1>
+    <p>Horizon Petroleum &nbsp;·&nbsp; Bielsko-Biała license</p>
+    <input type="password" id="passwordInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')tryLogin()">
+    <button class="login-btn" onclick="tryLogin()">Access project</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ── App ─────────────────────────────────────────────────── -->
+<div id="appScreen">
 <div class="app">
 
   <div class="header">
@@ -137,6 +165,7 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
   </div>
 
 </div>
+</div>
 
 <!-- Phase modal -->
 <div class="modal-overlay" id="phaseModal">
@@ -178,11 +207,42 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
   </div>
 </div>
 
-<!-- Firebase v9 compat (works as plain script tags, no bundler needed) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
+// ── Password gate ──────────────────────────────────────────────
+const PASS_HASH = "c91b04ce895b5c6de83e686469b828c5b78e410b7e67bb341b48124240c3616e";
+
+async function hashPassword(pw) {
+  const enc = new TextEncoder().encode(pw);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
+
+async function tryLogin() {
+  const pw = document.getElementById("passwordInput").value;
+  const hash = await hashPassword(pw);
+  if (hash === PASS_HASH) {
+    sessionStorage.setItem("lachowice7_auth", "1");
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("appScreen").style.display = "block";
+    initApp();
+  } else {
+    const err = document.getElementById("loginError");
+    err.textContent = "Incorrect password. Please try again.";
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("passwordInput").focus();
+    setTimeout(() => err.textContent = "", 3000);
+  }
+}
+
+// Auto-unlock if already authenticated this session
+if (sessionStorage.getItem("lachowice7_auth") === "1") {
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("appScreen").style.display = "block";
+}
+
 // ── Firebase init ──────────────────────────────────────────────
 const firebaseConfig = {
   apiKey: "AIzaSyAyby5pO-3GbBFlc6qS94mG2pqufZYZCSU",
@@ -237,52 +297,52 @@ const DEFAULT_PHASES = [
 ];
 
 // ── State ──────────────────────────────────────────────────────
-let phases = [];
-let people = [...DEFAULT_PEOPLE];
-let nextId = 9000;
-let editingPhaseId = null;
-let editingTaskCtx = null;
-let saveTimer = null;
-let isFirstLoad = true;
+let phases = [], people = [...DEFAULT_PEOPLE], nextId = 9000;
+let editingPhaseId = null, editingTaskCtx = null, saveTimer = null, isFirstLoad = true;
+let appInitialised = false;
 
-// ── Save status helpers ────────────────────────────────────────
 function setSaveStatus(state, text) {
   document.getElementById("saveDot").className = "save-dot " + state;
   document.getElementById("saveLabel").textContent = text;
 }
 
-// ── Firestore real-time listener ───────────────────────────────
-projectDoc.onSnapshot(snap => {
-  if (snap.exists) {
-    const data = snap.data();
-    phases = data.phases || [];
-    people = data.people || [...DEFAULT_PEOPLE];
-    nextId = data.nextId || 9000;
-    setSaveStatus("saved", "Live — " + new Date().toLocaleTimeString());
-    if (!isFirstLoad) {
-      document.getElementById("syncBanner").style.display = "flex";
-      setTimeout(() => document.getElementById("syncBanner").style.display = "none", 4000);
+function initApp() {
+  if (appInitialised) return;
+  appInitialised = true;
+
+  projectDoc.onSnapshot(snap => {
+    if (snap.exists) {
+      const data = snap.data();
+      phases = data.phases || [];
+      people = data.people || [...DEFAULT_PEOPLE];
+      nextId = data.nextId || 9000;
+      setSaveStatus("saved", "Live — " + new Date().toLocaleTimeString());
+      if (!isFirstLoad) {
+        const b = document.getElementById("syncBanner");
+        b.style.display = "flex";
+        setTimeout(() => b.style.display = "none", 4000);
+      }
+      isFirstLoad = false;
+      renderAll();
+    } else {
+      phases = JSON.parse(JSON.stringify(DEFAULT_PHASES));
+      people = [...DEFAULT_PEOPLE];
+      isFirstLoad = false;
+      persistSave();
     }
-    isFirstLoad = false;
-    renderAll();
-  } else {
-    // First time — seed with default data
+  }, err => {
+    setSaveStatus("error", "DB error — check console");
+    console.error(err);
     phases = JSON.parse(JSON.stringify(DEFAULT_PHASES));
     people = [...DEFAULT_PEOPLE];
     isFirstLoad = false;
-    persistSave();
-  }
-}, err => {
-  setSaveStatus("error", "DB error — check console");
-  console.error(err);
-  // Fall back to defaults so the UI still renders
-  phases = JSON.parse(JSON.stringify(DEFAULT_PHASES));
-  people = [...DEFAULT_PEOPLE];
-  isFirstLoad = false;
-  renderAll();
-});
+    renderAll();
+  });
+}
 
-// ── Persist to Firestore ───────────────────────────────────────
+// Auto-init if session already authenticated
+if (sessionStorage.getItem("lachowice7_auth") === "1") initApp();
+
 async function persistSave() {
   setSaveStatus("saving", "Saving…");
   try {
@@ -300,7 +360,6 @@ function scheduleSave() {
   saveTimer = setTimeout(persistSave, 800);
 }
 
-// ── Helpers ────────────────────────────────────────────────────
 function uid() { return ++nextId; }
 
 function statusBadge(s) {
@@ -315,7 +374,7 @@ function isOverdue(task) {
 }
 
 function computeStats() {
-  let total=0, done=0, prog=0, over=0;
+  let total=0,done=0,prog=0,over=0;
   phases.forEach(p => p.tasks.forEach(t => {
     total++; if(t.status==="complete") done++;
     if(t.status==="in progress") prog++;
@@ -334,7 +393,7 @@ function computeStats() {
 }
 
 function computePhaseProgress(p) {
-  let total=0, done=0;
+  let total=0,done=0;
   p.tasks.forEach(t => {
     total++; if(t.status==="complete") done++;
     (t.subs||[]).forEach(s => { total++; if(s.status==="complete") done++; });
@@ -348,37 +407,39 @@ function refreshOwnerFilter() {
   sel.innerHTML = '<option value="">All owners</option>';
   people.forEach(p => {
     const o = document.createElement("option");
-    o.value = p; o.textContent = p; o.selected = p===cur;
+    o.value=p; o.textContent=p; o.selected=p===cur;
     sel.appendChild(o);
   });
 }
 
-// ── Render ─────────────────────────────────────────────────────
 function renderAll() {
   const ft = (document.getElementById("filterText").value||"").toLowerCase();
   const fs = document.getElementById("filterStatus").value;
   const fo = document.getElementById("filterOwner").value;
-  computeStats();
-  refreshOwnerFilter();
+  computeStats(); refreshOwnerFilter();
   const c = document.getElementById("phasesContainer");
   c.innerHTML = "";
-  if (phases.length === 0) {
+  if (!phases.length) {
     c.innerHTML = '<div class="loading-screen">No phases yet. Click <strong>+ Add phase</strong> to get started.</div>';
     return;
   }
-  phases.forEach(p => c.appendChild(renderPhase(p, ft, fs, fo)));
+  phases.forEach(p => c.appendChild(renderPhase(p,ft,fs,fo)));
 }
 
-function taskVisible(t, ft, fs, fo) {
-  if (ft && !(t.name.toLowerCase().includes(ft) || (t.owner||"").toLowerCase().includes(ft))) return false;
-  if (fs && t.status !== fs && !(t.subs||[]).some(s => s.status===fs)) return false;
-  if (fo && t.owner !== fo && !(t.subs||[]).some(s => s.owner===fo)) return false;
+function taskVisible(t,ft,fs,fo) {
+  if (ft && !(t.name.toLowerCase().includes(ft)||(t.owner||"").toLowerCase().includes(ft))) return false;
+  if (fs && t.status!==fs && !(t.subs||[]).some(s=>s.status===fs)) return false;
+  if (fo && t.owner!==fo && !(t.subs||[]).some(s=>s.owner===fo)) return false;
   return true;
 }
 
-function renderPhase(p, ft, fs, fo) {
+function escHtml(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function renderPhase(p,ft,fs,fo) {
   const pct = computePhaseProgress(p);
-  const visibleTasks = p.tasks.filter(t => taskVisible(t, ft, fs, fo));
+  const vt = p.tasks.filter(t=>taskVisible(t,ft,fs,fo));
   const div = document.createElement("div");
   div.className = "phase";
   div.innerHTML = `
@@ -387,7 +448,7 @@ function renderPhase(p, ft, fs, fo) {
       <span class="phase-name">${escHtml(p.name)}</span>
       <div class="phase-meta">
         <span style="font-size:11px;color:var(--color-text-secondary)">${p.start||""} → ${p.end||""}</span>
-        <span class="badge badge-blue">${visibleTasks.length} task${visibleTasks.length!==1?"s":""}</span>
+        <span class="badge badge-blue">${vt.length} task${vt.length!==1?"s":""}</span>
         <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
         <span style="font-size:11px;color:var(--color-text-secondary);min-width:28px">${pct}%</span>
         <button class="action-btn" onclick="event.stopPropagation();openAddTask(${p.id},null)" title="Add task"><i class="ti ti-plus"></i></button>
@@ -396,18 +457,16 @@ function renderPhase(p, ft, fs, fo) {
       </div>
     </div>
     <div class="phase-body ${p.open?'open':''}">
-      <div class="table-head">
-        <span></span><span>Task</span><span>Owner</span><span>Dates</span><span>Status</span><span>Due</span><span></span>
-      </div>
-      ${visibleTasks.map(t => renderTaskRow(p.id, t)).join("")}
+      <div class="table-head"><span></span><span>Task</span><span>Owner</span><span>Dates</span><span>Status</span><span>Due</span><span></span></div>
+      ${vt.map(t=>renderTaskRow(p.id,t)).join("")}
       <div class="add-row" onclick="openAddTask(${p.id},null)"><i class="ti ti-plus" style="font-size:13px"></i> Add task</div>
     </div>`;
   return div;
 }
 
-function renderTaskRow(pid, t) {
+function renderTaskRow(pid,t) {
   const od = isOverdue(t);
-  const subRows = (t.subs||[]).map(s => renderSubRow(pid, t.id, s)).join("");
+  const subs = (t.subs||[]).map(s=>renderSubRow(pid,t.id,s)).join("");
   return `<div class="task-row" style="${od?'background:var(--color-background-danger)':''}">
     <div class="task-check ${t.status==='complete'?'done':''}" onclick="toggleDone(${pid},${t.id},null)">${t.status==='complete'?'<i class="ti ti-check"></i>':''}</div>
     <span style="${t.status==='complete'?'text-decoration:line-through;color:var(--color-text-secondary)':''}">${escHtml(t.name)}</span>
@@ -420,10 +479,10 @@ function renderTaskRow(pid, t) {
       <button class="action-btn" onclick="openEditTask(${pid},${t.id},null)" title="Edit"><i class="ti ti-edit" style="font-size:13px"></i></button>
       <button class="action-btn" onclick="deleteTask(${pid},${t.id},null)" title="Delete"><i class="ti ti-trash" style="font-size:13px"></i></button>
     </span>
-  </div>${subRows}`;
+  </div>${subs}`;
 }
 
-function renderSubRow(pid, tid, s) {
+function renderSubRow(pid,tid,s) {
   const od = isOverdue(s);
   return `<div class="task-row sub" style="${od?'background:#fff0f0':''}">
     <div class="task-check ${s.status==='complete'?'done':''}" onclick="toggleDone(${pid},${tid},${s.id})">${s.status==='complete'?'<i class="ti ti-check"></i>':''}</div>
@@ -439,145 +498,118 @@ function renderSubRow(pid, tid, s) {
   </div>`;
 }
 
-function escHtml(str) {
-  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-
-// ── Actions ────────────────────────────────────────────────────
 function togglePhase(id) {
-  const p = phases.find(x => x.id===id);
-  if (p) { p.open = !p.open; scheduleSave(); renderAll(); }
+  const p = phases.find(x=>x.id===id);
+  if(p){p.open=!p.open;scheduleSave();renderAll();}
 }
 
-function toggleDone(pid, tid, sid) {
-  const p = phases.find(x => x.id===pid); if(!p) return;
-  const t = p.tasks.find(x => x.id===tid); if(!t) return;
-  if (sid) {
-    const s = (t.subs||[]).find(x => x.id===sid);
-    if (s) s.status = s.status==="complete" ? "not started" : "complete";
-  } else {
-    t.status = t.status==="complete" ? "not started" : "complete";
-  }
-  scheduleSave(); renderAll();
+function toggleDone(pid,tid,sid) {
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  const t=p.tasks.find(x=>x.id===tid);if(!t)return;
+  if(sid){const s=(t.subs||[]).find(x=>x.id===sid);if(s)s.status=s.status==="complete"?"not started":"complete";}
+  else t.status=t.status==="complete"?"not started":"complete";
+  scheduleSave();renderAll();
 }
 
 function deletePhase(id) {
-  if (!confirm("Delete this phase and all its tasks?")) return;
-  phases = phases.filter(p => p.id!==id);
-  scheduleSave(); renderAll();
+  if(!confirm("Delete this phase and all its tasks?"))return;
+  phases=phases.filter(p=>p.id!==id);scheduleSave();renderAll();
 }
 
-function deleteTask(pid, tid, sid) {
-  const p = phases.find(x => x.id===pid); if(!p) return;
-  if (sid) {
-    const t = p.tasks.find(x => x.id===tid); if(!t) return;
-    t.subs = (t.subs||[]).filter(s => s.id!==sid);
-  } else {
-    p.tasks = p.tasks.filter(t => t.id!==tid);
-  }
-  scheduleSave(); renderAll();
+function deleteTask(pid,tid,sid) {
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  if(sid){const t=p.tasks.find(x=>x.id===tid);if(t)t.subs=(t.subs||[]).filter(s=>s.id!==sid);}
+  else p.tasks=p.tasks.filter(t=>t.id!==tid);
+  scheduleSave();renderAll();
 }
 
-// ── Phase modal ────────────────────────────────────────────────
 function openAddPhase() {
-  editingPhaseId = null;
-  document.getElementById("modalTitle").textContent = "Add phase";
-  ["mPhaseName","mPhaseStart","mPhaseEnd","mPhaseNotes"].forEach(id => document.getElementById(id).value = "");
+  editingPhaseId=null;
+  document.getElementById("modalTitle").textContent="Add phase";
+  ["mPhaseName","mPhaseStart","mPhaseEnd","mPhaseNotes"].forEach(id=>document.getElementById(id).value="");
   openModal("phaseModal");
 }
 
 function openEditPhase(id) {
-  const p = phases.find(x => x.id===id); if(!p) return;
-  editingPhaseId = id;
-  document.getElementById("modalTitle").textContent = "Edit phase";
-  document.getElementById("mPhaseName").value = p.name;
-  document.getElementById("mPhaseStart").value = p.start||"";
-  document.getElementById("mPhaseEnd").value = p.end||"";
-  document.getElementById("mPhaseNotes").value = p.notes||"";
+  const p=phases.find(x=>x.id===id);if(!p)return;
+  editingPhaseId=id;
+  document.getElementById("modalTitle").textContent="Edit phase";
+  document.getElementById("mPhaseName").value=p.name;
+  document.getElementById("mPhaseStart").value=p.start||"";
+  document.getElementById("mPhaseEnd").value=p.end||"";
+  document.getElementById("mPhaseNotes").value=p.notes||"";
   openModal("phaseModal");
 }
 
 function savePhase() {
-  const name = document.getElementById("mPhaseName").value.trim();
-  if (!name) return alert("Phase name is required.");
-  if (editingPhaseId) {
-    const p = phases.find(x => x.id===editingPhaseId);
-    if (p) { p.name=name; p.start=document.getElementById("mPhaseStart").value; p.end=document.getElementById("mPhaseEnd").value; p.notes=document.getElementById("mPhaseNotes").value; }
+  const name=document.getElementById("mPhaseName").value.trim();
+  if(!name)return alert("Phase name is required.");
+  if(editingPhaseId){
+    const p=phases.find(x=>x.id===editingPhaseId);
+    if(p){p.name=name;p.start=document.getElementById("mPhaseStart").value;p.end=document.getElementById("mPhaseEnd").value;p.notes=document.getElementById("mPhaseNotes").value;}
   } else {
-    phases.push({ id:uid(), name, start:document.getElementById("mPhaseStart").value, end:document.getElementById("mPhaseEnd").value, notes:document.getElementById("mPhaseNotes").value, open:true, tasks:[] });
+    phases.push({id:uid(),name,start:document.getElementById("mPhaseStart").value,end:document.getElementById("mPhaseEnd").value,notes:document.getElementById("mPhaseNotes").value,open:true,tasks:[]});
   }
-  closeModal("phaseModal"); scheduleSave(); renderAll();
+  closeModal("phaseModal");scheduleSave();renderAll();
 }
 
-// ── Task modal ─────────────────────────────────────────────────
-function openAddTask(pid, parentTid) {
-  editingTaskCtx = { pid, parentTid, tid:null };
-  document.getElementById("taskModalTitle").textContent = parentTid ? "Add sub-item" : "Add task";
-  ["mTaskName","mNewPerson","mTaskStart","mTaskDue"].forEach(id => document.getElementById(id).value = "");
-  document.getElementById("mTaskStatus").value = "not started";
-  document.getElementById("mTaskNotes").value = "";
-  populateOwnerSelect("mTaskOwner", "");
+function openAddTask(pid,parentTid) {
+  editingTaskCtx={pid,parentTid,tid:null};
+  document.getElementById("taskModalTitle").textContent=parentTid?"Add sub-item":"Add task";
+  ["mTaskName","mNewPerson","mTaskStart","mTaskDue"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("mTaskStatus").value="not started";
+  document.getElementById("mTaskNotes").value="";
+  populateOwnerSelect("mTaskOwner","");
   openModal("taskModal");
 }
 
-function openEditTask(pid, tid, sid) {
-  const p = phases.find(x => x.id===pid); if(!p) return;
-  const t = p.tasks.find(x => x.id===tid); if(!t) return;
-  const item = sid ? (t.subs||[]).find(s => s.id===sid) : t;
-  if (!item) return;
-  editingTaskCtx = { pid, parentTid:sid?tid:null, tid:sid||tid };
-  document.getElementById("taskModalTitle").textContent = "Edit task";
-  document.getElementById("mTaskName").value = item.name;
-  document.getElementById("mTaskStart").value = item.start||"";
-  document.getElementById("mTaskDue").value = item.due||"";
-  document.getElementById("mTaskStatus").value = item.status||"not started";
-  document.getElementById("mTaskNotes").value = item.notes||"";
-  document.getElementById("mNewPerson").value = "";
-  populateOwnerSelect("mTaskOwner", item.owner||"");
+function openEditTask(pid,tid,sid) {
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  const t=p.tasks.find(x=>x.id===tid);if(!t)return;
+  const item=sid?(t.subs||[]).find(s=>s.id===sid):t;if(!item)return;
+  editingTaskCtx={pid,parentTid:sid?tid:null,tid:sid||tid};
+  document.getElementById("taskModalTitle").textContent="Edit task";
+  document.getElementById("mTaskName").value=item.name;
+  document.getElementById("mTaskStart").value=item.start||"";
+  document.getElementById("mTaskDue").value=item.due||"";
+  document.getElementById("mTaskStatus").value=item.status||"not started";
+  document.getElementById("mTaskNotes").value=item.notes||"";
+  document.getElementById("mNewPerson").value="";
+  populateOwnerSelect("mTaskOwner",item.owner||"");
   openModal("taskModal");
 }
 
-function populateOwnerSelect(selId, selected) {
-  const sel = document.getElementById(selId);
-  sel.innerHTML = '<option value="">Unassigned</option>';
-  people.forEach(p => {
-    const o = document.createElement("option");
-    o.value = p; o.textContent = p; o.selected = p===selected;
-    sel.appendChild(o);
-  });
+function populateOwnerSelect(selId,selected) {
+  const sel=document.getElementById(selId);
+  sel.innerHTML='<option value="">Unassigned</option>';
+  people.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;o.selected=p===selected;sel.appendChild(o);});
 }
 
 function saveTask() {
-  const name = document.getElementById("mTaskName").value.trim();
-  if (!name) return alert("Task name is required.");
-  let owner = document.getElementById("mTaskOwner").value;
-  const newP = document.getElementById("mNewPerson").value.trim();
-  if (newP) { owner = newP; if (!people.includes(newP)) people.push(newP); }
-  const task = { id:uid(), name, owner, start:document.getElementById("mTaskStart").value, due:document.getElementById("mTaskDue").value, status:document.getElementById("mTaskStatus").value, notes:document.getElementById("mTaskNotes").value };
-  const { pid, parentTid, tid } = editingTaskCtx;
-  const p = phases.find(x => x.id===pid); if(!p) return;
-  if (tid) {
-    if (parentTid) {
-      const t = p.tasks.find(x => x.id===parentTid);
-      if (t) { const s = (t.subs||[]).find(x => x.id===tid); if(s) Object.assign(s, task); }
-    } else {
-      const t = p.tasks.find(x => x.id===tid);
-      if (t) Object.assign(t, { name:task.name, owner:task.owner, start:task.start, due:task.due, status:task.status, notes:task.notes });
-    }
-  } else if (parentTid) {
-    const t = p.tasks.find(x => x.id===parentTid);
-    if (t) { if(!t.subs) t.subs=[]; t.subs.push({...task}); }
+  const name=document.getElementById("mTaskName").value.trim();
+  if(!name)return alert("Task name is required.");
+  let owner=document.getElementById("mTaskOwner").value;
+  const newP=document.getElementById("mNewPerson").value.trim();
+  if(newP){owner=newP;if(!people.includes(newP))people.push(newP);}
+  const task={id:uid(),name,owner,start:document.getElementById("mTaskStart").value,due:document.getElementById("mTaskDue").value,status:document.getElementById("mTaskStatus").value,notes:document.getElementById("mTaskNotes").value};
+  const{pid,parentTid,tid}=editingTaskCtx;
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  if(tid){
+    if(parentTid){const t=p.tasks.find(x=>x.id===parentTid);if(t){const s=(t.subs||[]).find(x=>x.id===tid);if(s)Object.assign(s,task);}}
+    else{const t=p.tasks.find(x=>x.id===tid);if(t)Object.assign(t,{name:task.name,owner:task.owner,start:task.start,due:task.due,status:task.status,notes:task.notes});}
+  } else if(parentTid){
+    const t=p.tasks.find(x=>x.id===parentTid);
+    if(t){if(!t.subs)t.subs=[];t.subs.push({...task});}
   } else {
-    p.tasks.push({...task, subs:[]});
+    p.tasks.push({...task,subs:[]});
   }
-  closeModal("taskModal"); scheduleSave(); renderAll();
+  closeModal("taskModal");scheduleSave();renderAll();
 }
 
-// ── Modal helpers ──────────────────────────────────────────────
-function openModal(id) { document.getElementById(id).classList.add("open"); }
-function closeModal(id) { document.getElementById(id).classList.remove("open"); }
-document.querySelectorAll(".modal-overlay").forEach(el => {
-  el.addEventListener("click", function(e) { if(e.target===this) this.classList.remove("open"); });
+function openModal(id){document.getElementById(id).classList.add("open");}
+function closeModal(id){document.getElementById(id).classList.remove("open");}
+document.querySelectorAll(".modal-overlay").forEach(el=>{
+  el.addEventListener("click",function(e){if(e.target===this)this.classList.remove("open");});
 });
 </script>
 </body>
