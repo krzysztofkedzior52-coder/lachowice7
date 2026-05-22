@@ -258,7 +258,7 @@ const db = firebase.firestore();
 const projectDoc = db.collection("projects").doc("lachowice7");
  
 // ── Default seed data ──────────────────────────────────────────
-const DEFAULT_PEOPLE = [];
+const DEFAULT_PEOPLE = ["Chris Kedzior","Lukasz Lukanko","David Krajewski","Kasia Dusak","Tomasz Kepczynski","Roger McMechan","Dave Westlund","Todd MacEacheron","Ian Habke","David Winter"];
 const DEFAULT_PHASES = [
   {id:1,name:"Pre-spud & Location Preparation",start:"2025-09-01",end:"2025-09-30",notes:"Site setup, wellhead installation, rig move-in",open:true,tasks:[
     {id:101,name:"Site survey & environmental assessment",owner:"",start:"2025-09-01",due:"2025-09-10",status:"complete",notes:"",subs:[]},
