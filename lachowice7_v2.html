@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lachowice-7 Workover — Horizon Petroleum</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+<style>
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-text-primary: #1a1a18;
+  --color-text-secondary: #6b6b68;
+  --color-text-danger: #b91c1c;
+  --color-text-info: #1d4ed8;
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f8f7f4;
+  --color-background-danger: #fef2f2;
+  --color-background-info: #eff6ff;
+  --color-border-secondary: #e2e1db;
+  --color-border-tertiary: #eeede8;
+  --border-radius-md: 6px;
+  --border-radius-lg: 10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary);background:#fff;padding:0 1.5rem}
+
+/* ── Login screen ── */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.login-card{background:#fff;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:2rem;width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.07)}
+.login-logo{width:48px;height:48px;background:#1a4a8a;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:500;line-height:1.2;margin:0 auto 1.25rem}
+.login-card h1{font-size:16px;font-weight:500;margin-bottom:4px}
+.login-card p{font-size:12px;color:var(--color-text-secondary);margin-bottom:1.5rem}
+.login-card input{width:100%;height:38px;font-size:14px;padding:0 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans);margin-bottom:10px;letter-spacing:0.05em}
+.login-card input:focus{outline:none;border-color:#1a4a8a}
+.login-btn{width:100%;height:38px;background:#1a4a8a;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans)}
+.login-btn:hover{background:#15397a}
+.login-error{font-size:12px;color:var(--color-text-danger);margin-top:8px;min-height:18px}
+
+/* ── App ── */
+#appScreen{display:none}
+.app{max-width:1100px;margin:0 auto;padding:1.5rem 0}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.logo{width:36px;height:36px;background:#1a4a8a;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500;line-height:1.1;text-align:center;flex-shrink:0}
+.header-text h1{font-size:17px;font-weight:500}
+.header-text p{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.save-indicator{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);margin-left:auto;white-space:nowrap}
+.save-dot{width:7px;height:7px;border-radius:50%;background:#888;flex-shrink:0;transition:background 0.3s}
+.save-dot.saving{background:#ef9f27}
+.save-dot.saved{background:#639922}
+.save-dot.error{background:#e24b4a}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
+.stat-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.stat-value{font-size:20px;font-weight:500}
+.stat-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.toolbar{display:flex;gap:8px;margin-bottom:1rem;align-items:center;flex-wrap:wrap}
+.toolbar-left{display:flex;gap:8px;flex:1;align-items:center;flex-wrap:wrap}
+select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary)}
+.btn{height:32px;padding:0 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-primary{background:#1a4a8a;color:#fff;border-color:#1a4a8a}
+.btn-primary:hover{background:#15397a}
+.phase{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:12px;overflow:hidden}
+.phase-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--color-background-secondary);cursor:pointer;user-select:none}
+.phase-toggle{font-size:14px;color:var(--color-text-secondary);transition:transform 0.2s;width:18px;text-align:center;display:inline-block}
+.phase-toggle.open{transform:rotate(90deg)}
+.phase-name{font-weight:500;font-size:14px;flex:1}
+.phase-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
+.badge-blue{background:#e6f1fb;color:#0c447c}
+.badge-green{background:#eaf3de;color:#27500a}
+.badge-red{background:#fcebeb;color:#791f1f}
+.badge-gray{background:#f1efe8;color:#444441}
+.progress-bar{height:4px;background:var(--color-border-tertiary);border-radius:2px;width:80px;overflow:hidden}
+.progress-fill{height:100%;background:#1a4a8a;border-radius:2px;transition:width 0.3s}
+.phase-body{display:none;border-top:0.5px solid var(--color-border-tertiary)}
+.phase-body.open{display:block}
+.table-head{padding:8px 14px;display:grid;grid-template-columns:24px 1fr 130px 150px 110px 80px 70px;gap:8px;font-size:11px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary)}
+.task-row{padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:grid;grid-template-columns:24px 1fr 130px 150px 110px 80px 70px;gap:8px;align-items:center;font-size:13px}
+.task-row.sub{padding-left:42px;background:var(--color-background-secondary)}
+.task-row:last-child{border-bottom:none}
+.task-check{width:16px;height:16px;border:1.5px solid var(--color-border-secondary);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.task-check.done{background:#1a4a8a;border-color:#1a4a8a;color:#fff;font-size:11px}
+.owner-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:var(--color-background-info);color:var(--color-text-info);border-radius:20px;padding:2px 8px;max-width:128px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.action-btn{width:24px;height:24px;border:none;background:transparent;cursor:pointer;color:var(--color-text-secondary);display:inline-flex;align-items:center;justify-content:center;border-radius:4px;font-size:15px;padding:0}
+.action-btn:hover{background:var(--color-border-tertiary);color:var(--color-text-primary)}
+.add-row{padding:8px 14px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;border-top:0.5px dashed var(--color-border-tertiary)}
+.add-row:hover{color:#1a4a8a;background:var(--color-background-secondary)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-secondary);padding:1.25rem;width:420px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:15px;font-weight:500;margin-bottom:1rem}
+.form-row{margin-bottom:12px}
+.form-row label{display:block;font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.form-row input,.form-row select,.form-row textarea{width:100%;height:34px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans)}
+.form-row textarea{height:64px;padding:8px 10px;resize:vertical}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
+.sync-banner{font-size:12px;padding:8px 14px;background:var(--color-background-info);color:var(--color-text-info);display:flex;align-items:center;gap:6px;border-radius:var(--border-radius-md);margin-bottom:12px;border:0.5px solid #bfdbfe}
+.loading-screen{padding:4rem 0;text-align:center;color:var(--color-text-secondary);font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- ── Login screen ─────────────────────────────────────────── -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">PL<br>W/O</div>
+    <h1>Lachowice-7 Workover</h1>
+    <p>Horizon Petroleum &nbsp;·&nbsp; Bielsko-Biała license</p>
+    <input type="password" id="passwordInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')tryLogin()">
+    <button class="login-btn" onclick="tryLogin()">Access project</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ── App ─────────────────────────────────────────────────── -->
+<div id="appScreen">
+<div class="app">
+
+  <div class="header">
+    <div class="logo">PL<br>W/O</div>
+    <div class="header-text">
+      <h1>Lachowice-7 Workover</h1>
+      <p>Operator: Horizon Petroleum &nbsp;·&nbsp; License: Bielsko-Biała &nbsp;·&nbsp; Well type: Workover</p>
+    </div>
+    <div class="save-indicator">
+      <div class="save-dot" id="saveDot"></div>
+      <span id="saveLabel">Connecting…</span>
+    </div>
+    <button class="btn btn-primary" style="margin-left:12px" onclick="openAddPhase()">
+      <i class="ti ti-plus"></i> Add phase
+    </button>
+  </div>
+
+  <div id="syncBanner" class="sync-banner" style="display:none">
+    <i class="ti ti-refresh"></i>
+    <span>Changes synced from another user.</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Total tasks</div><div class="stat-value" id="st-total">—</div><div class="stat-sub">across all phases</div></div>
+    <div class="stat"><div class="stat-label">Completed</div><div class="stat-value" id="st-done">—</div><div class="stat-sub" id="st-pct">—</div></div>
+    <div class="stat"><div class="stat-label">In progress</div><div class="stat-value" id="st-progress">—</div><div class="stat-sub">active tasks</div></div>
+    <div class="stat"><div class="stat-label">Overdue</div><div class="stat-value" id="st-overdue" style="color:var(--color-text-danger)">—</div><div class="stat-sub">past due date</div></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <input type="text" id="filterText" placeholder="Search tasks…" style="width:200px" oninput="renderAll()">
+      <select id="filterStatus" onchange="renderAll()">
+        <option value="">All statuses</option>
+        <option value="not started">Not started</option>
+        <option value="in progress">In progress</option>
+        <option value="complete">Complete</option>
+        <option value="blocked">Blocked</option>
+      </select>
+      <select id="filterOwner" onchange="renderAll()">
+        <option value="">All owners</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="phasesContainer">
+    <div class="loading-screen"><i class="ti ti-loader ti-spin"></i>&nbsp; Connecting to database…</div>
+  </div>
+
+</div>
+</div>
+
+<!-- Phase modal -->
+<div class="modal-overlay" id="phaseModal">
+  <div class="modal">
+    <h2 id="modalTitle">Add phase</h2>
+    <div class="form-row"><label>Phase name</label><input id="mPhaseName" type="text" placeholder="e.g. Rig-up & Mobilisation"></div>
+    <div class="form-row"><label>Start date</label><input id="mPhaseStart" type="date"></div>
+    <div class="form-row"><label>End date</label><input id="mPhaseEnd" type="date"></div>
+    <div class="form-row"><label>Notes</label><textarea id="mPhaseNotes" placeholder="Optional phase notes"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('phaseModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="savePhase()">Save phase</button>
+    </div>
+  </div>
+</div>
+
+<!-- Task modal -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal">
+    <h2 id="taskModalTitle">Add task</h2>
+    <div class="form-row"><label>Task name</label><input id="mTaskName" type="text" placeholder="Task description"></div>
+    <div class="form-row"><label>Responsible person</label><select id="mTaskOwner"><option value="">Unassigned</option></select></div>
+    <div class="form-row"><label>Or add new person</label><input id="mNewPerson" type="text" placeholder="Full name — adds them to the team roster"></div>
+    <div class="form-row"><label>Start date</label><input id="mTaskStart" type="date"></div>
+    <div class="form-row"><label>Due date</label><input id="mTaskDue" type="date"></div>
+    <div class="form-row"><label>Status</label>
+      <select id="mTaskStatus">
+        <option value="not started">Not started</option>
+        <option value="in progress">In progress</option>
+        <option value="complete">Complete</option>
+        <option value="blocked">Blocked</option>
+      </select>
+    </div>
+    <div class="form-row"><label>Notes</label><textarea id="mTaskNotes" placeholder="Optional notes"></textarea></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('taskModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save task</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+// ── Password gate ──────────────────────────────────────────────
+const PASS_HASH = "c91b04ce895b5c6de83e686469b828c5b78e410b7e67bb341b48124240c3616e";
+
+async function hashPassword(pw) {
+  const enc = new TextEncoder().encode(pw);
+  const buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+}
+
+async function tryLogin() {
+  const pw = document.getElementById("passwordInput").value;
+  const hash = await hashPassword(pw);
+  if (hash === PASS_HASH) {
+    sessionStorage.setItem("lachowice7_auth", "1");
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("appScreen").style.display = "block";
+    initApp();
+  } else {
+    const err = document.getElementById("loginError");
+    err.textContent = "Incorrect password. Please try again.";
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("passwordInput").focus();
+    setTimeout(() => err.textContent = "", 3000);
+  }
+}
+
+// Auto-unlock if already authenticated this session
+if (sessionStorage.getItem("lachowice7_auth") === "1") {
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("appScreen").style.display = "block";
+}
+
+// ── Firebase init ──────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyAyby5pO-3GbBFlc6qS94mG2pqufZYZCSU",
+  authDomain: "lachowice-7-workover.firebaseapp.com",
+  projectId: "lachowice-7-workover",
+  storageBucket: "lachowice-7-workover.firebasestorage.app",
+  messagingSenderId: "367986868057",
+  appId: "1:367986868057:web:d0bb955c760eb31e505648",
+  measurementId: "G-T1TBVZPDQM"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const projectDoc = db.collection("projects").doc("lachowice7");
+
+// ── Default seed data ──────────────────────────────────────────
+const DEFAULT_PEOPLE = ["Anna Kowalska","Marek Wiśniewski","Piotr Nowak","Dorota Zając","Jan Lis","Ewa Kamińska","Tomasz Bąk","Site Engineer","HSE Officer","Mud Logger"];
+const DEFAULT_PHASES = [
+  {id:1,name:"Pre-spud & Location Preparation",start:"2025-09-01",end:"2025-09-30",notes:"Site setup, wellhead installation, rig move-in",open:true,tasks:[
+    {id:101,name:"Site survey & environmental assessment",owner:"Anna Kowalska",start:"2025-09-01",due:"2025-09-10",status:"complete",notes:"",subs:[]},
+    {id:102,name:"Rig move-in and rigging up",owner:"Marek Wiśniewski",start:"2025-09-11",due:"2025-09-20",status:"complete",notes:"",subs:[
+      {id:1021,name:"Equipment transport permits",owner:"Jan Lis",start:"2025-09-05",due:"2025-09-08",status:"complete",notes:""},
+      {id:1022,name:"Crane and heavy lift coordination",owner:"Marek Wiśniewski",start:"2025-09-11",due:"2025-09-13",status:"complete",notes:""}
+    ]},
+    {id:103,name:"Wellhead and BOP installation",owner:"Piotr Nowak",start:"2025-09-21",due:"2025-09-30",status:"in progress",notes:"",subs:[]}
+  ]},
+  {id:2,name:"Drilling – Surface Hole (26\")",start:"2025-10-01",end:"2025-10-20",notes:"Drill to 500m, set 18-5/8\" casing",open:true,tasks:[
+    {id:201,name:"Drill surface hole to 500m",owner:"Marek Wiśniewski",start:"2025-10-01",due:"2025-10-10",status:"in progress",notes:"",subs:[
+      {id:2011,name:"Daily drilling reports submission",owner:"Mud Logger",start:"2025-10-01",due:"2025-10-10",status:"in progress",notes:""}
+    ]},
+    {id:202,name:"Casing running & cementing",owner:"Piotr Nowak",start:"2025-10-11",due:"2025-10-18",status:"not started",notes:"",subs:[]},
+    {id:203,name:"Pressure test wellhead",owner:"HSE Officer",start:"2025-10-18",due:"2025-10-20",status:"not started",notes:"",subs:[]}
+  ]},
+  {id:3,name:"Drilling – Intermediate Hole (17.5\")",start:"2025-10-21",end:"2025-11-25",notes:"Drill to 2,400m TD target zone",open:false,tasks:[
+    {id:301,name:"Mud program review",owner:"Ewa Kamińska",start:"2025-10-21",due:"2025-10-23",status:"not started",notes:"",subs:[]},
+    {id:302,name:"Drill to intermediate TD",owner:"Marek Wiśniewski",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:"",subs:[
+      {id:3021,name:"Directional survey checks",owner:"Site Engineer",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:""},
+      {id:3022,name:"Mud logging & gas monitoring",owner:"Mud Logger",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:""}
+    ]},
+    {id:303,name:"Intermediate casing & cement job",owner:"Piotr Nowak",start:"2025-11-16",due:"2025-11-25",status:"not started",notes:"",subs:[]}
+  ]},
+  {id:4,name:"Logging, Testing & Completion",start:"2025-11-26",end:"2025-12-20",notes:"Wireline logs, DST, perforating, completion",open:false,tasks:[
+    {id:401,name:"Wireline logging run",owner:"Dorota Zając",start:"2025-11-26",due:"2025-11-30",status:"not started",notes:"",subs:[]},
+    {id:402,name:"Drill stem test (DST)",owner:"Piotr Nowak",start:"2025-12-01",due:"2025-12-10",status:"not started",notes:"",subs:[
+      {id:4021,name:"Wellhead pressure monitoring",owner:"HSE Officer",start:"2025-12-01",due:"2025-12-10",status:"not started",notes:""}
+    ]},
+    {id:403,name:"Perforating & completion",owner:"Tomasz Bąk",start:"2025-12-11",due:"2025-12-20",status:"not started",notes:"",subs:[]}
+  ]},
+  {id:5,name:"Rig Release & Site Restoration",start:"2025-12-21",end:"2026-01-10",notes:"Rig down, plug & abandon or wellhead hand-over",open:false,tasks:[
+    {id:501,name:"Rig-down and demobilization",owner:"Marek Wiśniewski",start:"2025-12-21",due:"2025-12-28",status:"not started",notes:"",subs:[]},
+    {id:502,name:"Environmental site restoration",owner:"Anna Kowalska",start:"2025-12-29",due:"2026-01-10",status:"not started",notes:"",subs:[]}
+  ]}
+];
+
+// ── State ──────────────────────────────────────────────────────
+let phases = [], people = [...DEFAULT_PEOPLE], nextId = 9000;
+let editingPhaseId = null, editingTaskCtx = null, saveTimer = null, isFirstLoad = true;
+let appInitialised = false;
+
+function setSaveStatus(state, text) {
+  document.getElementById("saveDot").className = "save-dot " + state;
+  document.getElementById("saveLabel").textContent = text;
+}
+
+function initApp() {
+  if (appInitialised) return;
+  appInitialised = true;
+
+  projectDoc.onSnapshot(snap => {
+    if (snap.exists) {
+      const data = snap.data();
+      phases = data.phases || [];
+      people = data.people || [...DEFAULT_PEOPLE];
+      nextId = data.nextId || 9000;
+      setSaveStatus("saved", "Live — " + new Date().toLocaleTimeString());
+      if (!isFirstLoad) {
+        const b = document.getElementById("syncBanner");
+        b.style.display = "flex";
+        setTimeout(() => b.style.display = "none", 4000);
+      }
+      isFirstLoad = false;
+      renderAll();
+    } else {
+      phases = JSON.parse(JSON.stringify(DEFAULT_PHASES));
+      people = [...DEFAULT_PEOPLE];
+      isFirstLoad = false;
+      persistSave();
+    }
+  }, err => {
+    setSaveStatus("error", "DB error — check console");
+    console.error(err);
+    phases = JSON.parse(JSON.stringify(DEFAULT_PHASES));
+    people = [...DEFAULT_PEOPLE];
+    isFirstLoad = false;
+    renderAll();
+  });
+}
+
+// Auto-init if session already authenticated
+if (sessionStorage.getItem("lachowice7_auth") === "1") initApp();
+
+async function persistSave() {
+  setSaveStatus("saving", "Saving…");
+  try {
+    await projectDoc.set({ phases, people, nextId, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+    setSaveStatus("saved", "Saved " + new Date().toLocaleTimeString());
+  } catch(e) {
+    setSaveStatus("error", "Save failed");
+    console.error(e);
+  }
+}
+
+function scheduleSave() {
+  setSaveStatus("saving", "Saving…");
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(persistSave, 800);
+}
+
+function uid() { return ++nextId; }
+
+function statusBadge(s) {
+  const m = { complete:"badge-green", "in progress":"badge-blue", "not started":"badge-gray", blocked:"badge-red" };
+  return `<span class="badge ${m[s]||'badge-gray'}">${s}</span>`;
+}
+
+function isOverdue(task) {
+  if (task.status === "complete") return false;
+  if (!task.due) return false;
+  return new Date(task.due) < new Date(new Date().toISOString().slice(0,10));
+}
+
+function computeStats() {
+  let total=0,done=0,prog=0,over=0;
+  phases.forEach(p => p.tasks.forEach(t => {
+    total++; if(t.status==="complete") done++;
+    if(t.status==="in progress") prog++;
+    if(isOverdue(t)) over++;
+    (t.subs||[]).forEach(s => {
+      total++; if(s.status==="complete") done++;
+      if(s.status==="in progress") prog++;
+      if(isOverdue(s)) over++;
+    });
+  }));
+  document.getElementById("st-total").textContent = total;
+  document.getElementById("st-done").textContent = done;
+  document.getElementById("st-pct").textContent = total ? Math.round(done/total*100)+"% done" : "0% done";
+  document.getElementById("st-progress").textContent = prog;
+  document.getElementById("st-overdue").textContent = over;
+}
+
+function computePhaseProgress(p) {
+  let total=0,done=0;
+  p.tasks.forEach(t => {
+    total++; if(t.status==="complete") done++;
+    (t.subs||[]).forEach(s => { total++; if(s.status==="complete") done++; });
+  });
+  return total ? Math.round(done/total*100) : 0;
+}
+
+function refreshOwnerFilter() {
+  const sel = document.getElementById("filterOwner");
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">All owners</option>';
+  people.forEach(p => {
+    const o = document.createElement("option");
+    o.value=p; o.textContent=p; o.selected=p===cur;
+    sel.appendChild(o);
+  });
+}
+
+function renderAll() {
+  const ft = (document.getElementById("filterText").value||"").toLowerCase();
+  const fs = document.getElementById("filterStatus").value;
+  const fo = document.getElementById("filterOwner").value;
+  computeStats(); refreshOwnerFilter();
+  const c = document.getElementById("phasesContainer");
+  c.innerHTML = "";
+  if (!phases.length) {
+    c.innerHTML = '<div class="loading-screen">No phases yet. Click <strong>+ Add phase</strong> to get started.</div>';
+    return;
+  }
+  phases.forEach(p => c.appendChild(renderPhase(p,ft,fs,fo)));
+}
+
+function taskVisible(t,ft,fs,fo) {
+  if (ft && !(t.name.toLowerCase().includes(ft)||(t.owner||"").toLowerCase().includes(ft))) return false;
+  if (fs && t.status!==fs && !(t.subs||[]).some(s=>s.status===fs)) return false;
+  if (fo && t.owner!==fo && !(t.subs||[]).some(s=>s.owner===fo)) return false;
+  return true;
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function renderPhase(p,ft,fs,fo) {
+  const pct = computePhaseProgress(p);
+  const vt = p.tasks.filter(t=>taskVisible(t,ft,fs,fo));
+  const div = document.createElement("div");
+  div.className = "phase";
+  div.innerHTML = `
+    <div class="phase-header" onclick="togglePhase(${p.id})">
+      <i class="ti ti-chevron-right phase-toggle ${p.open?'open':''}"></i>
+      <span class="phase-name">${escHtml(p.name)}</span>
+      <div class="phase-meta">
+        <span style="font-size:11px;color:var(--color-text-secondary)">${p.start||""} → ${p.end||""}</span>
+        <span class="badge badge-blue">${vt.length} task${vt.length!==1?"s":""}</span>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <span style="font-size:11px;color:var(--color-text-secondary);min-width:28px">${pct}%</span>
+        <button class="action-btn" onclick="event.stopPropagation();openAddTask(${p.id},null)" title="Add task"><i class="ti ti-plus"></i></button>
+        <button class="action-btn" onclick="event.stopPropagation();openEditPhase(${p.id})" title="Edit phase"><i class="ti ti-edit"></i></button>
+        <button class="action-btn" onclick="event.stopPropagation();deletePhase(${p.id})" title="Delete phase"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>
+    <div class="phase-body ${p.open?'open':''}">
+      <div class="table-head"><span></span><span>Task</span><span>Owner</span><span>Dates</span><span>Status</span><span>Due</span><span></span></div>
+      ${vt.map(t=>renderTaskRow(p.id,t)).join("")}
+      <div class="add-row" onclick="openAddTask(${p.id},null)"><i class="ti ti-plus" style="font-size:13px"></i> Add task</div>
+    </div>`;
+  return div;
+}
+
+function renderTaskRow(pid,t) {
+  const od = isOverdue(t);
+  const subs = (t.subs||[]).map(s=>renderSubRow(pid,t.id,s)).join("");
+  return `<div class="task-row" style="${od?'background:var(--color-background-danger)':''}">
+    <div class="task-check ${t.status==='complete'?'done':''}" onclick="toggleDone(${pid},${t.id},null)">${t.status==='complete'?'<i class="ti ti-check"></i>':''}</div>
+    <span style="${t.status==='complete'?'text-decoration:line-through;color:var(--color-text-secondary)':''}">${escHtml(t.name)}</span>
+    <span>${t.owner?`<span class="owner-pill"><i class="ti ti-user" style="font-size:10px"></i>${escHtml(t.owner)}</span>`:''}</span>
+    <span style="font-size:11px;color:var(--color-text-secondary)">${t.start||""}${t.start&&t.due?'<br>':''}${t.due||''}</span>
+    <span>${statusBadge(t.status)}</span>
+    <span style="font-size:11px;${od?'color:var(--color-text-danger);font-weight:500':''}">${t.due||""}</span>
+    <span style="display:flex;gap:2px">
+      <button class="action-btn" onclick="openAddTask(${pid},${t.id})" title="Add sub-item"><i class="ti ti-git-branch" style="font-size:13px"></i></button>
+      <button class="action-btn" onclick="openEditTask(${pid},${t.id},null)" title="Edit"><i class="ti ti-edit" style="font-size:13px"></i></button>
+      <button class="action-btn" onclick="deleteTask(${pid},${t.id},null)" title="Delete"><i class="ti ti-trash" style="font-size:13px"></i></button>
+    </span>
+  </div>${subs}`;
+}
+
+function renderSubRow(pid,tid,s) {
+  const od = isOverdue(s);
+  return `<div class="task-row sub" style="${od?'background:#fff0f0':''}">
+    <div class="task-check ${s.status==='complete'?'done':''}" onclick="toggleDone(${pid},${tid},${s.id})">${s.status==='complete'?'<i class="ti ti-check"></i>':''}</div>
+    <span style="${s.status==='complete'?'text-decoration:line-through;color:var(--color-text-secondary)':''}"><i class="ti ti-corner-down-right" style="font-size:11px;color:var(--color-text-secondary)"></i> ${escHtml(s.name)}</span>
+    <span>${s.owner?`<span class="owner-pill"><i class="ti ti-user" style="font-size:10px"></i>${escHtml(s.owner)}</span>`:''}</span>
+    <span style="font-size:11px;color:var(--color-text-secondary)">${s.start||""}${s.start&&s.due?'<br>':''}${s.due||''}</span>
+    <span>${statusBadge(s.status)}</span>
+    <span style="font-size:11px;${od?'color:var(--color-text-danger);font-weight:500':''}">${s.due||""}</span>
+    <span style="display:flex;gap:2px">
+      <button class="action-btn" onclick="openEditTask(${pid},${tid},${s.id})" title="Edit"><i class="ti ti-edit" style="font-size:13px"></i></button>
+      <button class="action-btn" onclick="deleteTask(${pid},${tid},${s.id})" title="Delete"><i class="ti ti-trash" style="font-size:13px"></i></button>
+    </span>
+  </div>`;
+}
+
+function togglePhase(id) {
+  const p = phases.find(x=>x.id===id);
+  if(p){p.open=!p.open;scheduleSave();renderAll();}
+}
+
+function toggleDone(pid,tid,sid) {
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  const t=p.tasks.find(x=>x.id===tid);if(!t)return;
+  if(sid){const s=(t.subs||[]).find(x=>x.id===sid);if(s)s.status=s.status==="complete"?"not started":"complete";}
+  else t.status=t.status==="complete"?"not started":"complete";
+  scheduleSave();renderAll();
+}
+
+function deletePhase(id) {
+  if(!confirm("Delete this phase and all its tasks?"))return;
+  phases=phases.filter(p=>p.id!==id);scheduleSave();renderAll();
+}
+
+function deleteTask(pid,tid,sid) {
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  if(sid){const t=p.tasks.find(x=>x.id===tid);if(t)t.subs=(t.subs||[]).filter(s=>s.id!==sid);}
+  else p.tasks=p.tasks.filter(t=>t.id!==tid);
+  scheduleSave();renderAll();
+}
+
+function openAddPhase() {
+  editingPhaseId=null;
+  document.getElementById("modalTitle").textContent="Add phase";
+  ["mPhaseName","mPhaseStart","mPhaseEnd","mPhaseNotes"].forEach(id=>document.getElementById(id).value="");
+  openModal("phaseModal");
+}
+
+function openEditPhase(id) {
+  const p=phases.find(x=>x.id===id);if(!p)return;
+  editingPhaseId=id;
+  document.getElementById("modalTitle").textContent="Edit phase";
+  document.getElementById("mPhaseName").value=p.name;
+  document.getElementById("mPhaseStart").value=p.start||"";
+  document.getElementById("mPhaseEnd").value=p.end||"";
+  document.getElementById("mPhaseNotes").value=p.notes||"";
+  openModal("phaseModal");
+}
+
+function savePhase() {
+  const name=document.getElementById("mPhaseName").value.trim();
+  if(!name)return alert("Phase name is required.");
+  if(editingPhaseId){
+    const p=phases.find(x=>x.id===editingPhaseId);
+    if(p){p.name=name;p.start=document.getElementById("mPhaseStart").value;p.end=document.getElementById("mPhaseEnd").value;p.notes=document.getElementById("mPhaseNotes").value;}
+  } else {
+    phases.push({id:uid(),name,start:document.getElementById("mPhaseStart").value,end:document.getElementById("mPhaseEnd").value,notes:document.getElementById("mPhaseNotes").value,open:true,tasks:[]});
+  }
+  closeModal("phaseModal");scheduleSave();renderAll();
+}
+
+function openAddTask(pid,parentTid) {
+  editingTaskCtx={pid,parentTid,tid:null};
+  document.getElementById("taskModalTitle").textContent=parentTid?"Add sub-item":"Add task";
+  ["mTaskName","mNewPerson","mTaskStart","mTaskDue"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("mTaskStatus").value="not started";
+  document.getElementById("mTaskNotes").value="";
+  populateOwnerSelect("mTaskOwner","");
+  openModal("taskModal");
+}
+
+function openEditTask(pid,tid,sid) {
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  const t=p.tasks.find(x=>x.id===tid);if(!t)return;
+  const item=sid?(t.subs||[]).find(s=>s.id===sid):t;if(!item)return;
+  editingTaskCtx={pid,parentTid:sid?tid:null,tid:sid||tid};
+  document.getElementById("taskModalTitle").textContent="Edit task";
+  document.getElementById("mTaskName").value=item.name;
+  document.getElementById("mTaskStart").value=item.start||"";
+  document.getElementById("mTaskDue").value=item.due||"";
+  document.getElementById("mTaskStatus").value=item.status||"not started";
+  document.getElementById("mTaskNotes").value=item.notes||"";
+  document.getElementById("mNewPerson").value="";
+  populateOwnerSelect("mTaskOwner",item.owner||"");
+  openModal("taskModal");
+}
+
+function populateOwnerSelect(selId,selected) {
+  const sel=document.getElementById(selId);
+  sel.innerHTML='<option value="">Unassigned</option>';
+  people.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;o.selected=p===selected;sel.appendChild(o);});
+}
+
+function saveTask() {
+  const name=document.getElementById("mTaskName").value.trim();
+  if(!name)return alert("Task name is required.");
+  let owner=document.getElementById("mTaskOwner").value;
+  const newP=document.getElementById("mNewPerson").value.trim();
+  if(newP){owner=newP;if(!people.includes(newP))people.push(newP);}
+  const task={id:uid(),name,owner,start:document.getElementById("mTaskStart").value,due:document.getElementById("mTaskDue").value,status:document.getElementById("mTaskStatus").value,notes:document.getElementById("mTaskNotes").value};
+  const{pid,parentTid,tid}=editingTaskCtx;
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  if(tid){
+    if(parentTid){const t=p.tasks.find(x=>x.id===parentTid);if(t){const s=(t.subs||[]).find(x=>x.id===tid);if(s)Object.assign(s,task);}}
+    else{const t=p.tasks.find(x=>x.id===tid);if(t)Object.assign(t,{name:task.name,owner:task.owner,start:task.start,due:task.due,status:task.status,notes:task.notes});}
+  } else if(parentTid){
+    const t=p.tasks.find(x=>x.id===parentTid);
+    if(t){if(!t.subs)t.subs=[];t.subs.push({...task});}
+  } else {
+    p.tasks.push({...task,subs:[]});
+  }
+  closeModal("taskModal");scheduleSave();renderAll();
+}
+
+function openModal(id){document.getElementById(id).classList.add("open");}
+function closeModal(id){document.getElementById(id).classList.remove("open");}
+document.querySelectorAll(".modal-overlay").forEach(el=>{
+  el.addEventListener("click",function(e){if(e.target===this)this.classList.remove("open");});
+});
+</script>
+</body>
+</html>
