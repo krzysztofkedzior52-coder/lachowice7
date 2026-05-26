@@ -6,102 +6,162 @@
 <title>Lachowice-7 Workover — Horizon Petroleum</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
 <style>
-:root {
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --color-text-primary: #1a1a18;
-  --color-text-secondary: #6b6b68;
-  --color-text-danger: #b91c1c;
-  --color-text-info: #1d4ed8;
-  --color-background-primary: #ffffff;
-  --color-background-secondary: #f8f7f4;
-  --color-background-danger: #fef2f2;
-  --color-background-info: #eff6ff;
-  --color-border-secondary: #e2e1db;
-  --color-border-tertiary: #eeede8;
-  --border-radius-md: 6px;
-  --border-radius-lg: 10px;
+:root{
+  --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --color-text-primary:#1a1a18;--color-text-secondary:#6b6b68;
+  --color-text-danger:#b91c1c;--color-text-info:#1d4ed8;
+  --color-bg:#ffffff;--color-bg-sec:#f8f7f4;
+  --color-bg-danger:#fef2f2;--color-bg-info:#eff6ff;
+  --color-border:#e2e1db;--color-border-t:#eeede8;
+  --radius:6px;--radius-lg:10px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-sans);color:var(--color-text-primary);background:#fff;padding:0 1.5rem}
+.app{max-width:1100px;margin:0 auto;padding:1.5rem 0}
 
-/* ── Login screen ── */
+/* Login */
 #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh}
-.login-card{background:#fff;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:2rem;width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.07)}
+.login-card{background:#fff;border:0.5px solid var(--color-border);border-radius:var(--radius-lg);padding:2rem;width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.07)}
 .login-logo{width:48px;height:48px;background:#1a4a8a;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:500;line-height:1.2;margin:0 auto 1.25rem}
 .login-card h1{font-size:16px;font-weight:500;margin-bottom:4px}
 .login-card p{font-size:12px;color:var(--color-text-secondary);margin-bottom:1.5rem}
-.login-card input{width:100%;height:38px;font-size:14px;padding:0 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans);margin-bottom:10px;letter-spacing:0.05em}
+.login-card input{width:100%;height:38px;font-size:14px;padding:0 12px;border:0.5px solid var(--color-border);border-radius:var(--radius);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans);margin-bottom:10px;letter-spacing:.05em}
 .login-card input:focus{outline:none;border-color:#1a4a8a}
-.login-btn{width:100%;height:38px;background:#1a4a8a;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans)}
+.login-btn{width:100%;height:38px;background:#1a4a8a;color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans)}
 .login-btn:hover{background:#15397a}
 .login-error{font-size:12px;color:var(--color-text-danger);margin-top:8px;min-height:18px}
 
-/* ── App ── */
+/* App shell */
 #appScreen{display:none}
-.app{max-width:1100px;margin:0 auto;padding:1.5rem 0}
-.header{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-t)}
 .logo{width:36px;height:36px;background:#1a4a8a;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500;line-height:1.1;text-align:center;flex-shrink:0}
 .header-text h1{font-size:17px;font-weight:500}
 .header-text p{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
 .save-indicator{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);margin-left:auto;white-space:nowrap}
-.save-dot{width:7px;height:7px;border-radius:50%;background:#888;flex-shrink:0;transition:background 0.3s}
-.save-dot.saving{background:#ef9f27}
-.save-dot.saved{background:#639922}
-.save-dot.error{background:#e24b4a}
+.save-dot{width:7px;height:7px;border-radius:50%;background:#888;flex-shrink:0;transition:background .3s}
+.save-dot.saving{background:#ef9f27}.save-dot.saved{background:#639922}.save-dot.error{background:#e24b4a}
+
+/* Tabs */
+.tabs{display:flex;gap:2px;margin-bottom:1.25rem;border-bottom:0.5px solid var(--color-border-t)}
+.tab-btn{height:34px;padding:0 16px;font-size:13px;border:none;background:transparent;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans);border-bottom:2px solid transparent;margin-bottom:-0.5px;display:flex;align-items:center;gap:6px}
+.tab-btn:hover{color:var(--color-text-primary)}
+.tab-btn.active{color:#1a4a8a;border-bottom-color:#1a4a8a;font-weight:500}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* Stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
-.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px}
+.stat{background:var(--color-bg-sec);border-radius:var(--radius);padding:12px 14px}
 .stat-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
 .stat-value{font-size:20px;font-weight:500}
 .stat-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+
+/* Toolbar */
 .toolbar{display:flex;gap:8px;margin-bottom:1rem;align-items:center;flex-wrap:wrap}
-.toolbar-left{display:flex;gap:8px;flex:1;align-items:center;flex-wrap:wrap}
-select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary)}
-.btn{height:32px;padding:0 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-.btn:hover{background:var(--color-background-secondary)}
-.btn-primary{background:#1a4a8a;color:#fff;border-color:#1a4a8a}
-.btn-primary:hover{background:#15397a}
-.phase{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:12px;overflow:hidden}
-.phase-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--color-background-secondary);cursor:pointer;user-select:none}
-.phase-toggle{font-size:14px;color:var(--color-text-secondary);transition:transform 0.2s;width:18px;text-align:center;display:inline-block}
+select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border);border-radius:var(--radius);background:#fff;color:var(--color-text-primary)}
+.btn{height:32px;padding:0 14px;font-size:13px;border:0.5px solid var(--color-border);border-radius:var(--radius);background:#fff;color:var(--color-text-primary);cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:var(--color-bg-sec)}
+.btn-primary{background:#1a4a8a;color:#fff;border-color:#1a4a8a}.btn-primary:hover{background:#15397a}
+.btn-sm{height:26px;padding:0 10px;font-size:12px}
+
+/* Phase/task board */
+.phase{border:0.5px solid var(--color-border-t);border-radius:var(--radius-lg);margin-bottom:12px;overflow:hidden}
+.phase-header{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--color-bg-sec);cursor:pointer;user-select:none}
+.phase-toggle{font-size:14px;color:var(--color-text-secondary);transition:transform .2s;width:18px;text-align:center;display:inline-block}
 .phase-toggle.open{transform:rotate(90deg)}
 .phase-name{font-weight:500;font-size:14px;flex:1}
 .phase-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
-.badge-blue{background:#e6f1fb;color:#0c447c}
-.badge-green{background:#eaf3de;color:#27500a}
-.badge-red{background:#fcebeb;color:#791f1f}
-.badge-gray{background:#f1efe8;color:#444441}
-.progress-bar{height:4px;background:var(--color-border-tertiary);border-radius:2px;width:80px;overflow:hidden}
-.progress-fill{height:100%;background:#1a4a8a;border-radius:2px;transition:width 0.3s}
-.phase-body{display:none;border-top:0.5px solid var(--color-border-tertiary)}
+.badge-blue{background:#e6f1fb;color:#0c447c}.badge-green{background:#eaf3de;color:#27500a}
+.badge-red{background:#fcebeb;color:#791f1f}.badge-gray{background:#f1efe8;color:#444441}
+.badge-amber{background:#faeeda;color:#633806}
+.progress-bar{height:4px;background:var(--color-border-t);border-radius:2px;width:80px;overflow:hidden}
+.progress-fill{height:100%;background:#1a4a8a;border-radius:2px;transition:width .3s}
+.phase-body{display:none;border-top:0.5px solid var(--color-border-t)}
 .phase-body.open{display:block}
-.table-head{padding:8px 14px;display:grid;grid-template-columns:24px 1fr 130px 150px 110px 80px 70px;gap:8px;font-size:11px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border-secondary);background:var(--color-background-secondary)}
-.task-row{padding:10px 14px;border-bottom:0.5px solid var(--color-border-tertiary);display:grid;grid-template-columns:24px 1fr 130px 150px 110px 80px 70px;gap:8px;align-items:center;font-size:13px}
-.task-row.sub{padding-left:42px;background:var(--color-background-secondary)}
+.table-head{padding:8px 14px;display:grid;grid-template-columns:18px 24px 1fr 120px 140px 100px 70px 80px;gap:8px;font-size:11px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border);background:var(--color-bg-sec)}
+.task-row{padding:10px 14px;border-bottom:0.5px solid var(--color-border-t);display:grid;grid-template-columns:18px 24px 1fr 120px 140px 100px 70px 80px;gap:8px;align-items:center;font-size:13px}
+.task-row.sub{padding-left:42px;background:var(--color-bg-sec)}
 .task-row:last-child{border-bottom:none}
-.task-check{width:16px;height:16px;border:1.5px solid var(--color-border-secondary);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.task-check{width:16px;height:16px;border:1.5px solid var(--color-border);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .task-check.done{background:#1a4a8a;border-color:#1a4a8a;color:#fff;font-size:11px}
-.owner-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:var(--color-background-info);color:var(--color-text-info);border-radius:20px;padding:2px 8px;max-width:128px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.owner-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:var(--color-bg-info);color:var(--color-text-info);border-radius:20px;padding:2px 8px;max-width:118px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dep-pill{display:inline-flex;align-items:center;gap:3px;font-size:10px;background:var(--color-bg-sec);color:var(--color-text-secondary);border:0.5px solid var(--color-border);border-radius:20px;padding:1px 6px;margin:1px;white-space:nowrap}
+.dep-warn{color:#e07b00}
 .action-btn{width:24px;height:24px;border:none;background:transparent;cursor:pointer;color:var(--color-text-secondary);display:inline-flex;align-items:center;justify-content:center;border-radius:4px;font-size:15px;padding:0}
-.action-btn:hover{background:var(--color-border-tertiary);color:var(--color-text-primary)}
-.add-row{padding:8px 14px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;border-top:0.5px dashed var(--color-border-tertiary)}
-.add-row:hover{color:#1a4a8a;background:var(--color-background-secondary)}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;align-items:center;justify-content:center}
+.action-btn:hover{background:var(--color-border-t);color:var(--color-text-primary)}
+.add-row{padding:8px 14px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;border-top:0.5px dashed var(--color-border-t)}
+.add-row:hover{color:#1a4a8a;background:var(--color-bg-sec)}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-secondary);padding:1.25rem;width:420px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.modal{background:#fff;border-radius:var(--radius-lg);border:0.5px solid var(--color-border);padding:1.25rem;width:460px;max-width:95vw;max-height:90vh;overflow-y:auto}
 .modal h2{font-size:15px;font-weight:500;margin-bottom:1rem}
 .form-row{margin-bottom:12px}
 .form-row label{display:block;font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
-.form-row input,.form-row select,.form-row textarea{width:100%;height:34px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans)}
+.form-row input,.form-row select,.form-row textarea{width:100%;height:34px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border);border-radius:var(--radius);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans)}
 .form-row textarea{height:64px;padding:8px 10px;resize:vertical}
 .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
-.sync-banner{font-size:12px;padding:8px 14px;background:var(--color-background-info);color:var(--color-text-info);display:flex;align-items:center;gap:6px;border-radius:var(--border-radius-md);margin-bottom:12px;border:0.5px solid #bfdbfe}
+.dep-list{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;min-height:24px}
+.dep-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:var(--color-bg-sec);border:0.5px solid var(--color-border);border-radius:20px;padding:2px 8px}
+.dep-tag button{border:none;background:none;cursor:pointer;color:var(--color-text-secondary);font-size:13px;padding:0;line-height:1;display:flex;align-items:center}
+.dep-add-row{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:end;margin-top:6px}
+.warn-box{background:#faeeda;border:0.5px solid #f0c080;border-radius:var(--radius);padding:8px 10px;font-size:12px;color:#633806;margin-top:6px}
+
+/* Sync banner */
+.sync-banner{font-size:12px;padding:8px 14px;background:var(--color-bg-info);color:var(--color-text-info);display:flex;align-items:center;gap:6px;border-radius:var(--radius);margin-bottom:12px;border:0.5px solid #bfdbfe}
 .loading-screen{padding:4rem 0;text-align:center;color:var(--color-text-secondary);font-size:14px}
+
+/* Gantt */
+.gantt-wrap{overflow-x:auto;padding-bottom:8px}
+.gantt-row{display:grid;align-items:center;margin-bottom:2px}
+.gc-label{font-size:12px;color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.gc-label.phase-lbl{font-weight:500;font-size:13px}
+.gc-label.sub-lbl{padding-left:16px;color:var(--color-text-secondary);font-size:11px}
+.gc-bar-area{position:relative}
+.gc-bar{position:absolute;border-radius:3px;cursor:pointer;transition:opacity .15s}
+.gc-bar:hover{opacity:.75}
+.gc-phase-bar{background:#1a4a8a;opacity:.9;height:16px;top:3px}
+.gc-task-complete{background:#639922}
+.gc-task-progress{background:#EF9F27}
+.gc-task-notstarted{background:#378ADD}
+.gc-task-blocked{background:#E24B4A}
+.gc-sub-bar{opacity:.75;height:11px;top:5px;border-radius:2px}
+.gc-today{position:absolute;top:0;bottom:0;width:1.5px;background:#E24B4A;opacity:.6;pointer-events:none;z-index:5}
+.gc-month-sep{position:absolute;top:0;bottom:0;width:.5px;background:var(--color-border-t);pointer-events:none}
+.gc-month-lbl{position:absolute;font-size:10px;color:var(--color-text-secondary);top:4px;white-space:nowrap}
+.gc-header-area{position:relative;height:24px}
+.gantt-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.dep-arrow-svg{position:absolute;top:0;left:0;pointer-events:none;overflow:visible}
+
+/* Swimlane */
+.sw-lane{margin-bottom:10px;border:0.5px solid var(--color-border-t);border-radius:var(--radius-lg);overflow:hidden}
+.sw-lane-header{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--color-bg-sec)}
+.sw-avatar{width:28px;height:28px;border-radius:50%;background:var(--color-bg-info);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--color-text-info);flex-shrink:0}
+.sw-owner-name{font-size:13px;font-weight:500;flex:1}
+.sw-tasks{padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px}
+.sw-task{border-radius:6px;padding:6px 10px;font-size:12px;display:flex;flex-direction:column;gap:2px;border:0.5px solid var(--color-border-t);background:#fff;min-width:140px;flex:1;max-width:220px}
+.sw-task-name{font-size:12px;color:var(--color-text-primary);line-height:1.3}
+.sw-task-phase{font-size:10px;color:var(--color-text-secondary)}
+.sw-task-footer{display:flex;align-items:center;justify-content:space-between;margin-top:3px}
+.sw-badge{font-size:10px;padding:1px 6px;border-radius:20px;font-weight:500}
+.sw-complete{background:#eaf3de;color:#27500a}.sw-progress{background:#faeeda;color:#633806}
+.sw-notstarted{background:#f1efe8;color:#444441}.sw-blocked{background:#fcebeb;color:#791f1f}
+.sw-date{font-size:10px;color:var(--color-text-secondary)}
+.no-tasks-msg{padding:1rem;font-size:12px;color:var(--color-text-secondary);text-align:center}
+.drag-handle{cursor:grab;color:var(--color-border);padding:0 2px;display:inline-flex;align-items:center;font-size:15px;flex-shrink:0;touch-action:none;user-select:none}
+.drag-handle:hover{color:var(--color-text-secondary)}
+.drag-handle:active{cursor:grabbing}
+.dragging{opacity:.35!important}
+.drag-over-top{box-shadow:inset 0 2px 0 0 #1a4a8a!important}
+.drag-over-bottom{box-shadow:inset 0 -2px 0 0 #1a4a8a!important}
 </style>
 </head>
 <body>
 
-<!-- ── Login screen ─────────────────────────────────────────── -->
+<!-- Login -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo">PL<br>W/O</div>
@@ -113,7 +173,7 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
   </div>
 </div>
 
-<!-- ── App ─────────────────────────────────────────────────── -->
+<!-- App -->
 <div id="appScreen">
 <div class="app">
 
@@ -133,8 +193,7 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
   </div>
 
   <div id="syncBanner" class="sync-banner" style="display:none">
-    <i class="ti ti-refresh"></i>
-    <span>Changes synced from another user.</span>
+    <i class="ti ti-refresh"></i><span>Changes synced from another user.</span>
   </div>
 
   <div class="stats">
@@ -144,24 +203,48 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
     <div class="stat"><div class="stat-label">Overdue</div><div class="stat-value" id="st-overdue" style="color:var(--color-text-danger)">—</div><div class="stat-sub">past due date</div></div>
   </div>
 
-  <div class="toolbar">
-    <div class="toolbar-left">
-      <input type="text" id="filterText" placeholder="Search tasks…" style="width:200px" oninput="renderAll()">
-      <select id="filterStatus" onchange="renderAll()">
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('board',this)"><i class="ti ti-layout-list"></i> Board</button>
+    <button class="tab-btn" onclick="switchTab('gantt',this)"><i class="ti ti-chart-gantt"></i> Gantt</button>
+    <button class="tab-btn" onclick="switchTab('swimlane',this)"><i class="ti ti-columns"></i> By person</button>
+  </div>
+
+  <!-- Board tab -->
+  <div class="tab-panel active" id="tab-board">
+    <div class="toolbar">
+      <input type="text" id="filterText" placeholder="Search tasks…" style="width:200px" oninput="renderBoard()">
+      <select id="filterStatus" onchange="renderBoard()">
         <option value="">All statuses</option>
         <option value="not started">Not started</option>
         <option value="in progress">In progress</option>
         <option value="complete">Complete</option>
         <option value="blocked">Blocked</option>
       </select>
-      <select id="filterOwner" onchange="renderAll()">
+      <select id="filterOwner" onchange="renderBoard()">
         <option value="">All owners</option>
       </select>
     </div>
+    <div id="phasesContainer"><div class="loading-screen"><i class="ti ti-loader"></i> Loading…</div></div>
   </div>
 
-  <div id="phasesContainer">
-    <div class="loading-screen"><i class="ti ti-loader ti-spin"></i>&nbsp; Connecting to database…</div>
+  <!-- Gantt tab -->
+  <div class="tab-panel" id="tab-gantt">
+    <div id="ganttContainer"><div class="loading-screen">Loading Gantt…</div></div>
+    <div class="gantt-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#1a4a8a"></div>Phase</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#639922"></div>Complete</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#EF9F27"></div>In progress</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#378ADD"></div>Not started</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#E24B4A"></div>Blocked</div>
+      <div class="leg-item"><svg width="30" height="12"><line x1="0" y1="6" x2="22" y2="6" stroke="#1a4a8a" stroke-width="1.5" marker-end="url(#ga)"/><defs><marker id="ga" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#1a4a8a" stroke-width="1.5" stroke-linecap="round"/></marker></defs></svg> Finish→Start</div>
+      <div class="leg-item"><svg width="30" height="12"><line x1="0" y1="6" x2="22" y2="6" stroke="#1a4a8a" stroke-width="1.5" stroke-dasharray="3 2" marker-end="url(#gb)"/><defs><marker id="gb" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#1a4a8a" stroke-width="1.5" stroke-linecap="round"/></marker></defs></svg> Start→Start</div>
+    </div>
+  </div>
+
+  <!-- Swimlane tab -->
+  <div class="tab-panel" id="tab-swimlane">
+    <div id="swimlaneContainer"><div class="loading-screen">Loading…</div></div>
   </div>
 
 </div>
@@ -171,10 +254,20 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
 <div class="modal-overlay" id="phaseModal">
   <div class="modal">
     <h2 id="modalTitle">Add phase</h2>
-    <div class="form-row"><label>Phase name</label><input id="mPhaseName" type="text" placeholder="e.g. Rig-up & Mobilisation"></div>
+    <div class="form-row"><label>Phase name</label><input id="mPhaseName" type="text"></div>
     <div class="form-row"><label>Start date</label><input id="mPhaseStart" type="date"></div>
     <div class="form-row"><label>End date</label><input id="mPhaseEnd" type="date"></div>
-    <div class="form-row"><label>Notes</label><textarea id="mPhaseNotes" placeholder="Optional phase notes"></textarea></div>
+    <div class="form-row"><label>Notes</label><textarea id="mPhaseNotes"></textarea></div>
+    <div class="form-row">
+      <label>Dependencies</label>
+      <div id="phaseDepList" class="dep-list"></div>
+      <div class="dep-add-row">
+        <select id="phaseDepSelect"><option value="">— select item —</option></select>
+        <select id="phaseDepType"><option value="FS">Finish→Start</option><option value="SS">Start→Start</option></select>
+        <button class="btn btn-sm" onclick="addDep('phase')"><i class="ti ti-plus"></i></button>
+      </div>
+      <div id="phaseDepWarn" class="warn-box" style="display:none"></div>
+    </div>
     <div class="modal-footer">
       <button class="btn" onclick="closeModal('phaseModal')">Cancel</button>
       <button class="btn btn-primary" onclick="savePhase()">Save phase</button>
@@ -186,9 +279,9 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
 <div class="modal-overlay" id="taskModal">
   <div class="modal">
     <h2 id="taskModalTitle">Add task</h2>
-    <div class="form-row"><label>Task name</label><input id="mTaskName" type="text" placeholder="Task description"></div>
+    <div class="form-row"><label>Task name</label><input id="mTaskName" type="text"></div>
     <div class="form-row"><label>Responsible person</label><select id="mTaskOwner"><option value="">Unassigned</option></select></div>
-    <div class="form-row"><label>Or add new person</label><input id="mNewPerson" type="text" placeholder="Full name — adds them to the team roster"></div>
+    <div class="form-row"><label>Or add new person</label><input id="mNewPerson" type="text" placeholder="Full name"></div>
     <div class="form-row"><label>Start date</label><input id="mTaskStart" type="date"></div>
     <div class="form-row"><label>Due date</label><input id="mTaskDue" type="date"></div>
     <div class="form-row"><label>Status</label>
@@ -199,7 +292,17 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
         <option value="blocked">Blocked</option>
       </select>
     </div>
-    <div class="form-row"><label>Notes</label><textarea id="mTaskNotes" placeholder="Optional notes"></textarea></div>
+    <div class="form-row"><label>Notes</label><textarea id="mTaskNotes"></textarea></div>
+    <div class="form-row">
+      <label>Dependencies</label>
+      <div id="taskDepList" class="dep-list"></div>
+      <div class="dep-add-row">
+        <select id="taskDepSelect"><option value="">— select item —</option></select>
+        <select id="taskDepType"><option value="FS">Finish→Start</option><option value="SS">Start→Start</option></select>
+        <button class="btn btn-sm" onclick="addDep('task')"><i class="ti ti-plus"></i></button>
+      </div>
+      <div id="taskDepWarn" class="warn-box" style="display:none"></div>
+    </div>
     <div class="modal-footer">
       <button class="btn" onclick="closeModal('taskModal')">Cancel</button>
       <button class="btn btn-primary" onclick="saveTask()">Save task</button>
@@ -209,272 +312,225 @@ select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px s
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <script>
-// ── Password gate ──────────────────────────────────────────────
-const PASS_HASH = "c91b04ce895b5c6de83e686469b828c5b78e410b7e67bb341b48124240c3616e";
-
-async function hashPassword(pw) {
-  const enc = new TextEncoder().encode(pw);
-  const buf = await crypto.subtle.digest("SHA-256", enc);
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+// ── Password ───────────────────────────────────────────────────
+const PASS_HASH="c91b04ce895b5c6de83e686469b828c5b78e410b7e67bb341b48124240c3616e";
+async function hashPassword(pw){const e=new TextEncoder().encode(pw);const b=await crypto.subtle.digest("SHA-256",e);return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("")}
+async function tryLogin(){
+  const pw=document.getElementById("passwordInput").value;
+  const h=await hashPassword(pw);
+  if(h===PASS_HASH){sessionStorage.setItem("l7auth","1");document.getElementById("loginScreen").style.display="none";document.getElementById("appScreen").style.display="block";initApp();}
+  else{const e=document.getElementById("loginError");e.textContent="Incorrect password. Please try again.";document.getElementById("passwordInput").value="";setTimeout(()=>e.textContent="",3000);}
 }
+if(sessionStorage.getItem("l7auth")==="1"){document.getElementById("loginScreen").style.display="none";document.getElementById("appScreen").style.display="block";}
 
-async function tryLogin() {
-  const pw = document.getElementById("passwordInput").value;
-  const hash = await hashPassword(pw);
-  if (hash === PASS_HASH) {
-    sessionStorage.setItem("lachowice7_auth", "1");
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("appScreen").style.display = "block";
-    initApp();
-  } else {
-    const err = document.getElementById("loginError");
-    err.textContent = "Incorrect password. Please try again.";
-    document.getElementById("passwordInput").value = "";
-    document.getElementById("passwordInput").focus();
-    setTimeout(() => err.textContent = "", 3000);
-  }
-}
-
-// Auto-unlock if already authenticated this session
-if (sessionStorage.getItem("lachowice7_auth") === "1") {
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("appScreen").style.display = "block";
-}
-
-// ── Firebase init ──────────────────────────────────────────────
-const firebaseConfig = {
-  apiKey: "AIzaSyAyby5pO-3GbBFlc6qS94mG2pqufZYZCSU",
-  authDomain: "lachowice-7-workover.firebaseapp.com",
-  projectId: "lachowice-7-workover",
-  storageBucket: "lachowice-7-workover.firebasestorage.app",
-  messagingSenderId: "367986868057",
-  appId: "1:367986868057:web:d0bb955c760eb31e505648",
-  measurementId: "G-T1TBVZPDQM"
-};
+// ── Firebase ───────────────────────────────────────────────────
+const firebaseConfig={apiKey:"AIzaSyAyby5pO-3GbBFlc6qS94mG2pqufZYZCSU",authDomain:"lachowice-7-workover.firebaseapp.com",projectId:"lachowice-7-workover",storageBucket:"lachowice-7-workover.firebasestorage.app",messagingSenderId:"367986868057",appId:"1:367986868057:web:d0bb955c760eb31e505648",measurementId:"G-T1TBVZPDQM"};
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const projectDoc = db.collection("projects").doc("lachowice7");
+const db=firebase.firestore();
+const projectDoc=db.collection("projects").doc("lachowice7");
 
-// ── Default seed data ──────────────────────────────────────────
-const DEFAULT_PEOPLE = [];
-const DEFAULT_PHASES = [
-  {id:1,name:"Pre-spud & Location Preparation",start:"2025-09-01",end:"2025-09-30",notes:"Site setup, wellhead installation, rig move-in",open:true,tasks:[
-    {id:101,name:"Site survey & environmental assessment",owner:"",start:"2025-09-01",due:"2025-09-10",status:"complete",notes:"",subs:[]},
-    {id:102,name:"Rig move-in and rigging up",owner:"",start:"2025-09-11",due:"2025-09-20",status:"complete",notes:"",subs:[
-      {id:1021,name:"Equipment transport permits",owner:"",start:"2025-09-05",due:"2025-09-08",status:"complete",notes:""},
-      {id:1022,name:"Crane and heavy lift coordination",owner:"",start:"2025-09-11",due:"2025-09-13",status:"complete",notes:""}
+// ── State ──────────────────────────────────────────────────────
+let phases=[],people=[],nextId=9000;
+let editingPhaseId=null,editingTaskCtx=null,saveTimer=null,isFirstLoad=true,appInitialised=false;
+let currentDeps={phase:[],task:[]};
+
+// ── Default seed ───────────────────────────────────────────────
+const DEFAULT_PHASES=[
+  {id:1,name:"Pre-spud & Location Preparation",start:"2025-09-01",end:"2025-09-30",notes:"",open:true,deps:[],tasks:[
+    {id:101,name:"Site survey & environmental assessment",owner:"",start:"2025-09-01",due:"2025-09-10",status:"complete",notes:"",deps:[],subs:[]},
+    {id:102,name:"Rig move-in and rigging up",owner:"",start:"2025-09-11",due:"2025-09-20",status:"complete",notes:"",deps:[],subs:[
+      {id:1021,name:"Equipment transport permits",owner:"",start:"2025-09-05",due:"2025-09-08",status:"complete",notes:"",deps:[]},
+      {id:1022,name:"Crane and heavy lift coordination",owner:"",start:"2025-09-11",due:"2025-09-13",status:"complete",notes:"",deps:[]}
     ]},
-    {id:103,name:"Wellhead and BOP installation",owner:"",start:"2025-09-21",due:"2025-09-30",status:"in progress",notes:"",subs:[]}
+    {id:103,name:"Wellhead and BOP installation",owner:"",start:"2025-09-21",due:"2025-09-30",status:"in progress",notes:"",deps:[],subs:[]}
   ]},
-  {id:2,name:"Drilling – Surface Hole (26\")",start:"2025-10-01",end:"2025-10-20",notes:"Drill to 500m, set 18-5/8\" casing",open:true,tasks:[
-    {id:201,name:"Drill surface hole to 500m",owner:"",start:"2025-10-01",due:"2025-10-10",status:"in progress",notes:"",subs:[
-      {id:2011,name:"Daily drilling reports submission",owner:"",start:"2025-10-01",due:"2025-10-10",status:"in progress",notes:""}
+  {id:2,name:"Drilling – Surface Hole (26\")",start:"2025-10-01",end:"2025-10-20",notes:"",open:true,deps:[{id:1,type:"FS"}],tasks:[
+    {id:201,name:"Drill surface hole to 500m",owner:"",start:"2025-10-01",due:"2025-10-10",status:"in progress",notes:"",deps:[],subs:[
+      {id:2011,name:"Daily drilling reports submission",owner:"",start:"2025-10-01",due:"2025-10-10",status:"in progress",notes:"",deps:[]}
     ]},
-    {id:202,name:"Casing running & cementing",owner:"",start:"2025-10-11",due:"2025-10-18",status:"not started",notes:"",subs:[]},
-    {id:203,name:"Pressure test wellhead",owner:"",start:"2025-10-18",due:"2025-10-20",status:"not started",notes:"",subs:[]}
+    {id:202,name:"Casing running & cementing",owner:"",start:"2025-10-11",due:"2025-10-18",status:"not started",notes:"",deps:[{id:201,type:"FS"}],subs:[]},
+    {id:203,name:"Pressure test wellhead",owner:"",start:"2025-10-18",due:"2025-10-20",status:"not started",notes:"",deps:[{id:202,type:"FS"}],subs:[]}
   ]},
-  {id:3,name:"Drilling – Intermediate Hole (17.5\")",start:"2025-10-21",end:"2025-11-25",notes:"Drill to 2,400m TD target zone",open:false,tasks:[
-    {id:301,name:"Mud program review",owner:"",start:"2025-10-21",due:"2025-10-23",status:"not started",notes:"",subs:[]},
-    {id:302,name:"Drill to intermediate TD",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:"",subs:[
-      {id:3021,name:"Directional survey checks",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:""},
-      {id:3022,name:"Mud logging & gas monitoring",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:""}
+  {id:3,name:"Drilling – Intermediate Hole (17.5\")",start:"2025-10-21",end:"2025-11-25",notes:"",open:false,deps:[{id:2,type:"FS"}],tasks:[
+    {id:301,name:"Mud program review",owner:"",start:"2025-10-21",due:"2025-10-23",status:"not started",notes:"",deps:[],subs:[]},
+    {id:302,name:"Drill to intermediate TD",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:"",deps:[{id:301,type:"FS"}],subs:[
+      {id:3021,name:"Directional survey checks",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:"",deps:[]},
+      {id:3022,name:"Mud logging & gas monitoring",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:"",deps:[{id:3021,type:"SS"}]}
     ]},
-    {id:303,name:"Intermediate casing & cement job",owner:"",start:"2025-11-16",due:"2025-11-25",status:"not started",notes:"",subs:[]}
+    {id:303,name:"Intermediate casing & cement job",owner:"",start:"2025-11-16",due:"2025-11-25",status:"not started",notes:"",deps:[{id:302,type:"FS"}],subs:[]}
   ]},
-  {id:4,name:"Logging, Testing & Completion",start:"2025-11-26",end:"2025-12-20",notes:"Wireline logs, DST, perforating, completion",open:false,tasks:[
-    {id:401,name:"Wireline logging run",owner:"",start:"2025-11-26",due:"2025-11-30",status:"not started",notes:"",subs:[]},
-    {id:402,name:"Drill stem test (DST)",owner:"",start:"2025-12-01",due:"2025-12-10",status:"not started",notes:"",subs:[
-      {id:4021,name:"Wellhead pressure monitoring",owner:"",start:"2025-12-01",due:"2025-12-10",status:"not started",notes:""}
+  {id:4,name:"Logging, Testing & Completion",start:"2025-11-26",end:"2025-12-20",notes:"",open:false,deps:[{id:3,type:"FS"}],tasks:[
+    {id:401,name:"Wireline logging run",owner:"",start:"2025-11-26",due:"2025-11-30",status:"not started",notes:"",deps:[],subs:[]},
+    {id:402,name:"Drill stem test (DST)",owner:"",start:"2025-12-01",due:"2025-12-10",status:"not started",notes:"",deps:[{id:401,type:"FS"}],subs:[
+      {id:4021,name:"Wellhead pressure monitoring",owner:"",start:"2025-12-01",due:"2025-12-10",status:"not started",notes:"",deps:[{id:402,type:"SS"}]}
     ]},
-    {id:403,name:"Perforating & completion",owner:"",start:"2025-12-11",due:"2025-12-20",status:"not started",notes:"",subs:[]}
+    {id:403,name:"Perforating & completion",owner:"",start:"2025-12-11",due:"2025-12-20",status:"not started",notes:"",deps:[{id:402,type:"FS"}],subs:[]}
   ]},
-  {id:5,name:"Rig Release & Site Restoration",start:"2025-12-21",end:"2026-01-10",notes:"Rig down, plug & abandon or wellhead hand-over",open:false,tasks:[
-    {id:501,name:"Rig-down and demobilization",owner:"",start:"2025-12-21",due:"2025-12-28",status:"not started",notes:"",subs:[]},
-    {id:502,name:"Environmental site restoration",owner:"",start:"2025-12-29",due:"2026-01-10",status:"not started",notes:"",subs:[]}
+  {id:5,name:"Rig Release & Site Restoration",start:"2025-12-21",end:"2026-01-10",notes:"",open:false,deps:[{id:4,type:"FS"}],tasks:[
+    {id:501,name:"Rig-down and demobilization",owner:"",start:"2025-12-21",due:"2025-12-28",status:"not started",notes:"",deps:[],subs:[]},
+    {id:502,name:"Environmental site restoration",owner:"",start:"2025-12-29",due:"2026-01-10",status:"not started",notes:"",deps:[{id:501,type:"FS"}],subs:[]}
   ]}
 ];
 
-// ── State ──────────────────────────────────────────────────────
-let phases = [], people = [...DEFAULT_PEOPLE], nextId = 9000;
-let editingPhaseId = null, editingTaskCtx = null, saveTimer = null, isFirstLoad = true;
-let appInitialised = false;
+// ── Helpers ────────────────────────────────────────────────────
+function uid(){return ++nextId}
+function escH(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function setSaveStatus(s,t){document.getElementById("saveDot").className="save-dot "+s;document.getElementById("saveLabel").textContent=t}
 
-function setSaveStatus(state, text) {
-  document.getElementById("saveDot").className = "save-dot " + state;
-  document.getElementById("saveLabel").textContent = text;
+// Build flat lookup of all items by id
+function buildLookup(){
+  const m={};
+  phases.forEach(p=>{
+    m[p.id]={item:p,type:"phase",label:p.name,start:p.start,end:p.end};
+    p.tasks.forEach(t=>{
+      m[t.id]={item:t,type:"task",label:t.name,start:t.start,end:t.due,phaseId:p.id};
+      (t.subs||[]).forEach(s=>{
+        m[s.id]={item:s,type:"sub",label:s.name,start:s.start,end:s.due,phaseId:p.id,taskId:t.id};
+      });
+    });
+  });
+  return m;
 }
 
-function initApp() {
-  if (appInitialised) return;
-  appInitialised = true;
+function getItemEnd(id){const m=buildLookup();const e=m[id];if(!e)return "";return e.end||e.start||"";}
+function getItemStart(id){const m=buildLookup();const e=m[id];if(!e)return "";return e.start||"";}
 
-  projectDoc.onSnapshot(snap => {
-    if (snap.exists) {
-      const data = snap.data();
-      phases = data.phases || [];
-      people = data.people || [...DEFAULT_PEOPLE];
-      nextId = data.nextId || 9000;
-      setSaveStatus("saved", "Live — " + new Date().toLocaleTimeString());
-      if (!isFirstLoad) {
-        const b = document.getElementById("syncBanner");
-        b.style.display = "flex";
-        setTimeout(() => b.style.display = "none", 4000);
-      }
-      isFirstLoad = false;
+function statusBadge(s){
+  const cls={complete:"badge-green","in progress":"badge-amber","not started":"badge-gray",blocked:"badge-red"};
+  return `<span class="badge ${cls[s]||"badge-gray"}">${s}</span>`;
+}
+function isOverdue(t){if(t.status==="complete")return false;if(!t.due)return false;return new Date(t.due)<new Date(new Date().toISOString().slice(0,10));}
+
+function clampDate(d,floor){if(!d||!floor)return d;return d<floor?floor:d;}
+
+// ── Firebase listener ──────────────────────────────────────────
+function initApp(){
+  if(appInitialised)return;appInitialised=true;
+  projectDoc.onSnapshot(snap=>{
+    if(snap.exists){
+      const data=snap.data();
+      phases=data.phases||[];people=data.people||[];nextId=data.nextId||9000;
+      setSaveStatus("saved","Live — "+new Date().toLocaleTimeString());
+      if(!isFirstLoad){const b=document.getElementById("syncBanner");b.style.display="flex";setTimeout(()=>b.style.display="none",4000);}
+      isFirstLoad=false;
       renderAll();
     } else {
-      phases = JSON.parse(JSON.stringify(DEFAULT_PHASES));
-      people = [...DEFAULT_PEOPLE];
-      isFirstLoad = false;
-      persistSave();
+      phases=JSON.parse(JSON.stringify(DEFAULT_PHASES));people=[];isFirstLoad=false;persistSave();
     }
-  }, err => {
-    setSaveStatus("error", "DB error — check console");
-    console.error(err);
-    phases = JSON.parse(JSON.stringify(DEFAULT_PHASES));
-    people = [...DEFAULT_PEOPLE];
-    isFirstLoad = false;
-    renderAll();
-  });
+  },err=>{setSaveStatus("error","DB error");console.error(err);phases=JSON.parse(JSON.stringify(DEFAULT_PHASES));isFirstLoad=false;renderAll();});
+}
+if(sessionStorage.getItem("l7auth")==="1")initApp();
+
+async function persistSave(){
+  setSaveStatus("saving","Saving…");
+  try{await projectDoc.set({phases,people,nextId,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});setSaveStatus("saved","Saved "+new Date().toLocaleTimeString());}
+  catch(e){setSaveStatus("error","Save failed");console.error(e);}
+}
+function scheduleSave(){setSaveStatus("saving","Saving…");clearTimeout(saveTimer);saveTimer=setTimeout(persistSave,800);}
+
+// ── Tab switching ──────────────────────────────────────────────
+function switchTab(name,btn){
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("tab-"+name).classList.add("active");
+  if(name==="gantt")renderGantt();
+  if(name==="swimlane")renderSwimlane();
 }
 
-// Auto-init if session already authenticated
-if (sessionStorage.getItem("lachowice7_auth") === "1") initApp();
-
-async function persistSave() {
-  setSaveStatus("saving", "Saving…");
-  try {
-    await projectDoc.set({ phases, people, nextId, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
-    setSaveStatus("saved", "Saved " + new Date().toLocaleTimeString());
-  } catch(e) {
-    setSaveStatus("error", "Save failed");
-    console.error(e);
-  }
-}
-
-function scheduleSave() {
-  setSaveStatus("saving", "Saving…");
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(persistSave, 800);
-}
-
-function uid() { return ++nextId; }
-
-function statusBadge(s) {
-  const m = { complete:"badge-green", "in progress":"badge-blue", "not started":"badge-gray", blocked:"badge-red" };
-  return `<span class="badge ${m[s]||'badge-gray'}">${s}</span>`;
-}
-
-function isOverdue(task) {
-  if (task.status === "complete") return false;
-  if (!task.due) return false;
-  return new Date(task.due) < new Date(new Date().toISOString().slice(0,10));
-}
-
-function computeStats() {
+// ── Stats ──────────────────────────────────────────────────────
+function computeStats(){
   let total=0,done=0,prog=0,over=0;
-  phases.forEach(p => p.tasks.forEach(t => {
-    total++; if(t.status==="complete") done++;
-    if(t.status==="in progress") prog++;
-    if(isOverdue(t)) over++;
-    (t.subs||[]).forEach(s => {
-      total++; if(s.status==="complete") done++;
-      if(s.status==="in progress") prog++;
-      if(isOverdue(s)) over++;
-    });
+  phases.forEach(p=>p.tasks.forEach(t=>{
+    total++;if(t.status==="complete")done++;if(t.status==="in progress")prog++;if(isOverdue(t))over++;
+    (t.subs||[]).forEach(s=>{total++;if(s.status==="complete")done++;if(s.status==="in progress")prog++;if(isOverdue(s))over++;});
   }));
-  document.getElementById("st-total").textContent = total;
-  document.getElementById("st-done").textContent = done;
-  document.getElementById("st-pct").textContent = total ? Math.round(done/total*100)+"% done" : "0% done";
-  document.getElementById("st-progress").textContent = prog;
-  document.getElementById("st-overdue").textContent = over;
+  document.getElementById("st-total").textContent=total;
+  document.getElementById("st-done").textContent=done;
+  document.getElementById("st-pct").textContent=total?Math.round(done/total*100)+"% done":"0% done";
+  document.getElementById("st-progress").textContent=prog;
+  document.getElementById("st-overdue").textContent=over;
+}
+function phaseProgress(p){let t=0,d=0;p.tasks.forEach(k=>{t++;if(k.status==="complete")d++;(k.subs||[]).forEach(s=>{t++;if(s.status==="complete")d++;});});return t?Math.round(d/t*100):0;}
+
+// ── Owner filter ───────────────────────────────────────────────
+function refreshOwnerFilter(){
+  const sel=document.getElementById("filterOwner");const cur=sel.value;
+  sel.innerHTML='<option value="">All owners</option>';
+  people.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;o.selected=p===cur;sel.appendChild(o);});
 }
 
-function computePhaseProgress(p) {
-  let total=0,done=0;
-  p.tasks.forEach(t => {
-    total++; if(t.status==="complete") done++;
-    (t.subs||[]).forEach(s => { total++; if(s.status==="complete") done++; });
-  });
-  return total ? Math.round(done/total*100) : 0;
+// ── Render all ─────────────────────────────────────────────────
+function renderAll(){computeStats();refreshOwnerFilter();renderBoard();}
+
+// ── Deps display helpers ───────────────────────────────────────
+function depPills(deps){
+  if(!deps||!deps.length)return "";
+  const m=buildLookup();
+  return deps.map(d=>{
+    const entry=m[d.id];if(!entry)return "";
+    const short=entry.label.length>22?entry.label.slice(0,20)+"…":entry.label;
+    return `<span class="dep-pill"><i class="ti ti-arrow-right" style="font-size:9px"></i>${escH(short)} <span style="opacity:.6">${d.type}</span></span>`;
+  }).join("");
 }
 
-function refreshOwnerFilter() {
-  const sel = document.getElementById("filterOwner");
-  const cur = sel.value;
-  sel.innerHTML = '<option value="">All owners</option>';
-  people.forEach(p => {
-    const o = document.createElement("option");
-    o.value=p; o.textContent=p; o.selected=p===cur;
-    sel.appendChild(o);
-  });
-}
-
-function renderAll() {
-  const ft = (document.getElementById("filterText").value||"").toLowerCase();
-  const fs = document.getElementById("filterStatus").value;
-  const fo = document.getElementById("filterOwner").value;
-  computeStats(); refreshOwnerFilter();
-  const c = document.getElementById("phasesContainer");
-  c.innerHTML = "";
-  if (!phases.length) {
-    c.innerHTML = '<div class="loading-screen">No phases yet. Click <strong>+ Add phase</strong> to get started.</div>';
-    return;
-  }
-  phases.forEach(p => c.appendChild(renderPhase(p,ft,fs,fo)));
-}
-
-function taskVisible(t,ft,fs,fo) {
-  if (ft && !(t.name.toLowerCase().includes(ft)||(t.owner||"").toLowerCase().includes(ft))) return false;
-  if (fs && t.status!==fs && !(t.subs||[]).some(s=>s.status===fs)) return false;
-  if (fo && t.owner!==fo && !(t.subs||[]).some(s=>s.owner===fo)) return false;
+// ── Board render ───────────────────────────────────────────────
+function taskVisible(t,ft,fs,fo){
+  if(ft&&!(t.name.toLowerCase().includes(ft)||(t.owner||"").toLowerCase().includes(ft)))return false;
+  if(fs&&t.status!==fs&&!(t.subs||[]).some(s=>s.status===fs))return false;
+  if(fo&&t.owner!==fo&&!(t.subs||[]).some(s=>s.owner===fo))return false;
   return true;
 }
 
-function escHtml(str) {
-  return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function renderBoard(){
+  const ft=(document.getElementById("filterText").value||"").toLowerCase();
+  const fs=document.getElementById("filterStatus").value;
+  const fo=document.getElementById("filterOwner").value;
+  const c=document.getElementById("phasesContainer");c.innerHTML="";
+  if(!phases.length){c.innerHTML='<div class="loading-screen">No phases yet. Click + Add phase to get started.</div>';return;}
+  phases.forEach(p=>c.appendChild(renderPhaseEl(p,ft,fs,fo)));
 }
 
-function renderPhase(p,ft,fs,fo) {
-  const pct = computePhaseProgress(p);
-  const vt = p.tasks.filter(t=>taskVisible(t,ft,fs,fo));
-  const div = document.createElement("div");
-  div.className = "phase";
-  div.innerHTML = `
+function renderPhaseEl(p,ft,fs,fo){
+  const pct=phaseProgress(p);const vt=p.tasks.filter(t=>taskVisible(t,ft,fs,fo));
+  const div=document.createElement("div");div.className="phase";div.dataset.phaseId=p.id;
+  div.innerHTML=`
     <div class="phase-header" onclick="togglePhase(${p.id})">
-      <i class="ti ti-chevron-right phase-toggle ${p.open?'open':''}"></i>
-      <span class="phase-name">${escHtml(p.name)}</span>
+      <span class="drag-handle" draggable="true" data-drag-phase="${p.id}" onclick="event.stopPropagation()" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+      <i class="ti ti-chevron-right phase-toggle ${p.open?"open":""}"></i>
+      <span class="phase-name">${escH(p.name)}</span>
       <div class="phase-meta">
         <span style="font-size:11px;color:var(--color-text-secondary)">${p.start||""} → ${p.end||""}</span>
         <span class="badge badge-blue">${vt.length} task${vt.length!==1?"s":""}</span>
         <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-        <span style="font-size:11px;color:var(--color-text-secondary);min-width:28px">${pct}%</span>
+        <span style="font-size:11px;color:var(--color-text-secondary);min-width:26px">${pct}%</span>
+        ${depPills(p.deps||[])}
         <button class="action-btn" onclick="event.stopPropagation();openAddTask(${p.id},null)" title="Add task"><i class="ti ti-plus"></i></button>
-        <button class="action-btn" onclick="event.stopPropagation();openEditPhase(${p.id})" title="Edit phase"><i class="ti ti-edit"></i></button>
-        <button class="action-btn" onclick="event.stopPropagation();deletePhase(${p.id})" title="Delete phase"><i class="ti ti-trash"></i></button>
+        <button class="action-btn" onclick="event.stopPropagation();openEditPhase(${p.id})" title="Edit"><i class="ti ti-edit"></i></button>
+        <button class="action-btn" onclick="event.stopPropagation();deletePhase(${p.id})" title="Delete"><i class="ti ti-trash"></i></button>
       </div>
     </div>
-    <div class="phase-body ${p.open?'open':''}">
-      <div class="table-head"><span></span><span>Task</span><span>Owner</span><span>Dates</span><span>Status</span><span>Due</span><span></span></div>
+    <div class="phase-body ${p.open?"open":""}">
+      <div class="table-head"><span></span><span></span><span>Task</span><span>Owner</span><span>Dates</span><span>Status</span><span>Due</span><span>Deps / actions</span></div>
       ${vt.map(t=>renderTaskRow(p.id,t)).join("")}
       <div class="add-row" onclick="openAddTask(${p.id},null)"><i class="ti ti-plus" style="font-size:13px"></i> Add task</div>
     </div>`;
   return div;
 }
 
-function renderTaskRow(pid,t) {
-  const od = isOverdue(t);
-  const subs = (t.subs||[]).map(s=>renderSubRow(pid,t.id,s)).join("");
-  return `<div class="task-row" style="${od?'background:var(--color-background-danger)':''}">
-    <div class="task-check ${t.status==='complete'?'done':''}" onclick="toggleDone(${pid},${t.id},null)">${t.status==='complete'?'<i class="ti ti-check"></i>':''}</div>
-    <span style="${t.status==='complete'?'text-decoration:line-through;color:var(--color-text-secondary)':''}">${escHtml(t.name)}</span>
-    <span>${t.owner?`<span class="owner-pill"><i class="ti ti-user" style="font-size:10px"></i>${escHtml(t.owner)}</span>`:''}</span>
-    <span style="font-size:11px;color:var(--color-text-secondary)">${t.start||""}${t.start&&t.due?'<br>':''}${t.due||''}</span>
+function renderTaskRow(pid,t){
+  const od=isOverdue(t);const subs=(t.subs||[]).map(s=>renderSubRow(pid,t.id,s)).join("");
+  return `<div class="task-row" data-pid="${pid}" data-tid="${t.id}" style="${od?"background:var(--color-bg-danger)":""}">
+    <span class="drag-handle" draggable="true" data-drag-task="${t.id}" data-drag-pid="${pid}" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+    <div class="task-check ${t.status==="complete"?"done":""}" onclick="toggleDone(${pid},${t.id},null)">${t.status==="complete"?'<i class="ti ti-check"></i>':""}</div>
+    <span style="${t.status==="complete"?"text-decoration:line-through;color:var(--color-text-secondary)":""}">${escH(t.name)}</span>
+    <span>${t.owner?`<span class="owner-pill"><i class="ti ti-user" style="font-size:10px"></i>${escH(t.owner)}</span>`:""}</span>
+    <span style="font-size:11px;color:var(--color-text-secondary)">${t.start||""}${t.start&&t.due?"<br>":""}${t.due||""}</span>
     <span>${statusBadge(t.status)}</span>
-    <span style="font-size:11px;${od?'color:var(--color-text-danger);font-weight:500':''}">${t.due||""}</span>
-    <span style="display:flex;gap:2px">
+    <span style="font-size:11px;${od?"color:var(--color-text-danger);font-weight:500":""}">${t.due||""}</span>
+    <span style="display:flex;flex-wrap:wrap;gap:2px;align-items:center">
+      ${depPills(t.deps||[])}
       <button class="action-btn" onclick="openAddTask(${pid},${t.id})" title="Add sub-item"><i class="ti ti-git-branch" style="font-size:13px"></i></button>
       <button class="action-btn" onclick="openEditTask(${pid},${t.id},null)" title="Edit"><i class="ti ti-edit" style="font-size:13px"></i></button>
       <button class="action-btn" onclick="deleteTask(${pid},${t.id},null)" title="Delete"><i class="ti ti-trash" style="font-size:13px"></i></button>
@@ -482,92 +538,167 @@ function renderTaskRow(pid,t) {
   </div>${subs}`;
 }
 
-function renderSubRow(pid,tid,s) {
-  const od = isOverdue(s);
-  return `<div class="task-row sub" style="${od?'background:#fff0f0':''}">
-    <div class="task-check ${s.status==='complete'?'done':''}" onclick="toggleDone(${pid},${tid},${s.id})">${s.status==='complete'?'<i class="ti ti-check"></i>':''}</div>
-    <span style="${s.status==='complete'?'text-decoration:line-through;color:var(--color-text-secondary)':''}"><i class="ti ti-corner-down-right" style="font-size:11px;color:var(--color-text-secondary)"></i> ${escHtml(s.name)}</span>
-    <span>${s.owner?`<span class="owner-pill"><i class="ti ti-user" style="font-size:10px"></i>${escHtml(s.owner)}</span>`:''}</span>
-    <span style="font-size:11px;color:var(--color-text-secondary)">${s.start||""}${s.start&&s.due?'<br>':''}${s.due||''}</span>
+function renderSubRow(pid,tid,s){
+  const od=isOverdue(s);
+  return `<div class="task-row sub" data-pid="${pid}" data-tid="${tid}" data-sid="${s.id}" style="${od?"background:#fff0f0":""}">
+    <span class="drag-handle" draggable="true" data-drag-sub="${s.id}" data-drag-pid="${pid}" data-drag-tid="${tid}" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+    <div class="task-check ${s.status==="complete"?"done":""}" onclick="toggleDone(${pid},${tid},${s.id})">${s.status==="complete"?'<i class="ti ti-check"></i>':""}</div>
+    <span style="${s.status==="complete"?"text-decoration:line-through;color:var(--color-text-secondary)":""}"><i class="ti ti-corner-down-right" style="font-size:11px;color:var(--color-text-secondary)"></i> ${escH(s.name)}</span>
+    <span>${s.owner?`<span class="owner-pill"><i class="ti ti-user" style="font-size:10px"></i>${escH(s.owner)}</span>`:""}</span>
+    <span style="font-size:11px;color:var(--color-text-secondary)">${s.start||""}${s.start&&s.due?"<br>":""}${s.due||""}</span>
     <span>${statusBadge(s.status)}</span>
-    <span style="font-size:11px;${od?'color:var(--color-text-danger);font-weight:500':''}">${s.due||""}</span>
-    <span style="display:flex;gap:2px">
+    <span style="font-size:11px;${od?"color:var(--color-text-danger);font-weight:500":""}">${s.due||""}</span>
+    <span style="display:flex;flex-wrap:wrap;gap:2px;align-items:center">
+      ${depPills(s.deps||[])}
       <button class="action-btn" onclick="openEditTask(${pid},${tid},${s.id})" title="Edit"><i class="ti ti-edit" style="font-size:13px"></i></button>
       <button class="action-btn" onclick="deleteTask(${pid},${tid},${s.id})" title="Delete"><i class="ti ti-trash" style="font-size:13px"></i></button>
     </span>
   </div>`;
 }
 
-function togglePhase(id) {
-  const p = phases.find(x=>x.id===id);
-  if(p){p.open=!p.open;scheduleSave();renderAll();}
-}
-
-function toggleDone(pid,tid,sid) {
+// ── Board actions ──────────────────────────────────────────────
+function togglePhase(id){const p=phases.find(x=>x.id===id);if(p){p.open=!p.open;scheduleSave();renderBoard();}}
+function toggleDone(pid,tid,sid){
   const p=phases.find(x=>x.id===pid);if(!p)return;
   const t=p.tasks.find(x=>x.id===tid);if(!t)return;
   if(sid){const s=(t.subs||[]).find(x=>x.id===sid);if(s)s.status=s.status==="complete"?"not started":"complete";}
   else t.status=t.status==="complete"?"not started":"complete";
   scheduleSave();renderAll();
 }
-
-function deletePhase(id) {
-  if(!confirm("Delete this phase and all its tasks?"))return;
-  phases=phases.filter(p=>p.id!==id);scheduleSave();renderAll();
-}
-
-function deleteTask(pid,tid,sid) {
+function deletePhase(id){if(!confirm("Delete this phase and all its tasks?"))return;phases=phases.filter(p=>p.id!==id);scheduleSave();renderAll();}
+function deleteTask(pid,tid,sid){
   const p=phases.find(x=>x.id===pid);if(!p)return;
   if(sid){const t=p.tasks.find(x=>x.id===tid);if(t)t.subs=(t.subs||[]).filter(s=>s.id!==sid);}
   else p.tasks=p.tasks.filter(t=>t.id!==tid);
   scheduleSave();renderAll();
 }
 
-function openAddPhase() {
-  editingPhaseId=null;
-  document.getElementById("modalTitle").textContent="Add phase";
-  ["mPhaseName","mPhaseStart","mPhaseEnd","mPhaseNotes"].forEach(id=>document.getElementById(id).value="");
-  openModal("phaseModal");
+// ── Dependency modal helpers ───────────────────────────────────
+function buildDepOptions(excludeId){
+  // Returns array of {value, label} for all items except excludeId
+  const opts=[];
+  const m=buildLookup();
+  phases.forEach(p=>{
+    if(p.id!==excludeId)opts.push({value:p.id,label:"[Phase] "+p.name});
+    p.tasks.forEach(t=>{
+      if(t.id!==excludeId)opts.push({value:t.id,label:"  [Task] "+t.name});
+      (t.subs||[]).forEach(s=>{
+        if(s.id!==excludeId)opts.push({value:s.id,label:"    [Sub] "+s.name});
+      });
+    });
+  });
+  return opts;
 }
 
-function openEditPhase(id) {
+function populateDepSelect(selId,excludeId){
+  const sel=document.getElementById(selId);sel.innerHTML='<option value="">— select item —</option>';
+  buildDepOptions(excludeId).forEach(o=>{const opt=document.createElement("option");opt.value=o.value;opt.textContent=o.label;sel.appendChild(opt);});
+}
+
+function renderDepList(listId,deps){
+  const el=document.getElementById(listId);el.innerHTML="";const m=buildLookup();
+  (deps||[]).forEach((d,i)=>{
+    const entry=m[d.id];const label=entry?entry.label:"Unknown";
+    const tag=document.createElement("span");tag.className="dep-tag";
+    tag.innerHTML=`<i class="ti ti-arrow-right" style="font-size:10px"></i>${escH(label.length>24?label.slice(0,22)+"…":label)} <em style="font-size:10px;opacity:.6">${d.type}</em>
+      <button onclick="removeDep('${listId}',${i})" title="Remove"><i class="ti ti-x"></i></button>`;
+    el.appendChild(tag);
+  });
+}
+
+function addDep(ctx){
+  const selId=ctx==="phase"?"phaseDepSelect":"taskDepSelect";
+  const typeId=ctx==="phase"?"phaseDepType":"taskDepType";
+  const listId=ctx==="phase"?"phaseDepList":"taskDepList";
+  const warnId=ctx==="phase"?"phaseDepWarn":"taskDepWarn";
+  const sel=document.getElementById(selId);const val=parseInt(sel.value);
+  if(!val)return;
+  const type=document.getElementById(typeId).value;
+  if(currentDeps[ctx].some(d=>d.id===val)){alert("Already added.");return;}
+  currentDeps[ctx].push({id:val,type});
+  renderDepList(listId,currentDeps[ctx]);
+  sel.value="";
+  checkDepWarning(ctx,warnId);
+}
+
+function removeDep(listId,idx){
+  const ctx=listId.startsWith("phase")?"phase":"task";
+  currentDeps[ctx].splice(idx,1);
+  renderDepList(listId,currentDeps[ctx]);
+  const warnId=ctx==="phase"?"phaseDepWarn":"taskDepWarn";
+  checkDepWarning(ctx,warnId);
+}
+
+function checkDepWarning(ctx,warnId){
+  const startId=ctx==="phase"?"mPhaseStart":"mTaskStart";
+  const start=document.getElementById(startId).value;
+  const warn=document.getElementById(warnId);
+  if(!start){warn.style.display="none";return;}
+  const violations=[];
+  currentDeps[ctx].forEach(d=>{
+    const refDate=d.type==="FS"?getItemEnd(d.id):getItemStart(d.id);
+    if(refDate&&start<refDate){
+      const m=buildLookup();const entry=m[d.id];
+      violations.push(`Start date is before ${d.type==="FS"?"end":"start"} of "${entry?entry.label:"item"}" (${refDate})`);
+    }
+  });
+  if(violations.length){warn.style.display="block";warn.innerHTML="⚠ "+violations.join("<br>⚠ ");}
+  else warn.style.display="none";
+}
+
+// ── Phase modal ────────────────────────────────────────────────
+function openAddPhase(){
+  editingPhaseId=null;currentDeps.phase=[];
+  document.getElementById("modalTitle").textContent="Add phase";
+  ["mPhaseName","mPhaseStart","mPhaseEnd","mPhaseNotes"].forEach(id=>document.getElementById(id).value="");
+  populateDepSelect("phaseDepSelect",null);
+  renderDepList("phaseDepList",[]);
+  document.getElementById("phaseDepWarn").style.display="none";
+  openModal("phaseModal");
+}
+function openEditPhase(id){
   const p=phases.find(x=>x.id===id);if(!p)return;
-  editingPhaseId=id;
+  editingPhaseId=id;currentDeps.phase=JSON.parse(JSON.stringify(p.deps||[]));
   document.getElementById("modalTitle").textContent="Edit phase";
   document.getElementById("mPhaseName").value=p.name;
   document.getElementById("mPhaseStart").value=p.start||"";
   document.getElementById("mPhaseEnd").value=p.end||"";
   document.getElementById("mPhaseNotes").value=p.notes||"";
+  populateDepSelect("phaseDepSelect",id);
+  renderDepList("phaseDepList",currentDeps.phase);
+  document.getElementById("phaseDepWarn").style.display="none";
   openModal("phaseModal");
 }
-
-function savePhase() {
-  const name=document.getElementById("mPhaseName").value.trim();
-  if(!name)return alert("Phase name is required.");
+function savePhase(){
+  const name=document.getElementById("mPhaseName").value.trim();if(!name)return alert("Phase name required.");
   if(editingPhaseId){
     const p=phases.find(x=>x.id===editingPhaseId);
-    if(p){p.name=name;p.start=document.getElementById("mPhaseStart").value;p.end=document.getElementById("mPhaseEnd").value;p.notes=document.getElementById("mPhaseNotes").value;}
+    if(p){p.name=name;p.start=document.getElementById("mPhaseStart").value;p.end=document.getElementById("mPhaseEnd").value;p.notes=document.getElementById("mPhaseNotes").value;p.deps=currentDeps.phase;}
   } else {
-    phases.push({id:uid(),name,start:document.getElementById("mPhaseStart").value,end:document.getElementById("mPhaseEnd").value,notes:document.getElementById("mPhaseNotes").value,open:true,tasks:[]});
+    phases.push({id:uid(),name,start:document.getElementById("mPhaseStart").value,end:document.getElementById("mPhaseEnd").value,notes:document.getElementById("mPhaseNotes").value,open:true,deps:currentDeps.phase,tasks:[]});
   }
   closeModal("phaseModal");scheduleSave();renderAll();
 }
 
-function openAddTask(pid,parentTid) {
-  editingTaskCtx={pid,parentTid,tid:null};
+// ── Task modal ─────────────────────────────────────────────────
+function openAddTask(pid,parentTid){
+  editingTaskCtx={pid,parentTid,tid:null};currentDeps.task=[];
   document.getElementById("taskModalTitle").textContent=parentTid?"Add sub-item":"Add task";
   ["mTaskName","mNewPerson","mTaskStart","mTaskDue"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("mTaskStatus").value="not started";
   document.getElementById("mTaskNotes").value="";
   populateOwnerSelect("mTaskOwner","");
+  populateDepSelect("taskDepSelect",null);
+  renderDepList("taskDepList",[]);
+  document.getElementById("taskDepWarn").style.display="none";
   openModal("taskModal");
 }
-
-function openEditTask(pid,tid,sid) {
+function openEditTask(pid,tid,sid){
   const p=phases.find(x=>x.id===pid);if(!p)return;
   const t=p.tasks.find(x=>x.id===tid);if(!t)return;
   const item=sid?(t.subs||[]).find(s=>s.id===sid):t;if(!item)return;
   editingTaskCtx={pid,parentTid:sid?tid:null,tid:sid||tid};
+  currentDeps.task=JSON.parse(JSON.stringify(item.deps||[]));
   document.getElementById("taskModalTitle").textContent="Edit task";
   document.getElementById("mTaskName").value=item.name;
   document.getElementById("mTaskStart").value=item.start||"";
@@ -576,48 +707,40 @@ function openEditTask(pid,tid,sid) {
   document.getElementById("mTaskNotes").value=item.notes||"";
   document.getElementById("mNewPerson").value="";
   populateOwnerSelect("mTaskOwner",item.owner||"");
+  populateDepSelect("taskDepSelect",sid||tid);
+  renderDepList("taskDepList",currentDeps.task);
+  document.getElementById("taskDepWarn").style.display="none";
   openModal("taskModal");
 }
-
-function populateOwnerSelect(selId,selected) {
-  const sel=document.getElementById(selId);
-  sel.innerHTML='<option value="">Unassigned</option>';
+function populateOwnerSelect(selId,selected){
+  const sel=document.getElementById(selId);sel.innerHTML='<option value="">Unassigned</option>';
   people.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;o.selected=p===selected;sel.appendChild(o);});
 }
 
-// Returns date string clamped to be >= floor (if floor set) — both are "YYYY-MM-DD" strings or ""
-function clampDate(date, floor) {
-  if (!date || !floor) return date;
-  return date < floor ? floor : date;
-}
-
-function saveTask() {
-  const name=document.getElementById("mTaskName").value.trim();
-  if(!name)return alert("Task name is required.");
+function clampDate(d,floor){if(!d||!floor)return d;return d<floor?floor:d;}
+function saveTask(){
+  const name=document.getElementById("mTaskName").value.trim();if(!name)return alert("Task name required.");
   let owner=document.getElementById("mTaskOwner").value;
   const newP=document.getElementById("mNewPerson").value.trim();
   if(newP){owner=newP;if(!people.includes(newP))people.push(newP);}
   const{pid,parentTid,tid}=editingTaskCtx;
   const p=phases.find(x=>x.id===pid);if(!p)return;
+  const floor=parentTid?(p.tasks.find(x=>x.id===parentTid)||{}).start||p.start||"":p.start||"";
+  let ts=clampDate(document.getElementById("mTaskStart").value,floor);
+  let td=clampDate(document.getElementById("mTaskDue").value,floor);
+  if(ts&&td&&td<ts)td=ts;
 
-  // Determine the earliest allowed date — parent task's start (for sub-items) or phase start (for tasks)
-  let floor = "";
-  if (parentTid) {
-    const parentTask = p.tasks.find(x=>x.id===parentTid);
-    floor = (parentTask && parentTask.start) ? parentTask.start : (p.start||"");
-  } else {
-    floor = p.start || "";
-  }
+  // Dep warning (non-blocking)
+  const violations=[];
+  currentDeps.task.forEach(d=>{
+    const refDate=d.type==="FS"?getItemEnd(d.id):getItemStart(d.id);
+    if(refDate&&ts&&ts<refDate)violations.push(true);
+  });
 
-  let taskStart = clampDate(document.getElementById("mTaskStart").value, floor);
-  let taskDue   = clampDate(document.getElementById("mTaskDue").value,   floor);
-  // Also ensure due is not before start
-  if (taskStart && taskDue && taskDue < taskStart) taskDue = taskStart;
-
-  const task={id:uid(),name,owner,start:taskStart,due:taskDue,status:document.getElementById("mTaskStatus").value,notes:document.getElementById("mTaskNotes").value};
+  const task={id:uid(),name,owner,start:ts,due:td,status:document.getElementById("mTaskStatus").value,notes:document.getElementById("mTaskNotes").value,deps:currentDeps.task};
   if(tid){
     if(parentTid){const t=p.tasks.find(x=>x.id===parentTid);if(t){const s=(t.subs||[]).find(x=>x.id===tid);if(s)Object.assign(s,task);}}
-    else{const t=p.tasks.find(x=>x.id===tid);if(t)Object.assign(t,{name:task.name,owner:task.owner,start:task.start,due:task.due,status:task.status,notes:task.notes});}
+    else{const t=p.tasks.find(x=>x.id===tid);if(t)Object.assign(t,{name:task.name,owner:task.owner,start:task.start,due:task.due,status:task.status,notes:task.notes,deps:task.deps});}
   } else if(parentTid){
     const t=p.tasks.find(x=>x.id===parentTid);
     if(t){if(!t.subs)t.subs=[];t.subs.push({...task});}
@@ -627,10 +750,317 @@ function saveTask() {
   closeModal("taskModal");scheduleSave();renderAll();
 }
 
+// ── Gantt ──────────────────────────────────────────────────────
+function renderGantt(){
+  const container=document.getElementById("ganttContainer");
+  container.innerHTML="";
+  if(!phases.length){container.innerHTML='<div class="loading-screen">No phases yet.</div>';return;}
+
+  // Compute date range
+  let minD=null,maxD=null;
+  const allItems=[];
+  phases.forEach(p=>{
+    if(p.start)minD=minD?Math.min(minD,new Date(p.start)):new Date(p.start).getTime();
+    if(p.end)maxD=maxD?Math.max(maxD,new Date(p.end)):new Date(p.end).getTime();
+    allItems.push({id:p.id,start:p.start,end:p.end,type:"phase"});
+    p.tasks.forEach(t=>{
+      if(t.start)minD=minD?Math.min(minD,new Date(t.start)):new Date(t.start).getTime();
+      if(t.due)maxD=maxD?Math.max(maxD,new Date(t.due)):new Date(t.due).getTime();
+      allItems.push({id:t.id,start:t.start,end:t.due,type:"task"});
+      (t.subs||[]).forEach(s=>{
+        if(s.start)minD=minD?Math.min(minD,new Date(s.start)):new Date(s.start).getTime();
+        if(s.due)maxD=maxD?Math.max(maxD,new Date(s.due)):new Date(s.due).getTime();
+        allItems.push({id:s.id,start:s.start,end:s.due,type:"sub"});
+      });
+    });
+  });
+  if(!minD)return;
+  const pStart=new Date(minD);const pEnd=new Date(maxD||minD);
+  const totalDays=(pEnd-pStart)/86400000||1;
+  const LABEL_W=170;
+
+  const wrap=document.createElement("div");wrap.className="gantt-wrap";
+  const innerW=Math.max(container.offsetWidth||700,700)-LABEL_W-20;
+
+  function pct(d){if(!d)return 0;return((new Date(d)-pStart)/86400000)/totalDays*100;}
+  function px(p){return (p/100)*innerW;}
+
+  // Header
+  const hRow=document.createElement("div");hRow.className="gantt-row";hRow.style.gridTemplateColumns=LABEL_W+"px 1fr";hRow.style.marginBottom="4px";
+  const hLbl=document.createElement("div");
+  const hArea=document.createElement("div");hArea.className="gc-header-area";hArea.style.position="relative";
+
+  let cur=new Date(pStart.getFullYear(),pStart.getMonth(),1);
+  while(cur<=pEnd){
+    const p=pct(cur.toISOString().slice(0,10));
+    const sep=document.createElement("div");sep.className="gc-month-sep";sep.style.left=p+"%";hArea.appendChild(sep);
+    const lbl=document.createElement("div");lbl.className="gc-month-lbl";lbl.style.left=(p+0.3)+"%";
+    lbl.textContent=cur.toLocaleString("en",{month:"short"})+" '"+cur.getFullYear().toString().slice(2);
+    hArea.appendChild(lbl);
+    cur=new Date(cur.getFullYear(),cur.getMonth()+1,1);
+  }
+  // Today
+  const todayStr=new Date().toISOString().slice(0,10);
+  const todayLine=document.createElement("div");todayLine.className="gc-today";todayLine.style.left=pct(todayStr)+"%";
+  hArea.appendChild(todayLine);
+  hRow.appendChild(hLbl);hRow.appendChild(hArea);wrap.appendChild(hRow);
+
+  // We'll collect row positions for arrow drawing
+  const rowMap={};// id -> {yCenter, xStart, xEnd}
+  const rows=[];
+
+  function addRow(label,labelClass,barClass,start,end,height,topOffset,rowId){
+    const row=document.createElement("div");row.className="gantt-row";row.style.gridTemplateColumns=LABEL_W+"px 1fr";row.style.marginBottom="2px";
+    const lbl=document.createElement("div");lbl.className="gc-label "+labelClass;lbl.textContent=label;lbl.title=label;
+    const area=document.createElement("div");area.className="gc-bar-area";area.style.position="relative";area.style.height=height+"px";
+    if(start&&end){
+      const bar=document.createElement("div");bar.className="gc-bar "+barClass;
+      const l=pct(start),r=pct(end);
+      bar.style.left=l+"%";bar.style.width=Math.max(0.4,r-l)+"%";bar.style.top=topOffset+"px";bar.style.height=(height-topOffset*2)+"px";
+      bar.dataset.itemId=rowId;
+      area.appendChild(bar);
+    }
+    const tl=document.createElement("div");tl.className="gc-today";tl.style.left=pct(todayStr)+"%";area.appendChild(tl);
+    row.appendChild(lbl);row.appendChild(area);wrap.appendChild(row);
+    rows.push({row,area,rowId,start,end});
+    return {row,area};
+  }
+
+  phases.forEach(p=>{
+    const {area:pa}=addRow(p.name,"gc-label phase-lbl","gc-phase-bar",p.start,p.end,22,3,p.id);
+    p.tasks.forEach(t=>{
+      const tc=t.status==="complete"?"gc-task-complete":t.status==="in progress"?"gc-task-progress":t.status==="blocked"?"gc-task-blocked":"gc-task-notstarted";
+      addRow(t.name,"gc-label","gc-bar "+tc,t.start,t.due,22,3,t.id);
+      (t.subs||[]).forEach(s=>{
+        const sc=s.status==="complete"?"gc-task-complete":s.status==="in progress"?"gc-task-progress":s.status==="blocked"?"gc-task-blocked":"gc-task-notstarted";
+        addRow(s.name,"gc-label sub-lbl","gc-bar gc-sub-bar "+sc,s.start,s.due,22,5,s.id);
+      });
+    });
+    // spacer
+    const sp=document.createElement("div");sp.style.height="5px";wrap.appendChild(sp);
+  });
+
+  container.appendChild(wrap);
+
+  // Draw dependency arrows using real measured bar positions
+  requestAnimationFrame(()=>{
+    const wrapRect=wrap.getBoundingClientRect();
+    const barInfoMap={};
+
+    // Measure every rendered bar's actual pixel position relative to wrap
+    wrap.querySelectorAll(".gc-bar").forEach(bar=>{
+      const id=parseInt(bar.dataset.itemId);if(!id)return;
+      const r=bar.getBoundingClientRect();
+      barInfoMap[id]={
+        xLeft: r.left - wrapRect.left,
+        xRight: r.right - wrapRect.left,
+        yMid: r.top - wrapRect.top + r.height/2
+      };
+    });
+
+    const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+    svg.style.cssText="position:absolute;top:0;left:0;pointer-events:none;overflow:visible";
+    svg.setAttribute("width","100%");svg.setAttribute("height",wrap.offsetHeight+"px");
+    svg.innerHTML=`<defs>
+      <marker id="depArrowFS" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M1 1L7 4L1 7" fill="none" stroke="#1a4a8a" stroke-width="1.5" stroke-linecap="round"/>
+      </marker>
+      <marker id="depArrowSS" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+        <path d="M1 1L7 4L1 7" fill="none" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round"/>
+      </marker>
+    </defs>`;
+
+    const allItemDeps=[];
+    phases.forEach(p=>{
+      (p.deps||[]).forEach(d=>allItemDeps.push({fromId:d.id,toId:p.id,type:d.type}));
+      p.tasks.forEach(t=>{
+        (t.deps||[]).forEach(d=>allItemDeps.push({fromId:d.id,toId:t.id,type:d.type}));
+        (t.subs||[]).forEach(s=>{
+          (s.deps||[]).forEach(d=>allItemDeps.push({fromId:d.id,toId:s.id,type:d.type}));
+        });
+      });
+    });
+
+    allItemDeps.forEach(dep=>{
+      const from=barInfoMap[dep.fromId];const to=barInfoMap[dep.toId];
+      if(!from||!to)return;
+      const x1=dep.type==="FS"?from.xRight:from.xLeft;
+      const y1=from.yMid;
+      const x2=to.xLeft;
+      const y2=to.yMid;
+      const bend=Math.max(12,Math.abs(x2-x1)*0.38);
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M${x1},${y1} C${x1+bend},${y1} ${x2-bend},${y2} ${x2},${y2}`);
+      path.setAttribute("fill","none");
+      path.setAttribute("stroke",dep.type==="FS"?"#1a4a8a":"#378ADD");
+      path.setAttribute("stroke-width","1.5");
+      path.setAttribute("opacity","0.65");
+      path.setAttribute("marker-end",`url(#depArrow${dep.type})`);
+      if(dep.type==="SS")path.setAttribute("stroke-dasharray","4 3");
+      svg.appendChild(path);
+    });
+
+    wrap.style.position="relative";
+    wrap.appendChild(svg);
+  });
+}
+
+// ── Swimlane ───────────────────────────────────────────────────
+function renderSwimlane(){
+  const c=document.getElementById("swimlaneContainer");c.innerHTML="";
+  const byOwner={};
+  phases.forEach(p=>{
+    p.tasks.forEach(t=>{
+      const o=t.owner||"Unassigned";
+      if(!byOwner[o])byOwner[o]=[];
+      byOwner[o].push({name:t.name,phase:p.name,due:t.due,status:t.status,deps:t.deps||[]});
+      (t.subs||[]).forEach(s=>{
+        const so=s.owner||t.owner||"Unassigned";
+        if(!byOwner[so])byOwner[so]=[];
+        byOwner[so].push({name:s.name,phase:p.name+" / "+t.name,due:s.due,status:s.status,deps:s.deps||[],isSub:true});
+      });
+    });
+  });
+  if(!Object.keys(byOwner).length){c.innerHTML='<div class="loading-screen">No tasks with owners yet.</div>';return;}
+
+  function initials(n){return n.split(" ").map(w=>w[0]||"").join("").slice(0,2).toUpperCase();}
+  function swBadge(s){const m={"complete":"sw-complete","in progress":"sw-progress","not started":"sw-notstarted","blocked":"sw-blocked"};return`<span class="sw-badge ${m[s]||"sw-notstarted"}">${s}</span>`;}
+
+  Object.entries(byOwner).sort((a,b)=>a[0].localeCompare(b[0])).forEach(([owner,tasks])=>{
+    const lane=document.createElement("div");lane.className="sw-lane";
+    const av=document.createElement("div");av.className="sw-lane-header";
+    av.innerHTML=`<div class="sw-avatar">${initials(owner)}</div><div class="sw-owner-name">${escH(owner)}</div><span style="font-size:11px;color:var(--color-text-secondary)">${tasks.length} task${tasks.length!==1?"s":""}</span>`;
+    const taskWrap=document.createElement("div");taskWrap.className="sw-tasks";
+    tasks.forEach(t=>{
+      const card=document.createElement("div");card.className="sw-task";
+      const depStr=(t.deps||[]).length?`<div style="margin-top:3px">${depPills(t.deps)}</div>`:"";
+      card.innerHTML=`<div class="sw-task-name">${t.isSub?'<i class="ti ti-corner-down-right" style="font-size:10px;color:var(--color-text-secondary)"></i> ':""} ${escH(t.name)}</div>
+        <div class="sw-task-phase">${escH(t.phase)}</div>
+        <div class="sw-task-footer">${swBadge(t.status)}<span class="sw-date">${t.due||""}</span></div>
+        ${depStr}`;
+      taskWrap.appendChild(card);
+    });
+    lane.appendChild(av);lane.appendChild(taskWrap);c.appendChild(lane);
+  });
+}
+
+// ── Modal helpers ──────────────────────────────────────────────
 function openModal(id){document.getElementById(id).classList.add("open");}
 function closeModal(id){document.getElementById(id).classList.remove("open");}
-document.querySelectorAll(".modal-overlay").forEach(el=>{
-  el.addEventListener("click",function(e){if(e.target===this)this.classList.remove("open");});
+document.querySelectorAll(".modal-overlay").forEach(el=>{el.addEventListener("click",function(e){if(e.target===this)this.classList.remove("open");});});
+
+// Wire up date change to re-check dep warnings
+["mPhaseStart","mPhaseEnd"].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("change",()=>checkDepWarning("phase","phaseDepWarn"));});
+["mTaskStart","mTaskDue"].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("change",()=>checkDepWarning("task","taskDepWarn"));});
+
+// ── Drag and drop reordering ───────────────────────────────────
+let dragCtx=null; // {type, id, pid, tid} + source element
+
+function clearDragStyles(){
+  document.querySelectorAll(".dragging,.drag-over-top,.drag-over-bottom").forEach(el=>{
+    el.classList.remove("dragging","drag-over-top","drag-over-bottom");
+  });
+}
+
+// Returns the nearest draggable container row/phase for a given event target
+function getDragTarget(e,type){
+  if(type==="phase")return e.target.closest(".phase");
+  if(type==="task")return e.target.closest(".task-row:not(.sub)");
+  if(type==="sub")return e.target.closest(".task-row.sub");
+  return null;
+}
+
+document.getElementById("phasesContainer").addEventListener("dragstart",e=>{
+  const handle=e.target.closest(".drag-handle");if(!handle)return;
+  e.stopPropagation();
+  if(handle.dataset.dragPhase){
+    dragCtx={type:"phase",id:parseInt(handle.dataset.dragPhase)};
+    const phaseEl=handle.closest(".phase");if(phaseEl)phaseEl.classList.add("dragging");
+  } else if(handle.dataset.dragTask){
+    dragCtx={type:"task",id:parseInt(handle.dataset.dragTask),pid:parseInt(handle.dataset.dragPid)};
+    const row=handle.closest(".task-row");if(row)row.classList.add("dragging");
+  } else if(handle.dataset.dragSub){
+    dragCtx={type:"sub",id:parseInt(handle.dataset.dragSub),pid:parseInt(handle.dataset.dragPid),tid:parseInt(handle.dataset.dragTid)};
+    const row=handle.closest(".task-row");if(row)row.classList.add("dragging");
+  }
+  e.dataTransfer.effectAllowed="move";
+  e.dataTransfer.setData("text/plain","drag");
+});
+
+document.getElementById("phasesContainer").addEventListener("dragend",()=>{
+  clearDragStyles();dragCtx=null;
+});
+
+document.getElementById("phasesContainer").addEventListener("dragover",e=>{
+  e.preventDefault();if(!dragCtx)return;
+  clearDragStyles();
+  if(dragCtx.type==="phase"){
+    const target=e.target.closest(".phase");
+    if(!target||parseInt(target.dataset.phaseId)===dragCtx.id)return;
+    const rect=target.getBoundingClientRect();
+    target.classList.add(e.clientY<rect.top+rect.height/2?"drag-over-top":"drag-over-bottom");
+  } else if(dragCtx.type==="task"){
+    const target=e.target.closest(".task-row:not(.sub)");
+    if(!target||parseInt(target.dataset.tid)===dragCtx.id)return;
+    if(parseInt(target.dataset.pid)!==dragCtx.pid)return;
+    const rect=target.getBoundingClientRect();
+    target.classList.add(e.clientY<rect.top+rect.height/2?"drag-over-top":"drag-over-bottom");
+  } else if(dragCtx.type==="sub"){
+    const target=e.target.closest(".task-row.sub");
+    if(!target||parseInt(target.dataset.sid)===dragCtx.id)return;
+    if(parseInt(target.dataset.tid)!==dragCtx.tid)return;
+    const rect=target.getBoundingClientRect();
+    target.classList.add(e.clientY<rect.top+rect.height/2?"drag-over-top":"drag-over-bottom");
+  }
+});
+
+document.getElementById("phasesContainer").addEventListener("drop",e=>{
+  e.preventDefault();if(!dragCtx)return;
+  if(dragCtx.type==="phase"){
+    const target=e.target.closest(".phase");
+    if(!target)return;
+    const targetId=parseInt(target.dataset.phaseId);
+    if(targetId===dragCtx.id)return;
+    const rect=target.getBoundingClientRect();
+    const before=e.clientY<rect.top+rect.height/2;
+    const fromIdx=phases.findIndex(p=>p.id===dragCtx.id);
+    let toIdx=phases.findIndex(p=>p.id===targetId);
+    if(fromIdx<0||toIdx<0)return;
+    const [item]=phases.splice(fromIdx,1);
+    toIdx=phases.findIndex(p=>p.id===targetId);
+    phases.splice(before?toIdx:toIdx+1,0,item);
+  } else if(dragCtx.type==="task"){
+    const target=e.target.closest(".task-row:not(.sub)");
+    if(!target)return;
+    const targetTid=parseInt(target.dataset.tid);
+    if(targetTid===dragCtx.id)return;
+    const p=phases.find(x=>x.id===dragCtx.pid);if(!p)return;
+    const rect=target.getBoundingClientRect();
+    const before=e.clientY<rect.top+rect.height/2;
+    const fromIdx=p.tasks.findIndex(t=>t.id===dragCtx.id);
+    let toIdx=p.tasks.findIndex(t=>t.id===targetTid);
+    if(fromIdx<0||toIdx<0)return;
+    const [item]=p.tasks.splice(fromIdx,1);
+    toIdx=p.tasks.findIndex(t=>t.id===targetTid);
+    p.tasks.splice(before?toIdx:toIdx+1,0,item);
+  } else if(dragCtx.type==="sub"){
+    const target=e.target.closest(".task-row.sub");
+    if(!target)return;
+    const targetSid=parseInt(target.dataset.sid);
+    if(targetSid===dragCtx.id)return;
+    const p=phases.find(x=>x.id===dragCtx.pid);if(!p)return;
+    const t=p.tasks.find(x=>x.id===dragCtx.tid);if(!t||!t.subs)return;
+    const rect=target.getBoundingClientRect();
+    const before=e.clientY<rect.top+rect.height/2;
+    const fromIdx=t.subs.findIndex(s=>s.id===dragCtx.id);
+    let toIdx=t.subs.findIndex(s=>s.id===targetSid);
+    if(fromIdx<0||toIdx<0)return;
+    const [item]=t.subs.splice(fromIdx,1);
+    toIdx=t.subs.findIndex(s=>s.id===targetSid);
+    t.subs.splice(before?toIdx:toIdx+1,0,item);
+  }
+  clearDragStyles();dragCtx=null;
+  scheduleSave();renderAll();
 });
 </script>
 </body>
