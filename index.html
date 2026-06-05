@@ -431,8 +431,9 @@ async function tryLogin(){
 }
 
 function saveName(){
-  const n=document.getElementById("nameInput").value.trim();
-  if(!n){document.getElementById("nameError").textContent="Please enter your name.";return;}
+  const raw=document.getElementById("nameInput").value.trim();
+  if(!raw){document.getElementById("nameError").textContent="Please enter your name.";return;}
+  const n=raw.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(" ");
   sessionStorage.setItem("l7name",n);currentUser=n;
   document.getElementById("nameScreen").style.display="none";
   showApp();
@@ -745,11 +746,13 @@ function deleteTask(pid,tid,sid){
   const p=phases.find(x=>x.id===pid);if(!p)return;
   if(sid){
     const t=p.tasks.find(x=>x.id===tid);if(!t)return;
-    const s=(t.subs||[]).find(x=>x.id===sid);const name=s?s.name:"sub-item";
+    const s=(t.subs||[]).find(x=>x.id===sid);const name=s?s.name:"this sub-item";
+    if(!confirm(`Delete sub-item "${name}"?`))return;
     t.subs=(t.subs||[]).filter(s=>s.id!==sid);
     logActivity(`${currentUser} deleted sub-item "${name}"`,"delete");
   } else {
-    const t=p.tasks.find(x=>x.id===tid);const name=t?t.name:"task";
+    const t=p.tasks.find(x=>x.id===tid);const name=t?t.name:"this task";
+    if(!confirm(`Delete task "${name}"?${t&&t.subs&&t.subs.length?"\n\nThis will also delete "+t.subs.length+" sub-item(s).":""}`))return;
     p.tasks=p.tasks.filter(t=>t.id!==tid);
     logActivity(`${currentUser} deleted task "${name}"`,"delete");
   }
