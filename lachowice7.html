@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Lachowice-7 Workover — Horizon Petroleum</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+<style>
+:root{
+  --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --color-text-primary:#1a1a18;--color-text-secondary:#6b6b68;
+  --color-text-danger:#b91c1c;--color-text-info:#1d4ed8;
+  --color-bg:#ffffff;--color-bg-sec:#f8f7f4;
+  --color-bg-danger:#fef2f2;--color-bg-info:#eff6ff;
+  --color-border:#e2e1db;--color-border-t:#eeede8;
+  --radius:6px;--radius-lg:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary);background:#fff;padding:0 1rem}
+.app{max-width:1100px;margin:0 auto;padding:1.5rem 0}
+
+/* ── Login / Name screens ── */
+.auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.auth-card{background:#fff;border:0.5px solid var(--color-border);border-radius:var(--radius-lg);padding:2rem;width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.07)}
+.auth-logo{width:48px;height:48px;background:#1a4a8a;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:500;line-height:1.2;margin:0 auto 1.25rem}
+.auth-card h1{font-size:16px;font-weight:500;margin-bottom:4px}
+.auth-card p{font-size:12px;color:var(--color-text-secondary);margin-bottom:1.5rem}
+.auth-card input{width:100%;height:38px;font-size:14px;padding:0 12px;border:0.5px solid var(--color-border);border-radius:var(--radius);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans);margin-bottom:10px}
+.auth-card input:focus{outline:none;border-color:#1a4a8a}
+.auth-btn{width:100%;height:38px;background:#1a4a8a;color:#fff;border:none;border-radius:var(--radius);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-sans)}
+.auth-btn:hover{background:#15397a}
+.auth-error{font-size:12px;color:var(--color-text-danger);margin-top:8px;min-height:18px}
+
+/* ── App shell ── */
+#appScreen{display:none}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-t);flex-wrap:wrap}
+.logo{width:36px;height:36px;background:#1a4a8a;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:500;line-height:1.1;text-align:center;flex-shrink:0}
+.header-text h1{font-size:17px;font-weight:500}
+.header-text p{font-size:12px;color:var(--color-text-secondary);margin-top:1px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.save-indicator{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);white-space:nowrap}
+.save-dot{width:7px;height:7px;border-radius:50%;background:#888;flex-shrink:0;transition:background .3s}
+.save-dot.saving{background:#ef9f27}.save-dot.saved{background:#639922}.save-dot.error{background:#e24b4a}
+.user-chip{display:flex;align-items:center;gap:5px;font-size:12px;background:var(--color-bg-sec);border:0.5px solid var(--color-border);border-radius:20px;padding:3px 10px;color:var(--color-text-secondary)}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:2px;margin-bottom:1.25rem;border-bottom:0.5px solid var(--color-border-t);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-btn{height:34px;padding:0 14px;font-size:13px;border:none;background:transparent;color:var(--color-text-secondary);cursor:pointer;font-family:var(--font-sans);border-bottom:2px solid transparent;margin-bottom:-0.5px;display:flex;align-items:center;gap:6px;white-space:nowrap;flex-shrink:0}
+.tab-btn:hover{color:var(--color-text-primary)}
+.tab-btn.active{color:#1a4a8a;border-bottom-color:#1a4a8a;font-weight:500}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* ── Stats ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.stat{background:var(--color-bg-sec);border-radius:var(--radius);padding:12px 14px}
+.stat-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.stat-value{font-size:20px;font-weight:500}
+.stat-sub{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+
+/* ── Toolbar ── */
+.toolbar{display:flex;gap:8px;margin-bottom:1rem;align-items:center;flex-wrap:wrap}
+select,input[type=text]{height:32px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border);border-radius:var(--radius);background:#fff;color:var(--color-text-primary)}
+.btn{height:32px;padding:0 14px;font-size:13px;border:0.5px solid var(--color-border);border-radius:var(--radius);background:#fff;color:var(--color-text-primary);cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:var(--color-bg-sec)}
+.btn-primary{background:#1a4a8a;color:#fff;border-color:#1a4a8a}.btn-primary:hover{background:#15397a}
+.btn-sm{height:26px;padding:0 10px;font-size:12px}
+
+/* ── Phase / task board ── */
+.phase{border:0.5px solid var(--color-border-t);border-radius:var(--radius-lg);margin-bottom:12px;overflow:hidden}
+.phase-header{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--color-bg-sec);cursor:pointer;user-select:none}
+.phase-toggle{font-size:14px;color:var(--color-text-secondary);transition:transform .2s;width:16px;text-align:center;display:inline-block;flex-shrink:0}
+.phase-toggle.open{transform:rotate(90deg)}
+.phase-name{font-weight:500;font-size:14px;flex:1;min-width:0}
+.phase-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
+.badge-blue{background:#e6f1fb;color:#0c447c}.badge-green{background:#eaf3de;color:#27500a}
+.badge-red{background:#fcebeb;color:#791f1f}.badge-gray{background:#f1efe8;color:#444441}
+.badge-amber{background:#faeeda;color:#633806}
+.progress-bar{height:4px;background:var(--color-border-t);border-radius:2px;width:70px;overflow:hidden;flex-shrink:0}
+.progress-fill{height:100%;background:#1a4a8a;border-radius:2px;transition:width .3s}
+.phase-body{display:none;border-top:0.5px solid var(--color-border-t)}
+.phase-body.open{display:block}
+
+/* Desktop table layout */
+.table-head{padding:7px 12px;display:grid;grid-template-columns:18px 24px 1fr 110px 130px 95px 65px 75px;gap:8px;font-size:11px;color:var(--color-text-secondary);font-weight:500;border-bottom:0.5px solid var(--color-border);background:var(--color-bg-sec)}
+.task-row{padding:9px 12px;border-bottom:0.5px solid var(--color-border-t);display:grid;grid-template-columns:18px 24px 1fr 110px 130px 95px 65px 75px;gap:8px;align-items:center;font-size:13px;cursor:default}
+.task-row.sub{padding-left:38px;background:var(--color-bg-sec)}
+.task-row:last-child{border-bottom:none}
+.task-name-cell{cursor:pointer;display:flex;align-items:center;gap:4px}
+.task-name-cell:hover .task-name-text{text-decoration:underline;color:#1a4a8a}
+.task-check{width:16px;height:16px;border:1.5px solid var(--color-border);border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.task-check.done{background:#1a4a8a;border-color:#1a4a8a;color:#fff;font-size:11px}
+.owner-pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:var(--color-bg-info);color:var(--color-text-info);border-radius:20px;padding:2px 8px;max-width:108px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dep-pill{display:inline-flex;align-items:center;gap:3px;font-size:10px;background:var(--color-bg-sec);color:var(--color-text-secondary);border:0.5px solid var(--color-border);border-radius:20px;padding:1px 6px;margin:1px;white-space:nowrap}
+.action-btn{width:24px;height:24px;border:none;background:transparent;cursor:pointer;color:var(--color-text-secondary);display:inline-flex;align-items:center;justify-content:center;border-radius:4px;font-size:15px;padding:0}
+.action-btn:hover{background:var(--color-border-t);color:var(--color-text-primary)}
+.add-row{padding:7px 12px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary);cursor:pointer;border-top:0.5px dashed var(--color-border-t)}
+.add-row:hover{color:#1a4a8a;background:var(--color-bg-sec)}
+.comment-count{font-size:10px;color:var(--color-text-secondary);display:inline-flex;align-items:center;gap:2px;margin-left:3px}
+
+/* ── Drag ── */
+.drag-handle{cursor:grab;color:var(--color-border);padding:0 2px;display:inline-flex;align-items:center;font-size:15px;flex-shrink:0;touch-action:none;user-select:none}
+.drag-handle:hover{color:var(--color-text-secondary)}
+.drag-handle:active{cursor:grabbing}
+.dragging{opacity:.35!important}
+.drag-over-top{box-shadow:inset 0 2px 0 0 #1a4a8a!important}
+.drag-over-bottom{box-shadow:inset 0 -2px 0 0 #1a4a8a!important}
+
+/* ── Detail panel ── */
+#detailPanel{position:fixed;top:0;right:-420px;width:400px;height:100vh;background:#fff;border-left:0.5px solid var(--color-border);z-index:200;display:flex;flex-direction:column;transition:right .25s ease;box-shadow:-4px 0 20px rgba(0,0,0,.08)}
+#detailPanel.open{right:0}
+.dp-header{padding:14px 16px;border-bottom:0.5px solid var(--color-border-t);display:flex;align-items:flex-start;gap:10px}
+.dp-title{font-size:14px;font-weight:500;flex:1;line-height:1.4}
+.dp-close{border:none;background:none;cursor:pointer;color:var(--color-text-secondary);font-size:18px;padding:0;display:flex;align-items:center;flex-shrink:0}
+.dp-close:hover{color:var(--color-text-primary)}
+.dp-meta{padding:12px 16px;border-bottom:0.5px solid var(--color-border-t);display:flex;flex-wrap:wrap;gap:8px;font-size:12px}
+.dp-meta-item{display:flex;flex-direction:column;gap:2px;min-width:80px}
+.dp-meta-label{font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em}
+.dp-meta-value{font-size:12px;color:var(--color-text-primary)}
+.dp-notes{padding:10px 16px;border-bottom:0.5px solid var(--color-border-t);font-size:12px;color:var(--color-text-secondary);font-style:italic}
+.dp-comments{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+.dp-comments-title{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:4px}
+.comment-item{background:var(--color-bg-sec);border-radius:var(--radius);padding:8px 10px}
+.comment-author{font-size:11px;font-weight:500;color:var(--color-text-primary)}
+.comment-time{font-size:10px;color:var(--color-text-secondary);margin-left:6px}
+.comment-text{font-size:12px;color:var(--color-text-primary);margin-top:3px;line-height:1.4}
+.dp-compose{padding:12px 16px;border-top:0.5px solid var(--color-border-t);display:flex;flex-direction:column;gap:8px}
+.dp-compose textarea{width:100%;height:64px;font-size:13px;padding:8px 10px;border:0.5px solid var(--color-border);border-radius:var(--radius);font-family:var(--font-sans);resize:none;color:var(--color-text-primary)}
+.dp-compose textarea:focus{outline:none;border-color:#1a4a8a}
+.dp-compose-footer{display:flex;justify-content:flex-end}
+
+/* ── Activity log ── */
+.activity-list{display:flex;flex-direction:column;gap:0}
+.activity-item{display:flex;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-t);align-items:flex-start}
+.activity-item:last-child{border-bottom:none}
+.activity-dot{width:8px;height:8px;border-radius:50%;background:#1a4a8a;flex-shrink:0;margin-top:4px}
+.activity-dot.comment{background:#639922}
+.activity-dot.delete{background:#e24b4a}
+.activity-dot.status{background:#ef9f27}
+.activity-body{flex:1;min-width:0}
+.activity-text{font-size:13px;color:var(--color-text-primary);line-height:1.4}
+.activity-meta{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.activity-empty{padding:3rem 0;text-align:center;color:var(--color-text-secondary);font-size:14px}
+
+/* ── Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:var(--radius-lg);border:0.5px solid var(--color-border);padding:1.25rem;width:460px;max-width:100%;max-height:90vh;overflow-y:auto}
+.modal h2{font-size:15px;font-weight:500;margin-bottom:1rem}
+.form-row{margin-bottom:12px}
+.form-row label{display:block;font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.form-row input,.form-row select,.form-row textarea{width:100%;height:34px;font-size:13px;padding:0 10px;border:0.5px solid var(--color-border);border-radius:var(--radius);background:#fff;color:var(--color-text-primary);font-family:var(--font-sans)}
+.form-row textarea{height:64px;padding:8px 10px;resize:vertical}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
+.dep-list{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;min-height:24px}
+.dep-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;background:var(--color-bg-sec);border:0.5px solid var(--color-border);border-radius:20px;padding:2px 8px}
+.dep-tag button{border:none;background:none;cursor:pointer;color:var(--color-text-secondary);font-size:13px;padding:0;line-height:1;display:flex;align-items:center}
+.dep-add-row{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:end;margin-top:6px}
+.warn-box{background:#faeeda;border:0.5px solid #f0c080;border-radius:var(--radius);padding:8px 10px;font-size:12px;color:#633806;margin-top:6px}
+
+/* ── Gantt ── */
+.gantt-wrap{overflow-x:auto;padding-bottom:8px;position:relative}
+.gantt-row{display:grid;align-items:center;margin-bottom:2px}
+.gc-label{font-size:12px;color:var(--color-text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.gc-label.phase-lbl{font-weight:500;font-size:13px}
+.gc-label.sub-lbl{padding-left:16px;color:var(--color-text-secondary);font-size:11px}
+.gc-label.cp-lbl{color:#c0392b;font-weight:500}
+.gc-bar-area{position:relative}
+.gc-bar{position:absolute;border-radius:3px;cursor:pointer;transition:opacity .15s}
+.gc-bar:hover{opacity:.75}
+.gc-phase-bar{background:#1a4a8a;opacity:.9;height:16px;top:3px}
+.gc-task-complete{background:#639922}
+.gc-task-progress{background:#EF9F27}
+.gc-task-notstarted{background:#378ADD}
+.gc-task-blocked{background:#E24B4A}
+.gc-task-critical{background:#c0392b}
+.gc-sub-bar{opacity:.75;height:11px;top:5px;border-radius:2px}
+.gc-today{position:absolute;top:0;bottom:0;width:1.5px;background:#E24B4A;opacity:.6;pointer-events:none;z-index:5}
+.gc-month-sep{position:absolute;top:0;bottom:0;width:.5px;background:var(--color-border-t);pointer-events:none}
+.gc-month-lbl{position:absolute;font-size:10px;color:var(--color-text-secondary);top:4px;white-space:nowrap}
+.gc-header-area{position:relative;height:24px}
+.gantt-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--color-text-secondary)}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* ── Swimlane ── */
+.sw-lane{margin-bottom:10px;border:0.5px solid var(--color-border-t);border-radius:var(--radius-lg);overflow:hidden}
+.sw-lane-header{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--color-bg-sec)}
+.sw-avatar{width:28px;height:28px;border-radius:50%;background:var(--color-bg-info);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:var(--color-text-info);flex-shrink:0}
+.sw-owner-name{font-size:13px;font-weight:500;flex:1}
+.sw-tasks{padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px}
+.sw-task{border-radius:6px;padding:6px 10px;font-size:12px;display:flex;flex-direction:column;gap:2px;border:0.5px solid var(--color-border-t);background:#fff;min-width:130px;flex:1;max-width:200px}
+.sw-task-name{font-size:12px;color:var(--color-text-primary);line-height:1.3}
+.sw-task-phase{font-size:10px;color:var(--color-text-secondary)}
+.sw-task-footer{display:flex;align-items:center;justify-content:space-between;margin-top:3px}
+.sw-badge{font-size:10px;padding:1px 6px;border-radius:20px;font-weight:500}
+.sw-complete{background:#eaf3de;color:#27500a}.sw-progress{background:#faeeda;color:#633806}
+.sw-notstarted{background:#f1efe8;color:#444441}.sw-blocked{background:#fcebeb;color:#791f1f}
+.sw-date{font-size:10px;color:var(--color-text-secondary)}
+
+/* ── Misc ── */
+.sync-banner{font-size:12px;padding:8px 14px;background:var(--color-bg-info);color:var(--color-text-info);display:flex;align-items:center;gap:6px;border-radius:var(--radius);margin-bottom:12px;border:0.5px solid #bfdbfe}
+.loading-screen{padding:4rem 0;text-align:center;color:var(--color-text-secondary);font-size:14px}
+
+/* ── Mobile ── */
+@media(max-width:640px){
+  body{padding:0 .5rem}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .table-head{display:none}
+  .task-row{grid-template-columns:18px 24px 1fr auto;gap:6px;padding:8px 10px}
+  .task-row .col-owner,.task-row .col-dates,.task-row .col-due,.task-row .col-status{display:none}
+  .task-row.sub{padding-left:28px}
+  .task-name-cell{font-size:13px}
+  .phase-meta .badge-blue,.phase-meta .progress-bar,.phase-meta span:first-child{display:none}
+  #detailPanel{width:100%;right:-100%}
+  #detailPanel.open{right:0}
+  .gantt-wrap{font-size:11px}
+  .gc-label{font-size:10px}
+  .header-text p{display:none}
+  .tabs{gap:0}
+  .tab-btn{padding:0 10px;font-size:12px}
+}
+
+/* ── Gantt phase toggles ── */
+.gantt-phase-toggles{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;padding-bottom:10px;border-bottom:0.5px solid var(--color-border-t)}
+.gantt-phase-toggles-label{font-size:11px;color:var(--color-text-secondary);align-self:center;white-space:nowrap;margin-right:2px}
+.phase-toggle-btn{height:26px;padding:0 10px;font-size:11px;border:0.5px solid var(--color-border);border-radius:20px;background:#fff;color:var(--color-text-primary);cursor:pointer;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;transition:all .15s;font-family:var(--font-sans)}
+.phase-toggle-btn.active{color:#fff;border-color:transparent}
+.phase-toggle-btn.inactive{background:var(--color-bg-sec);color:var(--color-text-secondary);opacity:.6}
+.phase-toggle-btn:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- ── Login ── -->
+<div class="auth-screen" id="loginScreen">
+  <div class="auth-card">
+    <div class="auth-logo">PL<br>W/O</div>
+    <h1>Lachowice-7 Workover</h1>
+    <p>Horizon Petroleum &nbsp;·&nbsp; Bielsko-Biała license</p>
+    <input type="password" id="passwordInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')tryLogin()">
+    <button class="auth-btn" onclick="tryLogin()">Access project</button>
+    <div class="auth-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ── Name prompt ── -->
+<div class="auth-screen" id="nameScreen" style="display:none">
+  <div class="auth-card">
+    <div class="auth-logo">PL<br>W/O</div>
+    <h1>Who are you?</h1>
+    <p>Your name appears on comments and activity entries.</p>
+    <input type="text" id="nameInput" placeholder="Your full name" onkeydown="if(event.key==='Enter')saveName()">
+    <button class="auth-btn" onclick="saveName()">Continue</button>
+    <div class="auth-error" id="nameError"></div>
+  </div>
+</div>
+
+<!-- ── App ── -->
+<div id="appScreen">
+<div class="app">
+
+  <div class="header">
+    <div class="logo">PL<br>W/O</div>
+    <div class="header-text">
+      <h1>Lachowice-7 Workover</h1>
+      <p>Operator: Horizon Petroleum &nbsp;·&nbsp; License: Bielsko-Biała &nbsp;·&nbsp; Well type: Workover</p>
+    </div>
+    <div class="header-right">
+      <div class="user-chip"><i class="ti ti-user" style="font-size:12px"></i><span id="currentUserLabel"></span></div>
+      <div class="save-indicator"><div class="save-dot" id="saveDot"></div><span id="saveLabel">Connecting…</span></div>
+      <button class="btn btn-primary" onclick="openAddPhase()"><i class="ti ti-plus"></i> <span class="hide-xs">Add phase</span></button>
+    </div>
+  </div>
+
+  <div id="syncBanner" class="sync-banner" style="display:none">
+    <i class="ti ti-refresh"></i><span>Changes synced from another user.</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Total tasks</div><div class="stat-value" id="st-total">—</div><div class="stat-sub">across all phases</div></div>
+    <div class="stat"><div class="stat-label">Completed</div><div class="stat-value" id="st-done">—</div><div class="stat-sub" id="st-pct">—</div></div>
+    <div class="stat"><div class="stat-label">In progress</div><div class="stat-value" id="st-progress">—</div><div class="stat-sub">active tasks</div></div>
+    <div class="stat"><div class="stat-label">Overdue</div><div class="stat-value" id="st-overdue" style="color:var(--color-text-danger)">—</div><div class="stat-sub">past due date</div></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('board',this)"><i class="ti ti-layout-list"></i> Board</button>
+    <button class="tab-btn" onclick="switchTab('gantt',this)"><i class="ti ti-chart-gantt"></i> Gantt</button>
+    <button class="tab-btn" onclick="switchTab('swimlane',this)"><i class="ti ti-columns"></i> By person</button>
+    <button class="tab-btn" onclick="switchTab('activity',this)"><i class="ti ti-history"></i> Activity</button>
+  </div>
+
+  <!-- Board -->
+  <div class="tab-panel active" id="tab-board">
+    <div class="toolbar">
+      <input type="text" id="filterText" placeholder="Search tasks…" style="width:180px" oninput="renderBoard()">
+      <select id="filterStatus" onchange="renderBoard()">
+        <option value="">All statuses</option>
+        <option value="not started">Not started</option>
+        <option value="in progress">In progress</option>
+        <option value="complete">Complete</option>
+        <option value="blocked">Blocked</option>
+      </select>
+      <select id="filterOwner" onchange="renderBoard()">
+        <option value="">All owners</option>
+      </select>
+    </div>
+    <div id="phasesContainer"><div class="loading-screen"><i class="ti ti-loader"></i> Loading…</div></div>
+  </div>
+
+  <!-- Gantt -->
+  <div class="tab-panel" id="tab-gantt">
+    <div id="ganttContainer"><div class="loading-screen">Loading Gantt…</div></div>
+    <div class="gantt-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:#1a4a8a"></div>Phase</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#639922"></div>Complete</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#EF9F27"></div>In progress</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#378ADD"></div>Not started</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#c0392b"></div>Critical path</div>
+      <div class="leg-item"><svg width="32" height="12" style="overflow:visible"><defs><marker id="lgFS" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#1a4a8a" stroke-width="1.5" stroke-linecap="round"/></marker></defs><line x1="2" y1="6" x2="24" y2="6" stroke="#1a4a8a" stroke-width="1.5" marker-end="url(#lgFS)"/></svg>Finish→Start</div>
+      <div class="leg-item"><svg width="32" height="12" style="overflow:visible"><defs><marker id="lgSS" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round"/></marker></defs><line x1="2" y1="6" x2="24" y2="6" stroke="#378ADD" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#lgSS)"/></svg>Start→Start</div>
+      <div class="leg-item"><div style="width:12px;height:2px;background:#E24B4A;opacity:.7"></div>Today</div>
+    </div>
+  </div>
+
+  <!-- Swimlane -->
+  <div class="tab-panel" id="tab-swimlane">
+    <div id="swimlaneContainer"><div class="loading-screen">Loading…</div></div>
+  </div>
+
+  <!-- Activity -->
+  <div class="tab-panel" id="tab-activity">
+    <div id="activityContainer"><div class="loading-screen">Loading activity…</div></div>
+  </div>
+
+</div>
+</div>
+
+<!-- Detail panel -->
+<div id="detailPanel">
+  <div class="dp-header">
+    <div class="dp-title" id="dpTitle">—</div>
+    <button class="dp-close" onclick="closeDetail()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="dp-meta" id="dpMeta"></div>
+  <div class="dp-notes" id="dpNotes" style="display:none"></div>
+  <div class="dp-comments" id="dpComments">
+    <div class="dp-comments-title">Comments</div>
+    <div id="dpCommentsList"></div>
+  </div>
+  <div class="dp-compose">
+    <textarea id="dpCommentInput" placeholder="Add a comment…"></textarea>
+    <div class="dp-compose-footer">
+      <button class="btn btn-primary btn-sm" onclick="postComment()"><i class="ti ti-send"></i> Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- Phase modal -->
+<div class="modal-overlay" id="phaseModal">
+  <div class="modal">
+    <h2 id="modalTitle">Add phase</h2>
+    <div class="form-row"><label>Phase name</label><input id="mPhaseName" type="text"></div>
+    <div class="form-row"><label>Start date</label><input id="mPhaseStart" type="date"></div>
+    <div class="form-row"><label>End date</label><input id="mPhaseEnd" type="date"></div>
+    <div class="form-row"><label>Notes</label><textarea id="mPhaseNotes"></textarea></div>
+    <div class="form-row">
+      <label>Dependencies</label>
+      <div id="phaseDepList" class="dep-list"></div>
+      <div class="dep-add-row">
+        <select id="phaseDepSelect"><option value="">— select item —</option></select>
+        <select id="phaseDepType"><option value="FS">Finish→Start</option><option value="SS">Start→Start</option></select>
+        <button class="btn btn-sm" onclick="addDep('phase')"><i class="ti ti-plus"></i></button>
+      </div>
+      <div id="phaseDepWarn" class="warn-box" style="display:none"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('phaseModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="savePhase()">Save phase</button>
+    </div>
+  </div>
+</div>
+
+<!-- Task modal -->
+<div class="modal-overlay" id="taskModal">
+  <div class="modal">
+    <h2 id="taskModalTitle">Add task</h2>
+    <div class="form-row"><label>Task name</label><input id="mTaskName" type="text"></div>
+    <div class="form-row"><label>Responsible person</label><select id="mTaskOwner"><option value="">Unassigned</option></select></div>
+    <div class="form-row"><label>Or add new person</label><input id="mNewPerson" type="text" placeholder="Full name"></div>
+    <div class="form-row"><label>Start date</label><input id="mTaskStart" type="date"></div>
+    <div class="form-row"><label>Due date</label><input id="mTaskDue" type="date"></div>
+    <div class="form-row"><label>Status</label>
+      <select id="mTaskStatus">
+        <option value="not started">Not started</option>
+        <option value="in progress">In progress</option>
+        <option value="complete">Complete</option>
+        <option value="blocked">Blocked</option>
+      </select>
+    </div>
+    <div class="form-row"><label>Notes</label><textarea id="mTaskNotes"></textarea></div>
+    <div class="form-row">
+      <label>Dependencies</label>
+      <div id="taskDepList" class="dep-list"></div>
+      <div class="dep-add-row">
+        <select id="taskDepSelect"><option value="">— select item —</option></select>
+        <select id="taskDepType"><option value="FS">Finish→Start</option><option value="SS">Start→Start</option></select>
+        <button class="btn btn-sm" onclick="addDep('task')"><i class="ti ti-plus"></i></button>
+      </div>
+      <div id="taskDepWarn" class="warn-box" style="display:none"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('taskModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save task</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+// ── Auth ───────────────────────────────────────────────────────
+const PASS_HASH="c91b04ce895b5c6de83e686469b828c5b78e410b7e67bb341b48124240c3616e";
+async function hashPw(pw){const e=new TextEncoder().encode(pw);const b=await crypto.subtle.digest("SHA-256",e);return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,"0")).join("")}
+
+async function tryLogin(){
+  const pw=document.getElementById("passwordInput").value;
+  if(await hashPw(pw)===PASS_HASH){
+    sessionStorage.setItem("l7auth","1");
+    document.getElementById("loginScreen").style.display="none";
+    const savedName=sessionStorage.getItem("l7name");
+    if(savedName){currentUser=savedName;showApp();}
+    else{document.getElementById("nameScreen").style.display="flex";}
+  } else {
+    const e=document.getElementById("loginError");e.textContent="Incorrect password.";
+    document.getElementById("passwordInput").value="";setTimeout(()=>e.textContent="",3000);
+  }
+}
+
+function saveName(){
+  const raw=document.getElementById("nameInput").value.trim();
+  if(!raw){document.getElementById("nameError").textContent="Please enter your name.";return;}
+  const n=raw.split(/\s+/).map(w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase()).join(" ");
+  sessionStorage.setItem("l7name",n);currentUser=n;
+  document.getElementById("nameScreen").style.display="none";
+  showApp();
+}
+
+// On page load — check session
+window.addEventListener("DOMContentLoaded",()=>{
+  if(sessionStorage.getItem("l7auth")==="1"){
+    const savedName=sessionStorage.getItem("l7name");
+    if(savedName){
+      currentUser=savedName;
+      document.getElementById("loginScreen").style.display="none";
+      showApp();
+    } else {
+      document.getElementById("loginScreen").style.display="none";
+      document.getElementById("nameScreen").style.display="flex";
+    }
+  }
+});
+
+document.getElementById("passwordInput").addEventListener("keydown",e=>{if(e.key==="Enter")tryLogin();});
+
+// ── Firebase ───────────────────────────────────────────────────
+const firebaseConfig={apiKey:"AIzaSyAyby5pO-3GbBFlc6qS94mG2pqufZYZCSU",authDomain:"lachowice-7-workover.firebaseapp.com",projectId:"lachowice-7-workover",storageBucket:"lachowice-7-workover.firebasestorage.app",messagingSenderId:"367986868057",appId:"1:367986868057:web:d0bb955c760eb31e505648"};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+const projectDoc=db.collection("projects").doc("lachowice7");
+const activityCol=db.collection("activity");
+const commentsCol=db.collection("comments");
+
+// ── State ──────────────────────────────────────────────────────
+let phases=[],people=[],nextId=9000;
+let currentUser="";
+let editingPhaseId=null,editingTaskCtx=null,saveTimer=null,isFirstLoad=true,appInitialised=false;
+let currentDeps={phase:[],task:[]};
+let detailItemId=null;
+let commentListeners={};
+
+// ── Seed data ──────────────────────────────────────────────────
+const DEFAULT_PHASES=[
+  {id:1,name:"Pre-spud & Location Preparation",start:"2025-09-01",end:"2025-09-30",notes:"",open:true,deps:[],tasks:[
+    {id:101,name:"Site survey & environmental assessment",owner:"",start:"2025-09-01",due:"2025-09-10",status:"complete",notes:"",deps:[],subs:[]},
+    {id:102,name:"Rig move-in and rigging up",owner:"",start:"2025-09-11",due:"2025-09-20",status:"complete",notes:"",deps:[{id:101,type:"FS"}],subs:[
+      {id:1021,name:"Equipment transport permits",owner:"",start:"2025-09-05",due:"2025-09-08",status:"complete",notes:"",deps:[]},
+      {id:1022,name:"Crane and heavy lift coordination",owner:"",start:"2025-09-11",due:"2025-09-13",status:"complete",notes:"",deps:[{id:1021,type:"FS"}]}
+    ]},
+    {id:103,name:"Wellhead and BOP installation",owner:"",start:"2025-09-21",due:"2025-09-30",status:"in progress",notes:"",deps:[{id:102,type:"FS"}],subs:[]}
+  ]},
+  {id:2,name:"Drilling – Surface Hole (26\")",start:"2025-10-01",end:"2025-10-20",notes:"",open:true,deps:[{id:1,type:"FS"}],tasks:[
+    {id:201,name:"Drill surface hole to 500m",owner:"",start:"2025-10-01",due:"2025-10-10",status:"in progress",notes:"",deps:[],subs:[
+      {id:2011,name:"Daily drilling reports submission",owner:"",start:"2025-10-01",due:"2025-10-10",status:"in progress",notes:"",deps:[{id:201,type:"SS"}]}
+    ]},
+    {id:202,name:"Casing running & cementing",owner:"",start:"2025-10-11",due:"2025-10-18",status:"not started",notes:"",deps:[{id:201,type:"FS"}],subs:[]},
+    {id:203,name:"Pressure test wellhead",owner:"",start:"2025-10-18",due:"2025-10-20",status:"not started",notes:"",deps:[{id:202,type:"FS"}],subs:[]}
+  ]},
+  {id:3,name:"Drilling – Intermediate Hole (17.5\")",start:"2025-10-21",end:"2025-11-25",notes:"",open:false,deps:[{id:2,type:"FS"}],tasks:[
+    {id:301,name:"Mud program review",owner:"",start:"2025-10-21",due:"2025-10-23",status:"not started",notes:"",deps:[],subs:[]},
+    {id:302,name:"Drill to intermediate TD",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:"",deps:[{id:301,type:"FS"}],subs:[
+      {id:3021,name:"Directional survey checks",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:"",deps:[]},
+      {id:3022,name:"Mud logging & gas monitoring",owner:"",start:"2025-10-24",due:"2025-11-15",status:"not started",notes:"",deps:[{id:3021,type:"SS"}]}
+    ]},
+    {id:303,name:"Intermediate casing & cement job",owner:"",start:"2025-11-16",due:"2025-11-25",status:"not started",notes:"",deps:[{id:302,type:"FS"}],subs:[]}
+  ]},
+  {id:4,name:"Logging, Testing & Completion",start:"2025-11-26",end:"2025-12-20",notes:"",open:false,deps:[{id:3,type:"FS"}],tasks:[
+    {id:401,name:"Wireline logging run",owner:"",start:"2025-11-26",due:"2025-11-30",status:"not started",notes:"",deps:[],subs:[]},
+    {id:402,name:"Drill stem test (DST)",owner:"",start:"2025-12-01",due:"2025-12-10",status:"not started",notes:"",deps:[{id:401,type:"FS"}],subs:[
+      {id:4021,name:"Wellhead pressure monitoring",owner:"",start:"2025-12-01",due:"2025-12-10",status:"not started",notes:"",deps:[{id:402,type:"SS"}]}
+    ]},
+    {id:403,name:"Perforating & completion",owner:"",start:"2025-12-11",due:"2025-12-20",status:"not started",notes:"",deps:[{id:402,type:"FS"}],subs:[]}
+  ]},
+  {id:5,name:"Rig Release & Site Restoration",start:"2025-12-21",end:"2026-01-10",notes:"",open:false,deps:[{id:4,type:"FS"}],tasks:[
+    {id:501,name:"Rig-down and demobilization",owner:"",start:"2025-12-21",due:"2025-12-28",status:"not started",notes:"",deps:[],subs:[]},
+    {id:502,name:"Environmental site restoration",owner:"",start:"2025-12-29",due:"2026-01-10",status:"not started",notes:"",deps:[{id:501,type:"FS"}],subs:[]}
+  ]}
+];
+
+// ── Helpers ────────────────────────────────────────────────────
+function uid(){return ++nextId}
+function escH(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function setSaveStatus(s,t){document.getElementById("saveDot").className="save-dot "+s;document.getElementById("saveLabel").textContent=t}
+function fmtTime(ts){if(!ts)return "";const d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})+" "+d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});}
+
+function buildLookup(){
+  const m={};
+  phases.forEach(p=>{
+    m[p.id]={item:p,type:"phase",label:p.name,start:p.start,end:p.end};
+    p.tasks.forEach(t=>{
+      m[t.id]={item:t,type:"task",label:t.name,start:t.start,end:t.due,phaseId:p.id};
+      (t.subs||[]).forEach(s=>{m[s.id]={item:s,type:"sub",label:s.name,start:s.start,end:s.due,phaseId:p.id,taskId:t.id};});
+    });
+  });
+  return m;
+}
+function getItemEnd(id){const m=buildLookup();const e=m[id];return e?e.end||e.start||"":" ";}
+function getItemStart(id){const m=buildLookup();const e=m[id];return e?e.start||"":" ";}
+function statusBadge(s){const cls={complete:"badge-green","in progress":"badge-amber","not started":"badge-gray",blocked:"badge-red"};return `<span class="badge ${cls[s]||"badge-gray"}">${s}</span>`;}
+function isOverdue(t){if(t.status==="complete")return false;if(!t.due)return false;return new Date(t.due)<new Date(new Date().toISOString().slice(0,10));}
+function clampDate(d,floor){if(!d||!floor)return d;return d<floor?floor:d;}
+
+// ── Activity logging ───────────────────────────────────────────
+async function logActivity(text,type="action"){
+  try{
+    await activityCol.add({text,type,user:currentUser,ts:firebase.firestore.FieldValue.serverTimestamp()});
+  }catch(e){console.warn("Activity log failed",e);}
+}
+
+// ── App init ───────────────────────────────────────────────────
+function showApp(){
+  document.getElementById("appScreen").style.display="block";
+  document.getElementById("currentUserLabel").textContent=currentUser;
+  initApp();
+}
+
+function initApp(){
+  if(appInitialised)return;appInitialised=true;
+  projectDoc.onSnapshot(snap=>{
+    if(snap.exists){
+      const data=snap.data();
+      phases=data.phases||[];people=data.people||[];nextId=data.nextId||9000;
+      setSaveStatus("saved","Live — "+new Date().toLocaleTimeString());
+      if(!isFirstLoad){const b=document.getElementById("syncBanner");b.style.display="flex";setTimeout(()=>b.style.display="none",4000);}
+      isFirstLoad=false;
+      renderAll();
+    } else {
+      phases=JSON.parse(JSON.stringify(DEFAULT_PHASES));people=[];isFirstLoad=false;persistSave();
+    }
+  },err=>{setSaveStatus("error","DB error");console.error(err);phases=JSON.parse(JSON.stringify(DEFAULT_PHASES));isFirstLoad=false;renderAll();});
+}
+
+async function persistSave(){
+  setSaveStatus("saving","Saving…");
+  try{await projectDoc.set({phases,people,nextId,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});setSaveStatus("saved","Saved "+new Date().toLocaleTimeString());}
+  catch(e){setSaveStatus("error","Save failed");console.error(e);}
+}
+function scheduleSave(){setSaveStatus("saving","Saving…");clearTimeout(saveTimer);saveTimer=setTimeout(persistSave,800);}
+
+// ── Tab switching ──────────────────────────────────────────────
+function switchTab(name,btn){
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+  btn.classList.add("active");document.getElementById("tab-"+name).classList.add("active");
+  if(name==="gantt")renderGantt();
+  if(name==="swimlane")renderSwimlane();
+  if(name==="activity")renderActivity();
+}
+
+// ── Stats ──────────────────────────────────────────────────────
+function computeStats(){
+  let total=0,done=0,prog=0,over=0;
+  phases.forEach(p=>p.tasks.forEach(t=>{
+    total++;if(t.status==="complete")done++;if(t.status==="in progress")prog++;if(isOverdue(t))over++;
+    (t.subs||[]).forEach(s=>{total++;if(s.status==="complete")done++;if(s.status==="in progress")prog++;if(isOverdue(s))over++;});
+  }));
+  document.getElementById("st-total").textContent=total;
+  document.getElementById("st-done").textContent=done;
+  document.getElementById("st-pct").textContent=total?Math.round(done/total*100)+"% done":"0% done";
+  document.getElementById("st-progress").textContent=prog;
+  document.getElementById("st-overdue").textContent=over;
+}
+function phaseProgress(p){let t=0,d=0;p.tasks.forEach(k=>{t++;if(k.status==="complete")d++;(k.subs||[]).forEach(s=>{t++;if(s.status==="complete")d++;});});return t?Math.round(d/t*100):0;}
+
+function refreshOwnerFilter(){
+  const sel=document.getElementById("filterOwner");const cur=sel.value;
+  sel.innerHTML='<option value="">All owners</option>';
+  people.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;o.selected=p===cur;sel.appendChild(o);});
+}
+function renderAll(){computeStats();refreshOwnerFilter();renderBoard();}
+
+// ── Dep pills ──────────────────────────────────────────────────
+function depPills(deps){
+  if(!deps||!deps.length)return "";
+  const m=buildLookup();
+  return deps.map(d=>{const e=m[d.id];if(!e)return "";const s=e.label.length>20?e.label.slice(0,18)+"…":e.label;return `<span class="dep-pill"><i class="ti ti-arrow-right" style="font-size:9px"></i>${escH(s)} <span style="opacity:.6">${d.type}</span></span>`;}).join("");
+}
+
+// ── Comment count ──────────────────────────────────────────────
+const commentCounts={};
+function getCommentCount(itemId){return commentCounts[itemId]||0;}
+
+// Preload comment counts for all items once
+function loadCommentCounts(){
+  commentsCol.get().then(snap=>{
+    snap.forEach(doc=>{
+      const d=doc.data();const id=String(d.itemId);
+      commentCounts[id]=(commentCounts[id]||0)+1;
+    });
+    renderBoard();
+  }).catch(()=>{});
+}
+
+// ── Board render ───────────────────────────────────────────────
+function taskVisible(t,ft,fs,fo){
+  if(ft&&!(t.name.toLowerCase().includes(ft)||(t.owner||"").toLowerCase().includes(ft)))return false;
+  if(fs&&t.status!==fs&&!(t.subs||[]).some(s=>s.status===fs))return false;
+  if(fo&&t.owner!==fo&&!(t.subs||[]).some(s=>s.owner===fo))return false;
+  return true;
+}
+
+function renderBoard(){
+  const ft=(document.getElementById("filterText").value||"").toLowerCase();
+  const fs=document.getElementById("filterStatus").value;
+  const fo=document.getElementById("filterOwner").value;
+  const c=document.getElementById("phasesContainer");c.innerHTML="";
+  if(!phases.length){c.innerHTML='<div class="loading-screen">No phases yet. Click + Add phase to get started.</div>';return;}
+  phases.forEach(p=>c.appendChild(renderPhaseEl(p,ft,fs,fo)));
+}
+
+function commentBadge(id){
+  const n=getCommentCount(String(id));
+  return n>0?`<span class="comment-count"><i class="ti ti-message" style="font-size:10px"></i>${n}</span>`:"";
+}
+
+function renderPhaseEl(p,ft,fs,fo){
+  const pct=phaseProgress(p);const vt=p.tasks.filter(t=>taskVisible(t,ft,fs,fo));
+  const div=document.createElement("div");div.className="phase";div.dataset.phaseId=p.id;
+  div.innerHTML=`
+    <div class="phase-header" onclick="togglePhase(${p.id})">
+      <span class="drag-handle" draggable="true" data-drag-phase="${p.id}" onclick="event.stopPropagation()" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+      <i class="ti ti-chevron-right phase-toggle ${p.open?"open":""}"></i>
+      <span class="phase-name">${escH(p.name)}</span>
+      <div class="phase-meta">
+        <span style="font-size:11px;color:var(--color-text-secondary)">${p.start||""} → ${p.end||""}</span>
+        <span class="badge badge-blue">${vt.length} task${vt.length!==1?"s":""}</span>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <span style="font-size:11px;color:var(--color-text-secondary);min-width:26px">${pct}%</span>
+        ${depPills(p.deps||[])}
+        <button class="action-btn" onclick="event.stopPropagation();openAddTask(${p.id},null)" title="Add task"><i class="ti ti-plus"></i></button>
+        <button class="action-btn" onclick="event.stopPropagation();openEditPhase(${p.id})" title="Edit"><i class="ti ti-edit"></i></button>
+        <button class="action-btn" onclick="event.stopPropagation();deletePhase(${p.id})" title="Delete"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>
+    <div class="phase-body ${p.open?"open":""}">
+      <div class="table-head"><span></span><span></span><span>Task</span><span>Owner</span><span>Dates</span><span>Status</span><span>Due</span><span>Actions</span></div>
+      ${vt.map(t=>renderTaskRow(p.id,t)).join("")}
+      <div class="add-row" onclick="openAddTask(${p.id},null)"><i class="ti ti-plus" style="font-size:13px"></i> Add task</div>
+    </div>`;
+  return div;
+}
+
+function renderTaskRow(pid,t){
+  const od=isOverdue(t);const subs=(t.subs||[]).map(s=>renderSubRow(pid,t.id,s)).join("");
+  return `<div class="task-row" data-pid="${pid}" data-tid="${t.id}" style="${od?"background:var(--color-bg-danger)":""}">
+    <span class="drag-handle" draggable="true" data-drag-task="${t.id}" data-drag-pid="${pid}" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+    <div class="task-check ${t.status==="complete"?"done":""}" onclick="toggleDone(${pid},${t.id},null)">${t.status==="complete"?'<i class="ti ti-check"></i>':""}</div>
+    <span class="task-name-cell" onclick="openDetail(${t.id})">
+      <span class="task-name-text" style="${t.status==="complete"?"text-decoration:line-through;color:var(--color-text-secondary)":""}">${escH(t.name)}</span>
+      ${commentBadge(t.id)}
+    </span>
+    <span class="col-owner">${t.owner?`<span class="owner-pill"><i class="ti ti-user" style="font-size:10px"></i>${escH(t.owner)}</span>`:""}</span>
+    <span class="col-dates" style="font-size:11px;color:var(--color-text-secondary)">${t.start||""}${t.start&&t.due?"<br>":""}${t.due||""}</span>
+    <span class="col-status">${statusBadge(t.status)}</span>
+    <span class="col-due" style="font-size:11px;${od?"color:var(--color-text-danger);font-weight:500":""}">${t.due||""}</span>
+    <span style="display:flex;flex-wrap:wrap;gap:2px;align-items:center">
+      ${depPills(t.deps||[])}
+      <button class="action-btn" onclick="openAddTask(${pid},${t.id})" title="Add sub-item"><i class="ti ti-git-branch" style="font-size:13px"></i></button>
+      <button class="action-btn" onclick="openEditTask(${pid},${t.id},null)" title="Edit"><i class="ti ti-edit" style="font-size:13px"></i></button>
+      <button class="action-btn" onclick="deleteTask(${pid},${t.id},null)" title="Delete"><i class="ti ti-trash" style="font-size:13px"></i></button>
+    </span>
+  </div>${subs}`;
+}
+
+function renderSubRow(pid,tid,s){
+  const od=isOverdue(s);
+  return `<div class="task-row sub" data-pid="${pid}" data-tid="${tid}" data-sid="${s.id}" style="${od?"background:#fff0f0":""}">
+    <span class="drag-handle" draggable="true" data-drag-sub="${s.id}" data-drag-pid="${pid}" data-drag-tid="${tid}" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+    <div class="task-check ${s.status==="complete"?"done":""}" onclick="toggleDone(${pid},${tid},${s.id})">${s.status==="complete"?'<i class="ti ti-check"></i>':""}</div>
+    <span class="task-name-cell" onclick="openDetail(${s.id})">
+      <i class="ti ti-corner-down-right" style="font-size:11px;color:var(--color-text-secondary)"></i>
+      <span class="task-name-text" style="${s.status==="complete"?"text-decoration:line-through;color:var(--color-text-secondary)":""}">${escH(s.name)}</span>
+      ${commentBadge(s.id)}
+    </span>
+    <span class="col-owner">${s.owner?`<span class="owner-pill"><i class="ti ti-user" style="font-size:10px"></i>${escH(s.owner)}</span>`:""}</span>
+    <span class="col-dates" style="font-size:11px;color:var(--color-text-secondary)">${s.start||""}${s.start&&s.due?"<br>":""}${s.due||""}</span>
+    <span class="col-status">${statusBadge(s.status)}</span>
+    <span class="col-due" style="font-size:11px;${od?"color:var(--color-text-danger);font-weight:500":""}">${s.due||""}</span>
+    <span style="display:flex;flex-wrap:wrap;gap:2px;align-items:center">
+      ${depPills(s.deps||[])}
+      <button class="action-btn" onclick="openEditTask(${pid},${tid},${s.id})" title="Edit"><i class="ti ti-edit" style="font-size:13px"></i></button>
+      <button class="action-btn" onclick="deleteTask(${pid},${tid},${s.id})" title="Delete"><i class="ti ti-trash" style="font-size:13px"></i></button>
+    </span>
+  </div>`;
+}
+
+// ── Board actions ──────────────────────────────────────────────
+function togglePhase(id){const p=phases.find(x=>x.id===id);if(p){p.open=!p.open;scheduleSave();renderBoard();}}
+
+function toggleDone(pid,tid,sid){
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  const t=p.tasks.find(x=>x.id===tid);if(!t)return;
+  if(sid){
+    const s=(t.subs||[]).find(x=>x.id===sid);
+    if(s){const prev=s.status;s.status=s.status==="complete"?"not started":"complete";logActivity(`${currentUser} marked "${s.name}" as ${s.status}`,"status");}
+  } else {
+    const prev=t.status;t.status=t.status==="complete"?"not started":"complete";
+    logActivity(`${currentUser} marked "${t.name}" as ${t.status}`,"status");
+  }
+  scheduleSave();renderAll();
+}
+
+function deletePhase(id){
+  if(!confirm("Delete this phase and all its tasks?"))return;
+  const p=phases.find(x=>x.id===id);
+  const name=p?p.name:"phase";
+  phases=phases.filter(p=>p.id!==id);
+  logActivity(`${currentUser} deleted phase "${name}"`,"delete");
+  scheduleSave();renderAll();
+}
+
+function deleteTask(pid,tid,sid){
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  if(sid){
+    const t=p.tasks.find(x=>x.id===tid);if(!t)return;
+    const s=(t.subs||[]).find(x=>x.id===sid);const name=s?s.name:"this sub-item";
+    if(!confirm(`Delete sub-item "${name}"?`))return;
+    t.subs=(t.subs||[]).filter(s=>s.id!==sid);
+    logActivity(`${currentUser} deleted sub-item "${name}"`,"delete");
+  } else {
+    const t=p.tasks.find(x=>x.id===tid);const name=t?t.name:"this task";
+    if(!confirm(`Delete task "${name}"?${t&&t.subs&&t.subs.length?"\n\nThis will also delete "+t.subs.length+" sub-item(s).":""}`))return;
+    p.tasks=p.tasks.filter(t=>t.id!==tid);
+    logActivity(`${currentUser} deleted task "${name}"`,"delete");
+  }
+  scheduleSave();renderAll();
+}
+
+// ── Detail panel ───────────────────────────────────────────────
+function openDetail(itemId){
+  detailItemId=itemId;
+  const m=buildLookup();const entry=m[itemId];
+  if(!entry)return;
+  const item=entry.item;
+  document.getElementById("dpTitle").textContent=item.name;
+  // Meta
+  const meta=document.getElementById("dpMeta");
+  meta.innerHTML=`
+    <div class="dp-meta-item"><div class="dp-meta-label">Status</div><div class="dp-meta-value">${item.status||"—"}</div></div>
+    <div class="dp-meta-item"><div class="dp-meta-label">Owner</div><div class="dp-meta-value">${item.owner||"Unassigned"}</div></div>
+    <div class="dp-meta-item"><div class="dp-meta-label">Start</div><div class="dp-meta-value">${item.start||"—"}</div></div>
+    <div class="dp-meta-item"><div class="dp-meta-label">Due</div><div class="dp-meta-value">${item.due||item.end||"—"}</div></div>
+    <div class="dp-meta-item"><div class="dp-meta-label">Type</div><div class="dp-meta-value" style="text-transform:capitalize">${entry.type}</div></div>`;
+  // Notes
+  const notesEl=document.getElementById("dpNotes");
+  if(item.notes){notesEl.style.display="block";notesEl.textContent=item.notes;}
+  else notesEl.style.display="none";
+  // Comments
+  document.getElementById("dpCommentsList").innerHTML='<div style="font-size:12px;color:var(--color-text-secondary)">Loading…</div>';
+  // Detach old listener
+  if(commentListeners[itemId])commentListeners[itemId]();
+  const unsub=commentsCol.where("itemId","==",itemId).orderBy("ts","asc").onSnapshot(snap=>{
+    const list=document.getElementById("dpCommentsList");
+    if(!list)return;list.innerHTML="";
+    if(snap.empty){list.innerHTML='<div style="font-size:12px;color:var(--color-text-secondary)">No comments yet.</div>';return;}
+    snap.forEach(doc=>{
+      const d=doc.data();
+      const el=document.createElement("div");el.className="comment-item";
+      el.innerHTML=`<div><span class="comment-author">${escH(d.author||"Unknown")}</span><span class="comment-time">${fmtTime(d.ts)}</span></div><div class="comment-text">${escH(d.text)}</div>`;
+      list.appendChild(el);
+    });
+    // Update comment count cache
+    commentCounts[String(itemId)]=snap.size;
+  },err=>console.warn(err));
+  commentListeners[itemId]=unsub;
+  document.getElementById("dpCommentInput").value="";
+  document.getElementById("detailPanel").classList.add("open");
+}
+
+function closeDetail(){
+  document.getElementById("detailPanel").classList.remove("open");
+  detailItemId=null;
+}
+
+async function postComment(){
+  const text=document.getElementById("dpCommentInput").value.trim();
+  if(!text||!detailItemId)return;
+  const m=buildLookup();const entry=m[detailItemId];
+  const itemName=entry?entry.label:"item";
+  try{
+    await commentsCol.add({itemId:detailItemId,text,author:currentUser,ts:firebase.firestore.FieldValue.serverTimestamp()});
+    document.getElementById("dpCommentInput").value="";
+    logActivity(`${currentUser} commented on "${itemName}"`,"comment");
+  }catch(e){alert("Failed to post comment. Check your connection.");console.error(e);}
+}
+
+// ── Activity tab ───────────────────────────────────────────────
+function renderActivity(){
+  const c=document.getElementById("activityContainer");
+  c.innerHTML='<div class="loading-screen"><i class="ti ti-loader"></i> Loading activity…</div>';
+  activityCol.orderBy("ts","desc").limit(100).get().then(snap=>{
+    c.innerHTML="";
+    if(snap.empty){c.innerHTML='<div class="activity-empty">No activity recorded yet.</div>';return;}
+    const list=document.createElement("div");list.className="activity-list";
+    snap.forEach(doc=>{
+      const d=doc.data();
+      const item=document.createElement("div");item.className="activity-item";
+      const dotClass=d.type==="comment"?"comment":d.type==="delete"?"delete":d.type==="status"?"status":"";
+      item.innerHTML=`<div class="activity-dot ${dotClass}"></div>
+        <div class="activity-body">
+          <div class="activity-text">${escH(d.text||"")}</div>
+          <div class="activity-meta">${fmtTime(d.ts)}</div>
+        </div>`;
+      list.appendChild(item);
+    });
+    c.appendChild(list);
+  }).catch(err=>{c.innerHTML='<div class="activity-empty">Could not load activity. Make sure Firestore indexes are set up.</div>';console.error(err);});
+}
+
+// ── Dep modal helpers ──────────────────────────────────────────
+function buildDepOptions(excludeId){
+  const opts=[];
+  phases.forEach(p=>{
+    if(p.id!==excludeId)opts.push({value:p.id,label:"[Phase] "+p.name});
+    p.tasks.forEach(t=>{
+      if(t.id!==excludeId)opts.push({value:t.id,label:"  [Task] "+t.name});
+      (t.subs||[]).forEach(s=>{if(s.id!==excludeId)opts.push({value:s.id,label:"    [Sub] "+s.name});});
+    });
+  });
+  return opts;
+}
+function populateDepSelect(selId,excludeId){
+  const sel=document.getElementById(selId);sel.innerHTML='<option value="">— select item —</option>';
+  buildDepOptions(excludeId).forEach(o=>{const opt=document.createElement("option");opt.value=o.value;opt.textContent=o.label;sel.appendChild(opt);});
+}
+function renderDepList(listId,deps){
+  const el=document.getElementById(listId);el.innerHTML="";const m=buildLookup();
+  (deps||[]).forEach((d,i)=>{
+    const entry=m[d.id];const label=entry?entry.label:"Unknown";
+    const tag=document.createElement("span");tag.className="dep-tag";
+    tag.innerHTML=`<i class="ti ti-arrow-right" style="font-size:10px"></i>${escH(label.length>24?label.slice(0,22)+"…":label)} <em style="font-size:10px;opacity:.6">${d.type}</em>
+      <button onclick="removeDep('${listId}',${i})" title="Remove"><i class="ti ti-x"></i></button>`;
+    el.appendChild(tag);
+  });
+}
+function addDep(ctx){
+  const selId=ctx==="phase"?"phaseDepSelect":"taskDepSelect";
+  const typeId=ctx==="phase"?"phaseDepType":"taskDepType";
+  const listId=ctx==="phase"?"phaseDepList":"taskDepList";
+  const warnId=ctx==="phase"?"phaseDepWarn":"taskDepWarn";
+  const sel=document.getElementById(selId);const val=parseInt(sel.value);
+  if(!val)return;
+  const type=document.getElementById(typeId).value;
+  if(currentDeps[ctx].some(d=>d.id===val)){alert("Already added.");return;}
+  currentDeps[ctx].push({id:val,type});
+  renderDepList(listId,currentDeps[ctx]);sel.value="";
+  checkDepWarning(ctx,warnId);
+}
+function removeDep(listId,idx){
+  const ctx=listId.startsWith("phase")?"phase":"task";
+  currentDeps[ctx].splice(idx,1);
+  renderDepList(listId,currentDeps[ctx]);
+  checkDepWarning(ctx,listId.startsWith("phase")?"phaseDepWarn":"taskDepWarn");
+}
+function checkDepWarning(ctx,warnId){
+  const startId=ctx==="phase"?"mPhaseStart":"mTaskStart";
+  const start=document.getElementById(startId).value;
+  const warn=document.getElementById(warnId);
+  if(!start){warn.style.display="none";return;}
+  const violations=[];
+  currentDeps[ctx].forEach(d=>{
+    const ref=d.type==="FS"?getItemEnd(d.id):getItemStart(d.id);
+    if(ref&&start<ref){const m=buildLookup();const e=m[d.id];violations.push(`Start is before ${d.type==="FS"?"end":"start"} of "${e?e.label:"item"}" (${ref})`);}
+  });
+  if(violations.length){warn.style.display="block";warn.innerHTML="⚠ "+violations.join("<br>⚠ ");}
+  else warn.style.display="none";
+}
+
+// ── Phase modal ────────────────────────────────────────────────
+function openAddPhase(){
+  editingPhaseId=null;currentDeps.phase=[];
+  document.getElementById("modalTitle").textContent="Add phase";
+  ["mPhaseName","mPhaseStart","mPhaseEnd","mPhaseNotes"].forEach(id=>document.getElementById(id).value="");
+  populateDepSelect("phaseDepSelect",null);renderDepList("phaseDepList",[]);
+  document.getElementById("phaseDepWarn").style.display="none";
+  openModal("phaseModal");
+}
+function openEditPhase(id){
+  const p=phases.find(x=>x.id===id);if(!p)return;
+  editingPhaseId=id;currentDeps.phase=JSON.parse(JSON.stringify(p.deps||[]));
+  document.getElementById("modalTitle").textContent="Edit phase";
+  document.getElementById("mPhaseName").value=p.name;
+  document.getElementById("mPhaseStart").value=p.start||"";
+  document.getElementById("mPhaseEnd").value=p.end||"";
+  document.getElementById("mPhaseNotes").value=p.notes||"";
+  populateDepSelect("phaseDepSelect",id);renderDepList("phaseDepList",currentDeps.phase);
+  document.getElementById("phaseDepWarn").style.display="none";
+  openModal("phaseModal");
+}
+function savePhase(){
+  const name=document.getElementById("mPhaseName").value.trim();if(!name)return alert("Phase name required.");
+  if(editingPhaseId){
+    const p=phases.find(x=>x.id===editingPhaseId);
+    if(p){const old=p.name;p.name=name;p.start=document.getElementById("mPhaseStart").value;p.end=document.getElementById("mPhaseEnd").value;p.notes=document.getElementById("mPhaseNotes").value;p.deps=currentDeps.phase;
+    logActivity(`${currentUser} edited phase "${name}"`);}
+  } else {
+    const newPhase={id:uid(),name,start:document.getElementById("mPhaseStart").value,end:document.getElementById("mPhaseEnd").value,notes:document.getElementById("mPhaseNotes").value,open:true,deps:currentDeps.phase,tasks:[]};
+    phases.push(newPhase);logActivity(`${currentUser} created phase "${name}"`);
+  }
+  closeModal("phaseModal");scheduleSave();renderAll();
+}
+
+// ── Task modal ─────────────────────────────────────────────────
+function openAddTask(pid,parentTid){
+  editingTaskCtx={pid,parentTid,tid:null};currentDeps.task=[];
+  document.getElementById("taskModalTitle").textContent=parentTid?"Add sub-item":"Add task";
+  ["mTaskName","mNewPerson","mTaskStart","mTaskDue"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("mTaskStatus").value="not started";document.getElementById("mTaskNotes").value="";
+  populateOwnerSelect("mTaskOwner","");populateDepSelect("taskDepSelect",null);
+  renderDepList("taskDepList",[]);document.getElementById("taskDepWarn").style.display="none";
+  openModal("taskModal");
+}
+function openEditTask(pid,tid,sid){
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  const t=p.tasks.find(x=>x.id===tid);if(!t)return;
+  const item=sid?(t.subs||[]).find(s=>s.id===sid):t;if(!item)return;
+  editingTaskCtx={pid,parentTid:sid?tid:null,tid:sid||tid};
+  currentDeps.task=JSON.parse(JSON.stringify(item.deps||[]));
+  document.getElementById("taskModalTitle").textContent="Edit task";
+  document.getElementById("mTaskName").value=item.name;
+  document.getElementById("mTaskStart").value=item.start||"";
+  document.getElementById("mTaskDue").value=item.due||"";
+  document.getElementById("mTaskStatus").value=item.status||"not started";
+  document.getElementById("mTaskNotes").value=item.notes||"";
+  document.getElementById("mNewPerson").value="";
+  populateOwnerSelect("mTaskOwner",item.owner||"");
+  populateDepSelect("taskDepSelect",sid||tid);
+  renderDepList("taskDepList",currentDeps.task);
+  document.getElementById("taskDepWarn").style.display="none";
+  openModal("taskModal");
+}
+function populateOwnerSelect(selId,selected){
+  const sel=document.getElementById(selId);sel.innerHTML='<option value="">Unassigned</option>';
+  people.forEach(p=>{const o=document.createElement("option");o.value=p;o.textContent=p;o.selected=p===selected;sel.appendChild(o);});
+}
+function saveTask(){
+  const name=document.getElementById("mTaskName").value.trim();if(!name)return alert("Task name required.");
+  let owner=document.getElementById("mTaskOwner").value;
+  const newP=document.getElementById("mNewPerson").value.trim();
+  if(newP){owner=newP;if(!people.includes(newP))people.push(newP);}
+  const{pid,parentTid,tid}=editingTaskCtx;
+  const p=phases.find(x=>x.id===pid);if(!p)return;
+  const floor=parentTid?(p.tasks.find(x=>x.id===parentTid)||{}).start||p.start||"":p.start||"";
+  let ts=clampDate(document.getElementById("mTaskStart").value,floor);
+  let td=clampDate(document.getElementById("mTaskDue").value,floor);
+  if(ts&&td&&td<ts)td=ts;
+  const task={id:uid(),name,owner,start:ts,due:td,status:document.getElementById("mTaskStatus").value,notes:document.getElementById("mTaskNotes").value,deps:currentDeps.task};
+  const isNew=!tid;
+  if(tid){
+    if(parentTid){const t=p.tasks.find(x=>x.id===parentTid);if(t){const s=(t.subs||[]).find(x=>x.id===tid);if(s)Object.assign(s,task);}}
+    else{const t=p.tasks.find(x=>x.id===tid);if(t)Object.assign(t,{name:task.name,owner:task.owner,start:task.start,due:task.due,status:task.status,notes:task.notes,deps:task.deps});}
+    logActivity(`${currentUser} edited ${parentTid?"sub-item":"task"} "${name}"`);
+  } else if(parentTid){
+    const t=p.tasks.find(x=>x.id===parentTid);if(t){if(!t.subs)t.subs=[];t.subs.push({...task});}
+    logActivity(`${currentUser} created sub-item "${name}"`);
+  } else {
+    p.tasks.push({...task,subs:[]});
+    logActivity(`${currentUser} created task "${name}"`);
+  }
+  closeModal("taskModal");scheduleSave();renderAll();
+}
+
+// ── Gantt ──────────────────────────────────────────────────────
+function computeCriticalPath(){
+  // Build flat map of all items with dates
+  const items={};
+  phases.forEach(p=>{
+    items[p.id]={id:p.id,start:p.start,end:p.end,deps:p.deps||[]};
+    p.tasks.forEach(t=>{
+      items[t.id]={id:t.id,start:t.start,end:t.due,deps:t.deps||[]};
+      (t.subs||[]).forEach(s=>{items[s.id]={id:s.id,start:s.start,end:s.due,deps:s.deps||[]};});
+    });
+  });
+  // Find latest end date
+  let maxEnd=null;let maxId=null;
+  Object.values(items).forEach(it=>{if(it.end&&(!maxEnd||it.end>maxEnd)){maxEnd=it.end;maxId=it.id;}});
+  // Walk backwards from the latest item following FS deps
+  const critical=new Set();
+  function walk(id){
+    if(!id||critical.has(id))return;critical.add(id);
+    const it=items[id];if(!it)return;
+    (it.deps||[]).filter(d=>d.type==="FS").forEach(d=>walk(d.id));
+  }
+  walk(maxId);
+  return critical;
+}
+
+
+// ── Gantt phase visibility ──────────────────────────────────────
+let hiddenPhases=new Set();
+function toggleGanttPhase(id){
+  if(hiddenPhases.has(id))hiddenPhases.delete(id);
+  else hiddenPhases.add(id);
+  renderGantt();
+}
+
+function renderGantt(){
+  const container=document.getElementById("ganttContainer");container.innerHTML="";
+  if(!phases.length){container.innerHTML='<div class="loading-screen">No phases yet.</div>';return;}
+
+  // Phase visibility toggle bar
+  const toggleBar=document.createElement("div");toggleBar.className="gantt-phase-toggles";
+  const tlbl=document.createElement("span");tlbl.className="gantt-phase-toggles-label";tlbl.textContent="Show:";toggleBar.appendChild(tlbl);
+  // Accent colour from CSS variable (falls back to blue for L7, green for CZ/BB)
+  const accentColor=getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#1a4a8a';
+  phases.forEach(p=>{
+    const btn=document.createElement("button");
+    btn.className="phase-toggle-btn "+(hiddenPhases.has(p.id)?"inactive":"active");
+    btn.style.background=hiddenPhases.has(p.id)?"":accentColor;
+    // Shorten long phase names for the button
+    const short=p.name.replace(/^Phase \d+:\s*/i,"").replace(/^Faza \d+:\s*/i,"");
+    btn.textContent=short.length>28?short.slice(0,26)+"…":short;
+    btn.title=p.name;
+    btn.onclick=()=>toggleGanttPhase(p.id);
+    toggleBar.appendChild(btn);
+  });
+  // Add "Show all" / "Hide all" controls
+  const allBtn=document.createElement("button");allBtn.className="phase-toggle-btn";allBtn.style.marginLeft="4px";
+  allBtn.innerHTML='<i class="ti ti-eye" style="font-size:11px"></i> All';
+  allBtn.onclick=()=>{hiddenPhases.clear();renderGantt();};
+  toggleBar.appendChild(allBtn);
+  const noneBtn=document.createElement("button");noneBtn.className="phase-toggle-btn";
+  noneBtn.innerHTML='<i class="ti ti-eye-off" style="font-size:11px"></i> None';
+  noneBtn.onclick=()=>{phases.forEach(p=>hiddenPhases.add(p.id));renderGantt();};
+  toggleBar.appendChild(noneBtn);
+  container.appendChild(toggleBar);
+  const criticalPath=computeCriticalPath();
+  let minD=null,maxD=null;
+  phases.forEach(p=>{
+    if(p.start)minD=minD?Math.min(minD,new Date(p.start).getTime()):new Date(p.start).getTime();
+    if(p.end)maxD=maxD?Math.max(maxD,new Date(p.end).getTime()):new Date(p.end).getTime();
+    p.tasks.forEach(t=>{
+      if(t.start)minD=minD?Math.min(minD,new Date(t.start).getTime()):new Date(t.start).getTime();
+      if(t.due)maxD=maxD?Math.max(maxD,new Date(t.due).getTime()):new Date(t.due).getTime();
+      (t.subs||[]).forEach(s=>{
+        if(s.start)minD=minD?Math.min(minD,new Date(s.start).getTime()):new Date(s.start).getTime();
+        if(s.due)maxD=maxD?Math.max(maxD,new Date(s.due).getTime()):new Date(s.due).getTime();
+      });
+    });
+  });
+  if(!minD)return;
+  const pStart=new Date(minD);const pEnd=new Date(maxD||minD);
+  const totalDays=(pEnd-pStart)/86400000||1;
+  const LABEL_W=170;
+  const wrap=document.createElement("div");wrap.className="gantt-wrap";
+  function pct(d){if(!d)return 0;return((new Date(d)-pStart)/86400000)/totalDays*100;}
+  const todayStr=new Date().toISOString().slice(0,10);
+
+  // Header
+  const hRow=document.createElement("div");hRow.className="gantt-row";hRow.style.gridTemplateColumns=LABEL_W+"px 1fr";hRow.style.marginBottom="4px";
+  const hLbl=document.createElement("div");
+  const hArea=document.createElement("div");hArea.className="gc-header-area";hArea.style.position="relative";
+  let cur=new Date(pStart.getFullYear(),pStart.getMonth(),1);
+  while(cur<=pEnd){
+    const pp=pct(cur.toISOString().slice(0,10));
+    const sep=document.createElement("div");sep.className="gc-month-sep";sep.style.left=pp+"%";hArea.appendChild(sep);
+    const lbl=document.createElement("div");lbl.className="gc-month-lbl";lbl.style.left=(pp+0.3)+"%";
+    lbl.textContent=cur.toLocaleString("en",{month:"short"})+" '"+cur.getFullYear().toString().slice(2);
+    hArea.appendChild(lbl);
+    cur=new Date(cur.getFullYear(),cur.getMonth()+1,1);
+  }
+  const todayHdr=document.createElement("div");todayHdr.className="gc-today";todayHdr.style.left=pct(todayStr)+"%";hArea.appendChild(todayHdr);
+  hRow.appendChild(hLbl);hRow.appendChild(hArea);wrap.appendChild(hRow);
+
+  const rows=[];
+  function addRow(label,lblClass,barCls,start,end,rowH,barTop,barH,rowId){
+    const row=document.createElement("div");row.className="gantt-row";row.style.gridTemplateColumns=LABEL_W+"px 1fr";row.style.marginBottom="2px";
+    const lbl=document.createElement("div");lbl.className="gc-label "+lblClass;lbl.textContent=label;lbl.title=label;
+    const area=document.createElement("div");area.className="gc-bar-area";area.style.position="relative";area.style.height=rowH+"px";
+    if(start&&end){
+      const bar=document.createElement("div");bar.className="gc-bar "+barCls;
+      const l=pct(start),r=pct(end);
+      bar.style.left=l+"%";bar.style.width=Math.max(0.4,r-l)+"%";bar.style.top=barTop+"px";bar.style.height=barH+"px";
+      bar.dataset.itemId=rowId;
+      area.appendChild(bar);
+    }
+    const tl=document.createElement("div");tl.className="gc-today";tl.style.left=pct(todayStr)+"%";area.appendChild(tl);
+    row.appendChild(lbl);row.appendChild(area);wrap.appendChild(row);
+    rows.push({area,rowId,start,end});
+    return{row,area};
+  }
+
+  phases.forEach(p=>{
+    if(hiddenPhases.has(p.id))return;
+    addRow(p.name,"gc-label phase-lbl","gc-phase-bar",p.start,p.end,22,3,16,p.id);
+    p.tasks.forEach(t=>{
+      const isCrit=criticalPath.has(t.id);
+      const tc=isCrit?"gc-task-critical":t.status==="complete"?"gc-task-complete":t.status==="in progress"?"gc-task-progress":t.status==="blocked"?"gc-task-blocked":"gc-task-notstarted";
+      const tLblCls="gc-label"+(isCrit?" cp-lbl":"");
+      addRow(t.name,tLblCls,"gc-bar "+tc,t.start,t.due,22,3,16,t.id);
+      (t.subs||[]).forEach(s=>{
+        const sc=criticalPath.has(s.id)?"gc-task-critical":s.status==="complete"?"gc-task-complete":s.status==="in progress"?"gc-task-progress":s.status==="blocked"?"gc-task-blocked":"gc-task-notstarted";
+        addRow(s.name,"gc-label sub-lbl","gc-bar gc-sub-bar "+sc,s.start,s.due,22,5,12,s.id);
+      });
+    });
+    const sp=document.createElement("div");sp.style.height="5px";wrap.appendChild(sp);
+  });
+
+  container.appendChild(wrap);
+
+  // Arrows
+  requestAnimationFrame(()=>{
+    const wrapRect=wrap.getBoundingClientRect();
+    const barInfoMap={};
+    wrap.querySelectorAll(".gc-bar[data-item-id]").forEach(bar=>{
+      const id=parseInt(bar.dataset.itemId);if(!id)return;
+      const r=bar.getBoundingClientRect();
+      barInfoMap[id]={xLeft:r.left-wrapRect.left,xRight:r.right-wrapRect.left,yMid:r.top-wrapRect.top+r.height/2};
+    });
+    const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+    svg.style.cssText="position:absolute;top:0;left:0;pointer-events:none;overflow:visible";
+    svg.setAttribute("width","100%");svg.setAttribute("height",wrap.offsetHeight+"px");
+    svg.innerHTML=`<defs>
+      <marker id="depArrowFS" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#1a4a8a" stroke-width="1.5" stroke-linecap="round"/></marker>
+      <marker id="depArrowSS" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#378ADD" stroke-width="1.5" stroke-linecap="round"/></marker>
+    </defs>`;
+    const allDeps=[];
+    phases.forEach(p=>{
+      (p.deps||[]).forEach(d=>allDeps.push({fromId:d.id,toId:p.id,type:d.type}));
+      p.tasks.forEach(t=>{
+        (t.deps||[]).forEach(d=>allDeps.push({fromId:d.id,toId:t.id,type:d.type}));
+        (t.subs||[]).forEach(s=>{(s.deps||[]).forEach(d=>allDeps.push({fromId:d.id,toId:s.id,type:d.type}));});
+      });
+    });
+    allDeps.forEach(dep=>{
+      const from=barInfoMap[dep.fromId];const to=barInfoMap[dep.toId];if(!from||!to)return;
+      const x1=dep.type==="FS"?from.xRight:from.xLeft;const y1=from.yMid;
+      const x2=to.xLeft;const y2=to.yMid;
+      const bend=Math.max(12,Math.abs(x2-x1)*0.38);
+      const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d",`M${x1},${y1} C${x1+bend},${y1} ${x2-bend},${y2} ${x2},${y2}`);
+      path.setAttribute("fill","none");
+      path.setAttribute("stroke",dep.type==="FS"?"#1a4a8a":"#378ADD");
+      path.setAttribute("stroke-width","1.5");path.setAttribute("opacity","0.65");
+      path.setAttribute("marker-end",`url(#depArrow${dep.type})`);
+      if(dep.type==="SS")path.setAttribute("stroke-dasharray","4 3");
+      svg.appendChild(path);
+    });
+    wrap.style.position="relative";wrap.appendChild(svg);
+  });
+}
+
+// ── Swimlane ───────────────────────────────────────────────────
+function renderSwimlane(){
+  const c=document.getElementById("swimlaneContainer");c.innerHTML="";
+  const byOwner={};
+  phases.forEach(p=>{
+    p.tasks.forEach(t=>{
+      const o=t.owner||"Unassigned";if(!byOwner[o])byOwner[o]=[];
+      byOwner[o].push({name:t.name,phase:p.name,due:t.due,status:t.status,id:t.id});
+      (t.subs||[]).forEach(s=>{
+        const so=s.owner||t.owner||"Unassigned";if(!byOwner[so])byOwner[so]=[];
+        byOwner[so].push({name:s.name,phase:p.name+" / "+t.name,due:s.due,status:s.status,id:s.id,isSub:true});
+      });
+    });
+  });
+  if(!Object.keys(byOwner).length){c.innerHTML='<div class="loading-screen">No tasks with owners yet.</div>';return;}
+  function initials(n){return n.split(" ").map(w=>w[0]||"").join("").slice(0,2).toUpperCase();}
+  function swBadge(s){const m={"complete":"sw-complete","in progress":"sw-progress","not started":"sw-notstarted","blocked":"sw-blocked"};return`<span class="sw-badge ${m[s]||"sw-notstarted"}">${s}</span>`;}
+  Object.entries(byOwner).sort((a,b)=>a[0].localeCompare(b[0])).forEach(([owner,tasks])=>{
+    const lane=document.createElement("div");lane.className="sw-lane";
+    lane.innerHTML=`<div class="sw-lane-header"><div class="sw-avatar">${initials(owner)}</div><div class="sw-owner-name">${escH(owner)}</div><span style="font-size:11px;color:var(--color-text-secondary)">${tasks.length} task${tasks.length!==1?"s":""}</span></div>`;
+    const tw=document.createElement("div");tw.className="sw-tasks";
+    tasks.forEach(t=>{
+      const card=document.createElement("div");card.className="sw-task";card.style.cursor="pointer";
+      card.onclick=()=>openDetail(t.id);
+      card.innerHTML=`<div class="sw-task-name">${t.isSub?'<i class="ti ti-corner-down-right" style="font-size:10px"></i> ':""} ${escH(t.name)}</div>
+        <div class="sw-task-phase">${escH(t.phase)}</div>
+        <div class="sw-task-footer">${swBadge(t.status)}<span class="sw-date">${t.due||""}</span></div>`;
+      tw.appendChild(card);
+    });
+    lane.appendChild(tw);c.appendChild(lane);
+  });
+}
+
+// ── Drag and drop ──────────────────────────────────────────────
+let dragCtx=null;
+function clearDragStyles(){document.querySelectorAll(".dragging,.drag-over-top,.drag-over-bottom").forEach(el=>el.classList.remove("dragging","drag-over-top","drag-over-bottom"));}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  const pc=document.getElementById("phasesContainer");
+  pc.addEventListener("dragstart",e=>{
+    const handle=e.target.closest(".drag-handle");if(!handle)return;
+    e.stopPropagation();
+    if(handle.dataset.dragPhase){dragCtx={type:"phase",id:parseInt(handle.dataset.dragPhase)};handle.closest(".phase")?.classList.add("dragging");}
+    else if(handle.dataset.dragTask){dragCtx={type:"task",id:parseInt(handle.dataset.dragTask),pid:parseInt(handle.dataset.dragPid)};handle.closest(".task-row")?.classList.add("dragging");}
+    else if(handle.dataset.dragSub){dragCtx={type:"sub",id:parseInt(handle.dataset.dragSub),pid:parseInt(handle.dataset.dragPid),tid:parseInt(handle.dataset.dragTid)};handle.closest(".task-row")?.classList.add("dragging");}
+    e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/plain","drag");
+  });
+  pc.addEventListener("dragend",()=>{clearDragStyles();dragCtx=null;});
+  pc.addEventListener("dragover",e=>{
+    e.preventDefault();if(!dragCtx)return;clearDragStyles();
+    if(dragCtx.type==="phase"){const t=e.target.closest(".phase");if(!t||parseInt(t.dataset.phaseId)===dragCtx.id)return;const r=t.getBoundingClientRect();t.classList.add(e.clientY<r.top+r.height/2?"drag-over-top":"drag-over-bottom");}
+    else if(dragCtx.type==="task"){const t=e.target.closest(".task-row:not(.sub)");if(!t||parseInt(t.dataset.tid)===dragCtx.id||parseInt(t.dataset.pid)!==dragCtx.pid)return;const r=t.getBoundingClientRect();t.classList.add(e.clientY<r.top+r.height/2?"drag-over-top":"drag-over-bottom");}
+    else if(dragCtx.type==="sub"){const t=e.target.closest(".task-row.sub");if(!t||parseInt(t.dataset.sid)===dragCtx.id||parseInt(t.dataset.tid)!==dragCtx.tid)return;const r=t.getBoundingClientRect();t.classList.add(e.clientY<r.top+r.height/2?"drag-over-top":"drag-over-bottom");}
+  });
+  pc.addEventListener("drop",e=>{
+    e.preventDefault();if(!dragCtx)return;
+    if(dragCtx.type==="phase"){
+      const t=e.target.closest(".phase");if(!t)return;const tid=parseInt(t.dataset.phaseId);if(tid===dragCtx.id)return;
+      const r=t.getBoundingClientRect();const before=e.clientY<r.top+r.height/2;
+      const fi=phases.findIndex(p=>p.id===dragCtx.id);const[item]=phases.splice(fi,1);
+      const ti=phases.findIndex(p=>p.id===tid);phases.splice(before?ti:ti+1,0,item);
+      logActivity(`${currentUser} reordered phases`);
+    } else if(dragCtx.type==="task"){
+      const t=e.target.closest(".task-row:not(.sub)");if(!t)return;const ttid=parseInt(t.dataset.tid);if(ttid===dragCtx.id)return;
+      const p=phases.find(x=>x.id===dragCtx.pid);if(!p)return;
+      const r=t.getBoundingClientRect();const before=e.clientY<r.top+r.height/2;
+      const fi=p.tasks.findIndex(x=>x.id===dragCtx.id);const[item]=p.tasks.splice(fi,1);
+      const ti=p.tasks.findIndex(x=>x.id===ttid);p.tasks.splice(before?ti:ti+1,0,item);
+      logActivity(`${currentUser} reordered tasks in "${p.name}"`);
+    } else if(dragCtx.type==="sub"){
+      const t=e.target.closest(".task-row.sub");if(!t)return;const tsid=parseInt(t.dataset.sid);if(tsid===dragCtx.id)return;
+      const p=phases.find(x=>x.id===dragCtx.pid);if(!p)return;
+      const task=p.tasks.find(x=>x.id===dragCtx.tid);if(!task||!task.subs)return;
+      const r=t.getBoundingClientRect();const before=e.clientY<r.top+r.height/2;
+      const fi=task.subs.findIndex(s=>s.id===dragCtx.id);const[item]=task.subs.splice(fi,1);
+      const ti=task.subs.findIndex(s=>s.id===tsid);task.subs.splice(before?ti:ti+1,0,item);
+      logActivity(`${currentUser} reordered sub-items`);
+    }
+    clearDragStyles();dragCtx=null;scheduleSave();renderAll();
+  });
+});
+
+// ── Modal helpers ──────────────────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add("open");}
+function closeModal(id){document.getElementById(id).classList.remove("open");}
+document.querySelectorAll(".modal-overlay").forEach(el=>{el.addEventListener("click",function(e){if(e.target===this)this.classList.remove("open");});});
+["mPhaseStart","mPhaseEnd"].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("change",()=>checkDepWarning("phase","phaseDepWarn"));});
+["mTaskStart","mTaskDue"].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener("change",()=>checkDepWarning("task","taskDepWarn"));});
+
+// Load comment counts after app init
+setTimeout(()=>{if(appInitialised)loadCommentCounts();},2000);
+</script>
+
+<!-- Firestore requires a composite index for the activity query. Add this to firestore.indexes.json or create manually in console:
+  Collection: activity, Fields: ts (Descending)
+-->
+</body>
+</html>
